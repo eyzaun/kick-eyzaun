@@ -197,7 +197,7 @@ echo    🔗 https://console.firebase.google.com/
 echo    📝 Proje adı: kick-eyzaun
 echo    📝 Project ID: kick-eyzaun
 echo.
-echo 2. ✅ Firebase login:
+echo 2. ✅   Firebase login:
 echo    💻 firebase login
 echo.
 echo 3. ✅ Firebase init:
