@@ -1,3 +1,4 @@
+/* public/css/main.css - Temel stiller */
 
 * {
     margin: 0;
@@ -14,39 +15,14 @@ body {
     position: relative;
 }
 
-/* Brand Header */
+/* Brand Header - HIDDEN */
 .brand-header {
-    position: fixed;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: linear-gradient(45deg, #ff69b4, #00ff00, #00bfff, #ff69b4);
-    background-size: 400% 400%;
-    animation: gradientShift 4s ease infinite;
-    color: white;
-    padding: 15px 30px;
-    border-radius: 20px;
-    font-size: 18px;
-    font-weight: bold;
-    z-index: 10002;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+    display: none !important;
 }
 
-/* Connection Status */
+/* Connection Status - HIDDEN */
 .connection-status {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    background: rgba(0,0,0,0.9);
-    color: white;
-    padding: 12px 20px;
-    border-radius: 25px;
-    font-size: 12px;
-    z-index: 10002;
-    border: 2px solid #00ff00;
-    backdrop-filter: blur(10px);
-    box-shadow: 0 0 15px rgba(0,255,0,0.3);
+    display: none !important;
 }
 
 /* User Count Display */
@@ -69,35 +45,45 @@ body {
     position: fixed;
     bottom: 20px;
     right: 20px;
-    background: rgba(0,0,0,0.85);
+    background: transparent !important;
     color: white;
-    padding: 15px;
+    padding: 12px;
     border-radius: 15px;
     font-size: 11px;
     z-index: 10002;
-    border: 2px solid #00ff00;
-    backdrop-filter: blur(10px);
+    border: 2px solid rgba(0,255,0,0.8);
+    backdrop-filter: none;
     min-width: 200px;
 }
 
 .stats-display h3 {
     color: #ff69b4;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
     font-size: 13px;
     text-align: center;
+    font-weight: 900;
+    text-shadow: 2px 2px 6px rgba(0,0,0,0.9);
+    background: rgba(0,0,0,0.7);
+    padding: 6px;
+    border-radius: 8px;
 }
 
 .stats-item {
-    margin: 6px 0;
+    margin: 4px 0;
     display: flex;
     justify-content: space-between;
-    padding: 2px 0;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
+    padding: 3px 6px;
+    background: rgba(0,0,0,0.6);
+    border-radius: 4px;
+    border-bottom: none;
+    font-weight: 700;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.9);
 }
 
 .stats-value {
     color: #00ff00;
-    font-weight: bold;
+    font-weight: 900;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.9);
 }
 
 /* Loading Screen */

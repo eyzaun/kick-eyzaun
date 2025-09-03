@@ -1,0 +1,92 @@
+{
+  "name": "kick-eyzaun-multi-avatar",
+  "version": "3.0.0",
+  "description": "Multi-user avatar chat system for Eyzaun Kick channel with individual user control",
+  "main": "public/index.html",
+  "type": "module",
+  "scripts": {
+    "dev": "firebase serve --only hosting --port 5000",
+    "build": "echo 'No build process required - static files'",
+    "deploy": "firebase deploy --only hosting",
+    "preview": "firebase serve --only hosting",
+    "test": "echo 'No tests configured'",
+    "lint": "echo 'No linting configured'",
+    "start": "firebase serve --only hosting"
+  },
+  "keywords": [
+    "kick",
+    "eyzaun",
+    "chat",
+    "effects",
+    "obs",
+    "websocket",
+    "avatar",
+    "multi-user",
+    "interactive",
+    "streaming",
+    "twitch-overlay"
+  ],
+  "author": "Eyzaun Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/eyzaun/kick-multi-avatar"
+  },
+  "homepage": "https://kick-eyzaun.web.app",
+  "bugs": {
+    "url": "https://github.com/eyzaun/kick-multi-avatar/issues"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ],
+  "devDependencies": {
+    "firebase-tools": "^13.0.0"
+  },
+  "dependencies": {},
+  "files": [
+    "public/**/*",
+    "firebase.json",
+    ".firebaserc",
+    "README.md"
+  ],
+  "config": {
+    "channel": "eyzaun",
+    "firebase": {
+      "project": "kick-eyzaun",
+      "hosting": {
+        "public": "public",
+        "ignore": [
+          "firebase.json",
+          "**/.*",
+          "**/node_modules/**"
+        ]
+      }
+    }
+  },
+  "metadata": {
+    "features": [
+      "Multi-user avatar system",
+      "Individual user control",
+      "Real-time chat integration",
+      "50+ visual effects",
+      "WebSocket communication",
+      "OBS-ready overlay",
+      "Debug tools",
+      "Performance monitoring",
+      "Mobile responsive"
+    ],
+    "commands": {
+      "movement": ["!sağ", "!sol", "!yukarı", "!aşağı"],
+      "animations": ["!dans", "!zıpla", "!döndür", "!karakter"],
+      "effects": ["!patlama", "!yıldırım", "!kar", "!ateş", "!konfeti", "!kalp", "!rainbow", "!shake"],
+      "advanced": ["!lazer", "!meteor", "!matrix", "!portal", "!galaksi", "!tsunami"],
+      "sound": ["!bas", "!davul", "!gitar", "!synth"],
+      "special": ["!nuke", "!disco", "!ufo", "!ninja"]
+    }
+  }
+}
