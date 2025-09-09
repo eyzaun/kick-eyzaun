@@ -70,8 +70,30 @@
 
 /* Speech Bubble Animation */
 @keyframes bubbleAppear {
-    0% { transform: scale(0) translateY(20px); opacity: 0; }
-    100% { transform: scale(1) translateY(0); opacity: 1; }
+    0% { 
+        transform: scale(0.3) translateY(20px); 
+        opacity: 0; 
+    }
+    50% { 
+        transform: scale(1.1) translateY(-5px); 
+        opacity: 0.8; 
+    }
+    100% { 
+        transform: scale(1) translateY(0); 
+        opacity: 1; 
+    }
+}
+
+/* Speech bubble fade out animation */
+@keyframes bubbleFadeOut {
+    0% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0.9) translateY(-15px);
+    }
 }
 
 /* Particle Animations */
@@ -124,12 +146,128 @@
     100% { opacity: 1; transform: scale(1.2); }
 }
 
-@keyframes tsunamiWave {
-    0% { left: -300vw; height: 50px; }
-    30% { left: -50vw; height: 150px; }
-    50% { left: 0vw; height: 200px; }
-    70% { left: 50vw; height: 150px; }
-    100% { left: 300vw; height: 50px; }
+@keyframes tsunamiFlow {
+    0% {
+        left: -100vw;
+        transform: scaleX(0.8) scaleY(0.5);
+        opacity: 0;
+    }
+    10% {
+        left: -80vw;
+        transform: scaleX(1) scaleY(0.7);
+        opacity: 0.3;
+    }
+    25% {
+        left: -40vw;
+        transform: scaleX(1.2) scaleY(0.9);
+        opacity: 0.7;
+    }
+    50% {
+        left: 0vw;
+        transform: scaleX(1.5) scaleY(1.1);
+        opacity: 1;
+    }
+    75% {
+        left: 40vw;
+        transform: scaleX(1.3) scaleY(1.2);
+        opacity: 0.8;
+    }
+    90% {
+        left: 80vw;
+        transform: scaleX(1) scaleY(0.8);
+        opacity: 0.4;
+    }
+    100% {
+        left: 120vw;
+        transform: scaleX(0.5) scaleY(0.3);
+        opacity: 0;
+    }
+}
+
+/* Geliştirilmiş tsunami animasyonları */
+@keyframes realisticFoam {
+    0% {
+        transform: translateX(0) translateY(0) rotate(0deg) scale(0.5);
+        opacity: 0;
+    }
+    20% {
+        transform: translateX(10vw) translateY(-20px) rotate(45deg) scale(0.8);
+        opacity: 0.8;
+    }
+    50% {
+        transform: translateX(25vw) translateY(-40px) rotate(90deg) scale(1);
+        opacity: 0.9;
+    }
+    80% {
+        transform: translateX(40vw) translateY(-30px) rotate(135deg) scale(0.9);
+        opacity: 0.7;
+    }
+    100% {
+        transform: translateX(60vw) translateY(0) rotate(180deg) scale(0.3);
+        opacity: 0;
+    }
+}
+
+@keyframes realisticDebris {
+    0% {
+        transform: translateX(0) translateY(0) rotate(0deg) scale(1);
+        opacity: 0;
+    }
+    15% {
+        transform: translateX(15vw) translateY(-25px) rotate(90deg) scale(1.1);
+        opacity: 1;
+    }
+    35% {
+        transform: translateX(35vw) translateY(-50px) rotate(180deg) scale(0.9);
+        opacity: 0.9;
+    }
+    60% {
+        transform: translateX(55vw) translateY(-35px) rotate(270deg) scale(1.2);
+        opacity: 0.8;
+    }
+    85% {
+        transform: translateX(75vw) translateY(-15px) rotate(360deg) scale(0.8);
+        opacity: 0.6;
+    }
+    100% {
+        transform: translateX(100vw) translateY(0) rotate(450deg) scale(0.5);
+        opacity: 0;
+    }
+}
+
+@keyframes realisticSplash {
+    0% {
+        transform: translateY(0) scale(0.3) rotate(0deg);
+        opacity: 1;
+    }
+    30% {
+        transform: translateY(-60px) scale(1.2) rotate(45deg);
+        opacity: 0.9;
+    }
+    60% {
+        transform: translateY(-90px) scale(1.5) rotate(90deg);
+        opacity: 0.7;
+    }
+    100% {
+        transform: translateY(-150px) scale(0.5) rotate(180deg);
+        opacity: 0;
+    }
+}
+
+@keyframes realisticShake {
+    0%, 100% { transform: translateX(0) translateY(0) rotate(0deg); }
+    5% { transform: translateX(-8px) translateY(-3px) rotate(-0.5deg); }
+    10% { transform: translateX(8px) translateY(3px) rotate(0.5deg); }
+    15% { transform: translateX(-6px) translateY(-2px) rotate(-0.3deg); }
+    20% { transform: translateX(6px) translateY(2px) rotate(0.3deg); }
+    25% { transform: translateX(-4px) translateY(-1px) rotate(-0.2deg); }
+    30% { transform: translateX(4px) translateY(1px) rotate(0.2deg); }
+    35% { transform: translateX(-3px) translateY(-1px) rotate(-0.1deg); }
+    40% { transform: translateX(3px) translateY(1px) rotate(0.1deg); }
+    45% { transform: translateX(-2px) translateY(-1px) rotate(-0.1deg); }
+    50% { transform: translateX(2px) translateY(1px) rotate(0.1deg); }
+    55% { transform: translateX(-1px) translateY(-1px) rotate(0deg); }
+    60% { transform: translateX(1px) translateY(1px) rotate(0deg); }
 }
 
 @keyframes drumPulse {

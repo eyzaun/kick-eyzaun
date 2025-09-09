@@ -505,32 +505,109 @@ export class VisualEffects {
     }
 
     /**
-     * Tsunami dalgası
+     * Tsunami dalgası - Yeniden yazılmış gerçekçi versiyon
      */
     async createTsunami() {
         const effectId = 'tsunami_' + Date.now();
         this.activeEffects.add(effectId);
-        
+
         try {
-            const waves = createElement('div');
-            waves.style.cssText = `
+            // Ana tsunami dalgası - soldan sağa doğru akar
+            const mainWave = createElement('div');
+            mainWave.style.cssText = `
                 position: fixed;
                 bottom: 0;
                 left: -100vw;
-                width: 300vw;
-                height: 200px;
-                background: linear-gradient(0deg, #0066cc 0%, #0099ff 50%, #66ccff 100%);
+                width: 200vw;
+                height: 80vh;
+                background: linear-gradient(0deg,
+                    rgba(0,102,204,0.95) 0%,
+                    rgba(0,153,255,0.9) 20%,
+                    rgba(102,204,255,0.8) 40%,
+                    rgba(204,229,255,0.6) 60%,
+                    rgba(255,255,255,0.3) 80%,
+                    transparent 100%);
                 z-index: ${CONFIG.UI.Z_INDICES.PARTICLES};
-                animation: tsunamiWave 8s ease-in-out forwards;
-                opacity: 0.8;
+                animation: tsunamiFlow 8s ease-in-out forwards;
+                opacity: 0.9;
                 pointer-events: none;
+                border-radius: 50% 50% 0 0;
+                box-shadow:
+                    0 -10px 30px rgba(0,102,204,0.8),
+                    0 -20px 60px rgba(0,153,255,0.6),
+                    0 -30px 90px rgba(0,204,255,0.4);
+                transform-origin: center bottom;
             `;
-            
-            document.body.appendChild(waves);
-            this.soundEffects.playTsunami();
-            
+
+            document.body.appendChild(mainWave);
+
+            // İkinci dalga katmanı - daha küçük ve hızlı
+            const secondaryWave = createElement('div');
+            secondaryWave.style.cssText = `
+                position: fixed;
+                bottom: 0;
+                left: -120vw;
+                width: 180vw;
+                height: 60vh;
+                background: linear-gradient(0deg,
+                    rgba(0,51,102,0.8) 0%,
+                    rgba(0,102,153,0.7) 30%,
+                    rgba(51,153,204,0.6) 50%,
+                    rgba(153,204,255,0.4) 70%,
+                    transparent 100%);
+                z-index: ${CONFIG.UI.Z_INDICES.PARTICLES - 1};
+                animation: tsunamiFlow 6s ease-in-out 0.5s forwards;
+                opacity: 0.7;
+                pointer-events: none;
+                border-radius: 40% 40% 0 0;
+                transform-origin: center bottom;
+            `;
+
+            document.body.appendChild(secondaryWave);
+
+            // Üçüncü küçük dalga - en hızlı
+            const smallWave = createElement('div');
+            smallWave.style.cssText = `
+                position: fixed;
+                bottom: 0;
+                left: -80vw;
+                width: 150vw;
+                height: 40vh;
+                background: linear-gradient(0deg,
+                    rgba(0,25,51,0.6) 0%,
+                    rgba(0,51,77,0.5) 40%,
+                    rgba(25,77,102,0.4) 60%,
+                    transparent 100%);
+                z-index: ${CONFIG.UI.Z_INDICES.PARTICLES - 2};
+                animation: tsunamiFlow 4s ease-in-out 1s forwards;
+                opacity: 0.5;
+                pointer-events: none;
+                border-radius: 30% 30% 0 0;
+                transform-origin: center bottom;
+            `;
+
+            document.body.appendChild(smallWave);
+
+            // Köpük efektleri
+            this.createRealisticFoam();
+
+            // Çöpler ve debris
+            this.createRealisticDebris();
+
+            // Su sıçramaları
+            this.createRealisticSplashes();
+
+            // Ekran sarsıntısı
+            this.createRealisticShake();
+
+            // Gelişmiş ses efektleri
+            this.playRealisticTsunamiSound();
+
+            // Cleanup
             setTimeout(() => {
-                removeElement(waves);
+                removeElement(mainWave);
+                removeElement(secondaryWave);
+                removeElement(smallWave);
                 this.activeEffects.delete(effectId);
             }, 8000);
 
@@ -541,6 +618,160 @@ export class VisualEffects {
             this.activeEffects.delete(effectId);
             return false;
         }
+    }
+
+    /**
+     * Gerçekçi köpük efektleri
+     */
+    createRealisticFoam() {
+        const foamEmojis = ['🌊', '💧', '🌫️', '💦', '🌊'];
+
+        for (let i = 0; i < 30; i++) {
+            setTimeout(() => {
+                const foam = createElement('div');
+                foam.textContent = foamEmojis[Math.floor(Math.random() * foamEmojis.length)];
+                foam.style.cssText = `
+                    position: fixed;
+                    bottom: ${Math.random() * 100 + 20}px;
+                    left: ${Math.random() * 120 - 20}vw;
+                    font-size: ${Math.random() * 25 + 15}px;
+                    z-index: ${CONFIG.UI.Z_INDICES.PARTICLES + 1};
+                    animation: realisticFoam ${Math.random() * 2 + 3}s ease-in-out forwards;
+                    opacity: ${Math.random() * 0.4 + 0.6};
+                    pointer-events: none;
+                    filter: blur(${Math.random() * 1.5}px);
+                    transform: rotate(${Math.random() * 60 - 30}deg);
+                `;
+
+                document.body.appendChild(foam);
+
+                setTimeout(() => {
+                    removeElement(foam);
+                }, 5000);
+            }, i * 150);
+        }
+    }
+
+    /**
+     * Gerçekçi çöpler ve debris
+     */
+    createRealisticDebris() {
+        const debrisItems = [
+            '🗑️', '🥤', '🛍️', '📦', '🥫', '🧴', '📱', '👟',
+            '📰', '🍾', '🥖', '🛶', '🏊', '🐟', '🐠', '🦈',
+            '🌿', '🍂', '🪵', '🪨', '🏠', '🚗', '🛥️', '🏄',
+            '📺', '🪑', '🛋️', '🪴', '🎈', '🧸', '📚', '💼'
+        ];
+
+        for (let i = 0; i < 50; i++) {
+            setTimeout(() => {
+                const debris = createElement('div');
+                debris.textContent = debrisItems[Math.floor(Math.random() * debrisItems.length)];
+                debris.style.cssText = `
+                    position: fixed;
+                    bottom: ${Math.random() * 80 + 10}px;
+                    left: ${Math.random() * 140 - 20}vw;
+                    font-size: ${Math.random() * 20 + 12}px;
+                    z-index: ${CONFIG.UI.Z_INDICES.PARTICLES + 2};
+                    animation: realisticDebris ${Math.random() * 3 + 4}s ease-in-out forwards;
+                    opacity: ${Math.random() * 0.6 + 0.4};
+                    pointer-events: none;
+                    transform: rotate(${Math.random() * 720 - 360}deg) scale(${Math.random() * 0.5 + 0.8});
+                `;
+
+                document.body.appendChild(debris);
+
+                setTimeout(() => {
+                    removeElement(debris);
+                }, 7000);
+            }, i * 100);
+        }
+    }
+
+    /**
+     * Gerçekçi su sıçramaları
+     */
+    createRealisticSplashes() {
+        for (let i = 0; i < 20; i++) {
+            setTimeout(() => {
+                const splash = createElement('div');
+                splash.textContent = '💧';
+                splash.style.cssText = `
+                    position: fixed;
+                    bottom: ${Math.random() * 150 + 50}px;
+                    left: ${Math.random() * 100}vw;
+                    font-size: ${Math.random() * 30 + 15}px;
+                    z-index: ${CONFIG.UI.Z_INDICES.PARTICLES + 3};
+                    animation: realisticSplash ${Math.random() * 1.5 + 0.8}s ease-out forwards;
+                    opacity: ${Math.random() * 0.5 + 0.5};
+                    pointer-events: none;
+                    transform: rotate(${Math.random() * 180 - 90}deg);
+                `;
+
+                document.body.appendChild(splash);
+
+                setTimeout(() => {
+                    removeElement(splash);
+                }, 2500);
+            }, i * 200);
+        }
+    }
+
+    /**
+     * Gerçekçi ekran sarsıntısı
+     */
+    createRealisticShake() {
+        // Ana sarsıntı - daha gerçekçi
+        document.body.style.animation = 'realisticShake 6s ease-in-out';
+
+        // Ek titreşimler - farklı zamanlamalarda
+        setTimeout(() => {
+            document.body.style.animation = 'realisticShake 3s ease-in-out 0.3s';
+        }, 1500);
+
+        setTimeout(() => {
+            document.body.style.animation = 'realisticShake 2s ease-in-out 0.2s';
+        }, 3000);
+
+        setTimeout(() => {
+            document.body.style.animation = '';
+        }, 8000);
+    }
+
+    /**
+     * Gerçekçi tsunami ses efektleri
+     */
+    playRealisticTsunamiSound() {
+        // Ana tsunami sesi
+        this.soundEffects.playTsunami();
+
+        // Dalga yaklaşma sesi
+        setTimeout(() => {
+            if (this.soundEffects.playWaterFlow) {
+                this.soundEffects.playWaterFlow();
+            }
+        }, 1000);
+
+        // Çarpma sesi
+        setTimeout(() => {
+            if (this.soundEffects.playImpact) {
+                this.soundEffects.playImpact();
+            }
+        }, 2500);
+
+        // Köpük ve sıçrama sesleri
+        setTimeout(() => {
+            if (this.soundEffects.playWaterSplash) {
+                this.soundEffects.playWaterSplash();
+            }
+        }, 3000);
+
+        // Geri çekilme sesi
+        setTimeout(() => {
+            if (this.soundEffects.playWaterFlow) {
+                this.soundEffects.playWaterFlow();
+            }
+        }, 5000);
     }
 
     // SOUND EFFECTS WITH VISUALS

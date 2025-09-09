@@ -539,6 +539,67 @@ export class SoundEffects {
         });
     }
 
+    /**
+     * Su sıçraması sesi
+     */
+    playWaterSplash() {
+        return this.createComplexSound('watersplash', () => {
+            // Multiple splash sounds
+            const splashes = [800, 600, 1000, 400];
+            
+            splashes.forEach((freq, index) => {
+                setTimeout(() => {
+                    this.createTone(freq, 0.1, 'sawtooth', 0.2);
+                }, index * 50);
+            });
+
+            return { duration: 500 };
+        });
+    }
+
+    /**
+     * Çarpma/impact sesi
+     */
+    playImpact() {
+        return this.createComplexSound('impact', () => {
+            // Low frequency impact
+            this.createTone(80, 0.3, 'sawtooth', 0.5);
+            
+            // Higher frequency crack
+            setTimeout(() => {
+                this.createTone(1200, 0.1, 'square', 0.3);
+            }, 100);
+
+            return { duration: 500 };
+        });
+    }
+
+    /**
+     * Su akışı sesi
+     */
+    playWaterFlow() {
+        return this.createComplexSound('waterflow', () => {
+            const flow = this.audioContext.createOscillator();
+            const flowGain = this.audioContext.createGain();
+            
+            flow.connect(flowGain);
+            flowGain.connect(this.audioContext.destination);
+            
+            flow.frequency.setValueAtTime(200, this.audioContext.currentTime);
+            flow.frequency.linearRampToValueAtTime(180, this.audioContext.currentTime + 2);
+            flow.frequency.linearRampToValueAtTime(220, this.audioContext.currentTime + 4);
+            flow.type = 'sawtooth';
+            
+            flowGain.gain.setValueAtTime(this.masterVolume * 0.3, this.audioContext.currentTime);
+            flowGain.gain.exponentialRampToValueAtTime(0.01, this.audioContext.currentTime + 4);
+            
+            flow.start();
+            flow.stop(this.audioContext.currentTime + 4);
+
+            return { oscillator: flow, gainNode: flowGain, duration: 4000 };
+        });
+    }
+
     // MUSICAL EFFECTS
 
     /**

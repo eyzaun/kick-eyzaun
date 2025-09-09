@@ -30,6 +30,9 @@ export class UserAvatar {
         this.label = null;
         this.speechBubble = null;
         
+        // Speech bubble timeout
+        this.speechBubbleTimeout = null;
+        
         // Animation queue
         this.animationQueue = [];
         this.isProcessingQueue = false;
@@ -124,6 +127,9 @@ export class UserAvatar {
      * Sağa hareket
      */
     async moveRight() {
+        // Show speech bubble with current emoji
+        this.showSpeechBubble(`${CONFIG.AVATAR.EMOJIS[this.currentEmoji]} →`, true, 30000);
+        
         return this.moveTo(
             Math.min(CONFIG.SCREEN.WIDTH - CONFIG.AVATAR.SIZE, this.position.x + CONFIG.AVATAR.MOVE_DISTANCE),
             this.position.y
@@ -134,6 +140,9 @@ export class UserAvatar {
      * Sola hareket
      */
     async moveLeft() {
+        // Show speech bubble with current emoji
+        this.showSpeechBubble(`← ${CONFIG.AVATAR.EMOJIS[this.currentEmoji]}`, true, 30000);
+        
         return this.moveTo(
             Math.max(0, this.position.x - CONFIG.AVATAR.MOVE_DISTANCE),
             this.position.y
@@ -144,6 +153,9 @@ export class UserAvatar {
      * Yukarı hareket
      */
     async moveUp() {
+        // Show speech bubble with current emoji
+        this.showSpeechBubble(`↑ ${CONFIG.AVATAR.EMOJIS[this.currentEmoji]}`, true, 30000);
+        
         return this.moveTo(
             this.position.x,
             Math.max(0, this.position.y - CONFIG.AVATAR.MOVE_DISTANCE)
@@ -154,6 +166,9 @@ export class UserAvatar {
      * Aşağı hareket
      */
     async moveDown() {
+        // Show speech bubble with current emoji
+        this.showSpeechBubble(`${CONFIG.AVATAR.EMOJIS[this.currentEmoji]} ↓`, true, 30000);
+        
         return this.moveTo(
             this.position.x,
             Math.min(CONFIG.SCREEN.HEIGHT - CONFIG.AVATAR.SIZE, this.position.y + CONFIG.AVATAR.MOVE_DISTANCE)
@@ -187,12 +202,31 @@ export class UserAvatar {
         // Animate to new position
         this.updateElementPosition();
         
+        // Update speech bubble position during movement
+        if (this.speechBubble) {
+            this.updateSpeechBubblePosition();
+            
+            // Keep updating position during movement
+            const positionUpdateInterval = setInterval(() => {
+                if (this.speechBubble && this.isMoving) {
+                    this.updateSpeechBubblePosition();
+                } else {
+                    clearInterval(positionUpdateInterval);
+                }
+            }, 50);
+        }
+        
         // Wait for animation
         await new Promise(resolve => setTimeout(resolve, CONFIG.AVATAR.ANIMATION_DURATION));
         
         // Clean up
         this.element.classList.remove('moving');
         this.isMoving = false;
+        
+        // Final position update
+        if (this.speechBubble) {
+            this.updateSpeechBubblePosition();
+        }
         
         logger.avatar(`${this.username} moved to ${this.position.x}, ${this.position.y}`);
         
@@ -297,10 +331,16 @@ export class UserAvatar {
     /**
      * Konuşma balonu göster
      */
-    showSpeechBubble(message, isCommand = false, duration = CONFIG.AVATAR.SPEECH_BUBBLE_DURATION) {
+    showSpeechBubble(message, isCommand = false, duration = 30000) {
         this.updateActivity();
         
-        // Remove existing bubble
+        // Clear any existing timeout
+        if (this.speechBubbleTimeout) {
+            clearTimeout(this.speechBubbleTimeout);
+            this.speechBubbleTimeout = null;
+        }
+        
+        // Remove existing bubble immediately if same user
         this.removeSpeechBubble();
         
         // Create new bubble
@@ -319,9 +359,15 @@ export class UserAvatar {
         // Add to DOM
         document.body.appendChild(this.speechBubble);
         
-        // Auto remove
-        setTimeout(() => {
-            this.removeSpeechBubble();
+        // Store timeout reference
+        this.speechBubbleTimeout = setTimeout(() => {
+            if (this.speechBubble) {
+                this.speechBubble.style.animation = 'bubbleFadeOut 2.5s ease-out forwards';
+                setTimeout(() => {
+                    this.removeSpeechBubble();
+                    this.speechBubbleTimeout = null;
+                }, 2500);
+            }
         }, duration);
         
         logger.avatar(`${this.username} said: ${message}`);
@@ -332,8 +378,22 @@ export class UserAvatar {
      */
     updateSpeechBubblePosition() {
         if (this.speechBubble) {
-            this.speechBubble.style.left = (this.position.x - 50) + 'px';
-            this.speechBubble.style.top = (this.position.y - 60) + 'px';
+            // Get actual bubble dimensions after content is set
+            const computedStyle = window.getComputedStyle(this.speechBubble);
+            const paddingLeft = parseFloat(computedStyle.paddingLeft) || 18;
+            const paddingRight = parseFloat(computedStyle.paddingRight) || 18;
+            const fontSize = parseFloat(computedStyle.fontSize) || 16;
+            
+            // Estimate width based on text length and font size
+            const textLength = this.speechBubble.textContent.length;
+            const estimatedWidth = Math.min(textLength * (fontSize * 0.6) + paddingLeft + paddingRight + 20, 280);
+            
+            // Center the bubble above the avatar with perfect positioning
+            const avatarCenter = this.position.x + (CONFIG.AVATAR.SIZE / 2);
+            const bubbleLeft = Math.max(15, Math.min(CONFIG.SCREEN.WIDTH - estimatedWidth - 15, avatarCenter - (estimatedWidth / 2)));
+            
+            this.speechBubble.style.left = bubbleLeft + 'px';
+            this.speechBubble.style.top = (this.position.y - 90) + 'px'; // Higher for better visibility
         }
     }
 
@@ -344,6 +404,12 @@ export class UserAvatar {
         if (this.speechBubble) {
             removeElement(this.speechBubble);
             this.speechBubble = null;
+        }
+        
+        // Clear timeout if exists
+        if (this.speechBubbleTimeout) {
+            clearTimeout(this.speechBubbleTimeout);
+            this.speechBubbleTimeout = null;
         }
     }
 

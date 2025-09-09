@@ -104,45 +104,94 @@
 /* Speech Bubbles */
 .speech-bubble {
     position: fixed;
-    background: rgba(0,0,0,0.9);
+    background: linear-gradient(135deg, rgba(0,0,0,0.95), rgba(20,20,20,0.95));
     color: white;
-    padding: 8px 12px;
-    border-radius: 15px;
-    font-size: 12px;
+    padding: 12px 18px;
+    border-radius: 20px;
+    font-size: 16px;
+    font-weight: bold;
     z-index: 10001;
-    max-width: 200px;
+    max-width: 280px;
+    min-width: 120px;
     word-wrap: break-word;
-    border: 2px solid #00ff00;
-    backdrop-filter: blur(10px);
-    animation: bubbleAppear 0.3s ease-out;
+    border: 3px solid rgba(0,255,0,0.8);
+    backdrop-filter: blur(15px);
+    box-shadow:
+        0 0 25px rgba(0,255,0,0.4),
+        0 6px 20px rgba(0,0,0,0.6),
+        inset 0 1px 0 rgba(255,255,255,0.1);
+    animation: bubbleAppear 0.5s ease-out;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+    text-align: center;
+    white-space: nowrap;
+    pointer-events: none;
 }
 
 .speech-bubble.command {
-    border-color: #ff69b4;
-    background: rgba(255,105,180,0.2);
-    box-shadow: 0 0 15px rgba(255,105,180,0.4);
+    border-color: rgba(255,105,180,0.9);
+    background: linear-gradient(135deg, rgba(255,105,180,0.2), rgba(255,20,147,0.3));
+    box-shadow:
+        0 0 25px rgba(255,105,180,0.4),
+        0 4px 15px rgba(0,0,0,0.5),
+        inset 0 1px 0 rgba(255,255,255,0.2);
+    color: #ffffff;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.9);
 }
 
 .speech-bubble.broadcaster {
-    border-color: #ff69b4;
-    background: rgba(255,105,180,0.3);
+    border-color: rgba(255,105,180,0.9);
+    background: linear-gradient(135deg, rgba(255,105,180,0.25), rgba(255,20,147,0.35));
+    box-shadow:
+        0 0 25px rgba(255,105,180,0.5),
+        0 4px 15px rgba(0,0,0,0.5),
+        inset 0 1px 0 rgba(255,255,255,0.2);
 }
 
 .speech-bubble.moderator {
-    border-color: #00bfff;
-    background: rgba(0,191,255,0.3);
+    border-color: rgba(0,191,255,0.9);
+    background: linear-gradient(135deg, rgba(0,191,255,0.25), rgba(0,150,255,0.35));
+    box-shadow:
+        0 0 25px rgba(0,191,255,0.5),
+        0 4px 15px rgba(0,0,0,0.5),
+        inset 0 1px 0 rgba(255,255,255,0.2);
 }
 
 .speech-bubble::before {
     content: '';
     position: absolute;
-    bottom: -8px;
-    left: 20px;
+    bottom: -12px;
+    left: 50%;
+    transform: translateX(-50%);
     width: 0;
     height: 0;
-    border-left: 8px solid transparent;
-    border-right: 8px solid transparent;
-    border-top: 8px solid rgba(0,0,0,0.9);
+    border-left: 12px solid transparent;
+    border-right: 12px solid transparent;
+    border-top: 12px solid rgba(0,0,0,0.95);
+    filter: drop-shadow(0 3px 3px rgba(0,0,0,0.4));
+}
+
+.speech-bubble.command::before {
+    border-top-color: rgba(255,105,180,0.3);
+}
+
+.speech-bubble.broadcaster::before {
+    border-top-color: rgba(255,105,180,0.35);
+}
+
+.speech-bubble.moderator::before {
+    border-top-color: rgba(0,191,255,0.35);
+}
+
+/* Speech bubble fade out animation */
+@keyframes bubbleFadeOut {
+    0% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0.8) translateY(-10px);
+    }
 }
 
 /* User Info Label */
