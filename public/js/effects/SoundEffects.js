@@ -515,33 +515,27 @@ export class SoundEffects {
     }
 
     /**
-     * Tsunami sesi - Minimal Version
+     * Tsunami sesi
      */
     playTsunami() {
         return this.createComplexSound('tsunami', () => {
-            // Gentle wave sound
             const wave = this.audioContext.createOscillator();
             const waveGain = this.audioContext.createGain();
             
             wave.connect(waveGain);
             waveGain.connect(this.audioContext.destination);
             
-            // Gentle rumbling frequency
-            wave.frequency.setValueAtTime(50, this.audioContext.currentTime);
-            wave.frequency.linearRampToValueAtTime(60, this.audioContext.currentTime + 2);
-            wave.frequency.exponentialRampToValueAtTime(40, this.audioContext.currentTime + 6);
+            wave.frequency.setValueAtTime(60, this.audioContext.currentTime);
+            wave.frequency.exponentialRampToValueAtTime(40, this.audioContext.currentTime + 3);
             wave.type = 'sine';
             
-            // Moderate volume
-            waveGain.gain.setValueAtTime(0, this.audioContext.currentTime);
-            waveGain.gain.linearRampToValueAtTime(this.masterVolume * 0.3, this.audioContext.currentTime + 1);
-            waveGain.gain.exponentialRampToValueAtTime(this.masterVolume * 0.2, this.audioContext.currentTime + 4);
-            waveGain.gain.exponentialRampToValueAtTime(0.01, this.audioContext.currentTime + 6);
+            waveGain.gain.setValueAtTime(this.masterVolume * 0.6, this.audioContext.currentTime);
+            waveGain.gain.exponentialRampToValueAtTime(0.01, this.audioContext.currentTime + 3);
             
             wave.start();
-            wave.stop(this.audioContext.currentTime + 6);
+            wave.stop(this.audioContext.currentTime + 3);
 
-            return { oscillator: wave, gainNode: waveGain, duration: 6000 };
+            return { oscillator: wave, gainNode: waveGain, duration: 3000 };
         });
     }
 
