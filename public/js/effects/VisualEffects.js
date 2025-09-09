@@ -505,34 +505,195 @@ export class VisualEffects {
     }
 
     /**
-     * Tsunami dalgası
+     * Tsunami dalgası - Enhanced Realistic Version
      */
     async createTsunami() {
         const effectId = 'tsunami_' + Date.now();
         this.activeEffects.add(effectId);
         
         try {
-            const waves = createElement('div');
-            waves.style.cssText = `
+            // Main tsunami wave layers
+            const tsunamiContainer = createElement('div');
+            tsunamiContainer.className = 'tsunami-container';
+            tsunamiContainer.style.cssText = `
                 position: fixed;
-                bottom: 0;
-                left: -100vw;
-                width: 300vw;
-                height: 200px;
-                background: linear-gradient(0deg, #0066cc 0%, #0099ff 50%, #66ccff 100%);
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
                 z-index: ${CONFIG.UI.Z_INDICES.PARTICLES};
-                animation: tsunamiWave 8s ease-in-out forwards;
-                opacity: 0.8;
                 pointer-events: none;
+                overflow: hidden;
             `;
             
-            document.body.appendChild(waves);
+            // Background water layer
+            const waterBackground = createElement('div');
+            waterBackground.style.cssText = `
+                position: absolute;
+                bottom: 0;
+                left: -200vw;
+                width: 500vw;
+                height: 80vh;
+                background: linear-gradient(0deg, 
+                    #003366 0%, 
+                    #0066cc 30%, 
+                    #0099ff 60%, 
+                    #66ccff 90%, 
+                    rgba(102, 204, 255, 0.8) 100%);
+                animation: tsunamiWave 12s ease-in-out forwards;
+                filter: drop-shadow(0 -10px 30px rgba(0, 102, 204, 0.6));
+            `;
+            
+            // Foam layer
+            const foamLayer = createElement('div');
+            foamLayer.style.cssText = `
+                position: absolute;
+                bottom: 60vh;
+                left: -200vw;
+                width: 500vw;
+                height: 20vh;
+                background: repeating-linear-gradient(90deg,
+                    rgba(255, 255, 255, 0.9) 0px,
+                    rgba(255, 255, 255, 0.7) 20px,
+                    rgba(200, 230, 255, 0.8) 40px,
+                    rgba(255, 255, 255, 0.9) 60px);
+                animation: tsunamiFoam 12s ease-in-out forwards;
+                filter: blur(2px);
+                animation-delay: 0.3s;
+            `;
+            
+            // Screen flood overlay
+            const floodOverlay = createElement('div');
+            floodOverlay.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                animation: tsunamiFlood 12s ease-in-out forwards;
+                z-index: ${CONFIG.UI.Z_INDICES.PARTICLES + 1};
+            `;
+            
+            // Add water effects to existing elements
+            const textDistortClass = 'tsunami-text-distort';
+            const allTextElements = document.querySelectorAll('div, span, p, h1, h2, h3, h4, h5, h6');
+            allTextElements.forEach(element => {
+                if (element.textContent.trim() && !element.querySelector('*')) {
+                    element.classList.add(textDistortClass);
+                    element.style.animation = 'tsunamiTextDistort 12s ease-in-out forwards';
+                }
+            });
+            
+            // Create debris particles
+            const debrisEmojis = ['🏠', '🚗', '🌳', '📦', '⛵', '🛶', '🚢', '🗑️', '📺', '🪑'];
+            for (let i = 0; i < 15; i++) {
+                setTimeout(() => {
+                    const debris = createElement('div');
+                    debris.textContent = debrisEmojis[Math.floor(Math.random() * debrisEmojis.length)];
+                    debris.style.cssText = `
+                        position: fixed;
+                        bottom: ${40 + Math.random() * 30}vh;
+                        left: -100px;
+                        font-size: ${20 + Math.random() * 30}px;
+                        z-index: ${CONFIG.UI.Z_INDICES.PARTICLES + 2};
+                        animation: tsunamiDebris ${8 + Math.random() * 4}s linear forwards;
+                        animation-delay: ${Math.random() * 3}s;
+                        filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.5));
+                        pointer-events: none;
+                    `;
+                    
+                    tsunamiContainer.appendChild(debris);
+                    
+                    setTimeout(() => {
+                        removeElement(debris);
+                    }, 12000);
+                }, i * 200);
+            }
+            
+            // Create water splash particles
+            for (let i = 0; i < 25; i++) {
+                setTimeout(() => {
+                    const splash = createElement('div');
+                    splash.textContent = '💧';
+                    splash.style.cssText = `
+                        position: fixed;
+                        bottom: ${50 + Math.random() * 40}vh;
+                        left: ${Math.random() * 100}vw;
+                        font-size: ${15 + Math.random() * 25}px;
+                        z-index: ${CONFIG.UI.Z_INDICES.PARTICLES + 1};
+                        animation: particleFloat ${2 + Math.random() * 3}s ease-out forwards;
+                        animation-delay: ${Math.random() * 4}s;
+                        pointer-events: none;
+                    `;
+                    
+                    tsunamiContainer.appendChild(splash);
+                    
+                    setTimeout(() => {
+                        removeElement(splash);
+                    }, 6000);
+                }, i * 150);
+            }
+            
+            // Assemble tsunami layers
+            tsunamiContainer.appendChild(waterBackground);
+            tsunamiContainer.appendChild(foamLayer);
+            document.body.appendChild(tsunamiContainer);
+            document.body.appendChild(floodOverlay);
+            
+            // Screen shake effect
+            setTimeout(() => {
+                document.body.style.animation = 'screenShake 0.8s ease-in-out 3';
+            }, 3000);
+            
+            setTimeout(() => {
+                document.body.style.animation = '';
+            }, 5500);
+            
+            // Sound effect with delay for impact
             this.soundEffects.playTsunami();
             
             setTimeout(() => {
-                removeElement(waves);
+                this.soundEffects.playEarthquake();
+            }, 2500);
+            
+            // Warning text effect
+            setTimeout(() => {
+                const warningText = createElement('div');
+                warningText.innerHTML = '🌊 TSUNAMI WARNING! 🌊';
+                warningText.style.cssText = `
+                    position: fixed;
+                    top: 10%;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    font-size: 36px;
+                    font-weight: bold;
+                    color: #ff0000;
+                    text-shadow: 0 0 20px #ff0000, 0 0 40px #ffffff;
+                    z-index: ${CONFIG.UI.Z_INDICES.PARTICLES + 3};
+                    animation: screenShake 0.5s ease-in-out infinite;
+                    pointer-events: none;
+                `;
+                
+                document.body.appendChild(warningText);
+                
+                setTimeout(() => {
+                    removeElement(warningText);
+                }, 6000);
+            }, 1000);
+            
+            // Cleanup
+            setTimeout(() => {
+                removeElement(tsunamiContainer);
+                removeElement(floodOverlay);
+                
+                // Remove text distortion effects
+                allTextElements.forEach(element => {
+                    element.classList.remove(textDistortClass);
+                    element.style.animation = '';
+                });
+                
                 this.activeEffects.delete(effectId);
-            }, 8000);
+            }, 15000);
 
             return true;
 
