@@ -128,38 +128,38 @@
 @keyframes tsunamiWave {
     0% { 
         transform: translateX(-150vw) scale(1, 0.3);
-        height: 30vh;
-        opacity: 0.7;
+        height: 25vh;
+        opacity: 0.5;
     }
     15% { 
         transform: translateX(-75vw) scale(1, 0.6);
-        height: 45vh;
-        opacity: 0.85;
+        height: 35vh;
+        opacity: 0.7;
     }
     30% { 
         transform: translateX(-25vw) scale(1, 0.8);
-        height: 60vh;
-        opacity: 0.9;
+        height: 45vh;
+        opacity: 0.8;
     }
     50% { 
         transform: translateX(0vw) scale(1, 1);
-        height: 75vh;
-        opacity: 0.95;
+        height: 55vh;
+        opacity: 0.85;
     }
     70% { 
         transform: translateX(25vw) scale(1, 0.9);
-        height: 65vh;
-        opacity: 0.9;
-    }
-    85% { 
-        transform: translateX(75vw) scale(1, 0.7);
         height: 50vh;
         opacity: 0.8;
     }
+    85% { 
+        transform: translateX(75vw) scale(1, 0.7);
+        height: 40vh;
+        opacity: 0.7;
+    }
     100% { 
         transform: translateX(150vw) scale(1, 0.4);
-        height: 35vh;
-        opacity: 0.6;
+        height: 30vh;
+        opacity: 0.5;
     }
 }
 
@@ -195,19 +195,19 @@
         opacity: 1;
     }
     25% { 
-        transform: scale(1.02) skewY(-2deg);
-        filter: blur(1px);
-        opacity: 0.9;
+        transform: scale(1.01) skewY(-1deg);
+        filter: blur(0.5px);
+        opacity: 0.95;
     }
     50% { 
-        transform: scale(1.05) skewY(3deg);
-        filter: blur(2px);
-        opacity: 0.8;
-    }
-    75% { 
-        transform: scale(1.03) skewY(-1deg);
+        transform: scale(1.02) skewY(1.5deg);
         filter: blur(1px);
         opacity: 0.9;
+    }
+    75% { 
+        transform: scale(1.01) skewY(-0.5deg);
+        filter: blur(0.5px);
+        opacity: 0.95;
     }
     100% { 
         transform: scale(1) skewY(0deg);
@@ -223,16 +223,16 @@
         backdrop-filter: blur(0px);
     }
     25% { 
+        background: rgba(0, 102, 204, 0.05);
+        backdrop-filter: blur(0.5px);
+    }
+    50% { 
         background: rgba(0, 102, 204, 0.1);
         backdrop-filter: blur(1px);
     }
-    50% { 
-        background: rgba(0, 102, 204, 0.2);
-        backdrop-filter: blur(2px);
-    }
     75% { 
-        background: rgba(0, 102, 204, 0.15);
-        backdrop-filter: blur(1px);
+        background: rgba(0, 102, 204, 0.08);
+        backdrop-filter: blur(0.5px);
     }
     100% { 
         background: rgba(0, 102, 204, 0);

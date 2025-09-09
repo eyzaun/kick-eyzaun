@@ -533,33 +533,35 @@ export class VisualEffects {
                 bottom: 0;
                 left: -200vw;
                 width: 500vw;
-                height: 80vh;
+                height: 60vh;
                 background: linear-gradient(0deg, 
-                    #003366 0%, 
-                    #0066cc 30%, 
-                    #0099ff 60%, 
-                    #66ccff 90%, 
-                    rgba(102, 204, 255, 0.8) 100%);
+                    rgba(0, 51, 102, 0.7) 0%, 
+                    rgba(0, 102, 204, 0.6) 30%, 
+                    rgba(0, 153, 255, 0.5) 60%, 
+                    rgba(102, 204, 255, 0.4) 90%, 
+                    rgba(102, 204, 255, 0.2) 100%);
                 animation: tsunamiWave 12s ease-in-out forwards;
-                filter: drop-shadow(0 -10px 30px rgba(0, 102, 204, 0.6));
+                filter: drop-shadow(0 -10px 30px rgba(0, 102, 204, 0.3));
+                opacity: 0.8;
             `;
             
             // Foam layer
             const foamLayer = createElement('div');
             foamLayer.style.cssText = `
                 position: absolute;
-                bottom: 60vh;
+                bottom: 45vh;
                 left: -200vw;
                 width: 500vw;
-                height: 20vh;
+                height: 15vh;
                 background: repeating-linear-gradient(90deg,
-                    rgba(255, 255, 255, 0.9) 0px,
-                    rgba(255, 255, 255, 0.7) 20px,
-                    rgba(200, 230, 255, 0.8) 40px,
-                    rgba(255, 255, 255, 0.9) 60px);
+                    rgba(255, 255, 255, 0.6) 0px,
+                    rgba(255, 255, 255, 0.4) 20px,
+                    rgba(200, 230, 255, 0.5) 40px,
+                    rgba(255, 255, 255, 0.6) 60px);
                 animation: tsunamiFoam 12s ease-in-out forwards;
                 filter: blur(2px);
                 animation-delay: 0.3s;
+                opacity: 0.7;
             `;
             
             // Screen flood overlay
@@ -571,16 +573,23 @@ export class VisualEffects {
                 width: 100%;
                 height: 100%;
                 animation: tsunamiFlood 12s ease-in-out forwards;
-                z-index: ${CONFIG.UI.Z_INDICES.PARTICLES + 1};
+                z-index: ${CONFIG.UI.Z_INDICES.PARTICLES - 1};
+                pointer-events: none;
             `;
             
-            // Add water effects to existing elements
+            // Add water effects to existing elements (reduced intensity)
             const textDistortClass = 'tsunami-text-distort';
             const allTextElements = document.querySelectorAll('div, span, p, h1, h2, h3, h4, h5, h6');
             allTextElements.forEach(element => {
                 if (element.textContent.trim() && !element.querySelector('*')) {
-                    element.classList.add(textDistortClass);
-                    element.style.animation = 'tsunamiTextDistort 12s ease-in-out forwards';
+                    // Skip UI elements with high z-index
+                    const computedStyle = window.getComputedStyle(element);
+                    const zIndex = parseInt(computedStyle.zIndex) || 0;
+                    
+                    if (zIndex < CONFIG.UI.Z_INDICES.UI_COMPONENTS) {
+                        element.classList.add(textDistortClass);
+                        element.style.animation = 'tsunamiTextDistort 12s ease-in-out forwards';
+                    }
                 }
             });
             
@@ -592,7 +601,7 @@ export class VisualEffects {
                     debris.textContent = debrisEmojis[Math.floor(Math.random() * debrisEmojis.length)];
                     debris.style.cssText = `
                         position: fixed;
-                        bottom: ${40 + Math.random() * 30}vh;
+                        bottom: ${35 + Math.random() * 25}vh;
                         left: -100px;
                         font-size: ${20 + Math.random() * 30}px;
                         z-index: ${CONFIG.UI.Z_INDICES.PARTICLES + 2};
@@ -617,7 +626,7 @@ export class VisualEffects {
                     splash.textContent = '💧';
                     splash.style.cssText = `
                         position: fixed;
-                        bottom: ${50 + Math.random() * 40}vh;
+                        bottom: ${40 + Math.random() * 20}vh;
                         left: ${Math.random() * 100}vw;
                         font-size: ${15 + Math.random() * 25}px;
                         z-index: ${CONFIG.UI.Z_INDICES.PARTICLES + 1};

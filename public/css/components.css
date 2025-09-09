@@ -411,7 +411,7 @@ input:checked + .toggle-slider:before {
     left: 0 !important;
     width: 100% !important;
     height: 100% !important;
-    z-index: 9999 !important;
+    z-index: 9998 !important;
     pointer-events: none !important;
     overflow: hidden !important;
 }
@@ -427,9 +427,9 @@ input:checked + .toggle-slider:before {
     left: 0 !important;
     width: 100% !important;
     height: 100% !important;
-    background: rgba(0, 102, 204, 0.1) !important;
-    backdrop-filter: blur(1px) !important;
-    z-index: 10000 !important;
+    background: rgba(0, 102, 204, 0.05) !important;
+    backdrop-filter: blur(0.5px) !important;
+    z-index: 9997 !important;
     pointer-events: none !important;
 }
 
