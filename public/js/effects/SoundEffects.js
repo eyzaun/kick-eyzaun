@@ -515,65 +515,33 @@ export class SoundEffects {
     }
 
     /**
-     * Tsunami sesi - Enhanced Realistic Version
+     * Tsunami sesi - Minimal Version
      */
     playTsunami() {
         return this.createComplexSound('tsunami', () => {
-            // Deep ocean wave sound
+            // Gentle wave sound
             const wave = this.audioContext.createOscillator();
             const waveGain = this.audioContext.createGain();
             
             wave.connect(waveGain);
             waveGain.connect(this.audioContext.destination);
             
-            // Deep rumbling frequency that builds
-            wave.frequency.setValueAtTime(40, this.audioContext.currentTime);
-            wave.frequency.linearRampToValueAtTime(50, this.audioContext.currentTime + 2);
-            wave.frequency.linearRampToValueAtTime(70, this.audioContext.currentTime + 4);
-            wave.frequency.exponentialRampToValueAtTime(30, this.audioContext.currentTime + 8);
+            // Gentle rumbling frequency
+            wave.frequency.setValueAtTime(50, this.audioContext.currentTime);
+            wave.frequency.linearRampToValueAtTime(60, this.audioContext.currentTime + 2);
+            wave.frequency.exponentialRampToValueAtTime(40, this.audioContext.currentTime + 6);
             wave.type = 'sine';
             
-            // Volume builds dramatically then fades
+            // Moderate volume
             waveGain.gain.setValueAtTime(0, this.audioContext.currentTime);
             waveGain.gain.linearRampToValueAtTime(this.masterVolume * 0.3, this.audioContext.currentTime + 1);
-            waveGain.gain.linearRampToValueAtTime(this.masterVolume * 0.8, this.audioContext.currentTime + 4);
-            waveGain.gain.exponentialRampToValueAtTime(this.masterVolume * 0.5, this.audioContext.currentTime + 6);
-            waveGain.gain.exponentialRampToValueAtTime(0.01, this.audioContext.currentTime + 10);
+            waveGain.gain.exponentialRampToValueAtTime(this.masterVolume * 0.2, this.audioContext.currentTime + 4);
+            waveGain.gain.exponentialRampToValueAtTime(0.01, this.audioContext.currentTime + 6);
             
             wave.start();
-            wave.stop(this.audioContext.currentTime + 10);
+            wave.stop(this.audioContext.currentTime + 6);
 
-            // Add water crash sound layers
-            setTimeout(() => {
-                // High frequency water crash
-                const crash = this.audioContext.createOscillator();
-                const crashGain = this.audioContext.createGain();
-                
-                crash.connect(crashGain);
-                crashGain.connect(this.audioContext.destination);
-                
-                crash.frequency.setValueAtTime(800, this.audioContext.currentTime);
-                crash.frequency.exponentialRampToValueAtTime(200, this.audioContext.currentTime + 2);
-                crash.type = 'sawtooth';
-                
-                crashGain.gain.setValueAtTime(this.masterVolume * 0.4, this.audioContext.currentTime);
-                crashGain.gain.exponentialRampToValueAtTime(0.01, this.audioContext.currentTime + 2);
-                
-                crash.start();
-                crash.stop(this.audioContext.currentTime + 2);
-            }, 3000);
-
-            // Add debris sounds
-            setTimeout(() => {
-                const frequencies = [150, 250, 350, 450];
-                frequencies.forEach((freq, index) => {
-                    setTimeout(() => {
-                        this.createTone(freq + Math.random() * 100, 0.3, 'square', 0.15);
-                    }, index * 300 + Math.random() * 200);
-                });
-            }, 4000);
-
-            return { oscillator: wave, gainNode: waveGain, duration: 10000 };
+            return { oscillator: wave, gainNode: waveGain, duration: 6000 };
         });
     }
 

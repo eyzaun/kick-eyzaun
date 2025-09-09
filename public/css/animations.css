@@ -124,66 +124,56 @@
     100% { opacity: 1; transform: scale(1.2); }
 }
 
-/* Tsunami Wave Animation - Enhanced */
+/* Tsunami Wave Animation - Minimal UI-Friendly */
 @keyframes tsunamiWave {
     0% { 
-        transform: translateX(-150vw) scale(1, 0.3);
-        height: 25vh;
-        opacity: 0.5;
+        transform: translateX(-120vw);
+        height: 20vh;
+        opacity: 0.2;
     }
-    15% { 
-        transform: translateX(-75vw) scale(1, 0.6);
-        height: 35vh;
-        opacity: 0.7;
-    }
-    30% { 
-        transform: translateX(-25vw) scale(1, 0.8);
-        height: 45vh;
-        opacity: 0.8;
+    25% { 
+        transform: translateX(-60vw);
+        height: 22vh;
+        opacity: 0.3;
     }
     50% { 
-        transform: translateX(0vw) scale(1, 1);
-        height: 55vh;
-        opacity: 0.85;
+        transform: translateX(0vw);
+        height: 25vh;
+        opacity: 0.4;
     }
-    70% { 
-        transform: translateX(25vw) scale(1, 0.9);
-        height: 50vh;
-        opacity: 0.8;
-    }
-    85% { 
-        transform: translateX(75vw) scale(1, 0.7);
-        height: 40vh;
-        opacity: 0.7;
+    75% { 
+        transform: translateX(60vw);
+        height: 22vh;
+        opacity: 0.3;
     }
     100% { 
-        transform: translateX(150vw) scale(1, 0.4);
-        height: 30vh;
-        opacity: 0.5;
+        transform: translateX(120vw);
+        height: 20vh;
+        opacity: 0.2;
     }
 }
 
-/* Tsunami Foam Animation */
+/* Tsunami Foam Animation - Minimal */
 @keyframes tsunamiFoam {
     0% { 
-        transform: translateX(-200vw) scale(0.8);
-        opacity: 0;
+        transform: translateX(-120vw);
+        opacity: 0.1;
     }
-    20% { 
-        transform: translateX(-50vw) scale(1.1);
-        opacity: 0.8;
+    25% { 
+        transform: translateX(-40vw);
+        opacity: 0.2;
     }
     50% { 
-        transform: translateX(0vw) scale(1.3);
-        opacity: 1;
+        transform: translateX(0vw);
+        opacity: 0.3;
     }
-    80% { 
-        transform: translateX(50vw) scale(1.1);
-        opacity: 0.8;
+    75% { 
+        transform: translateX(40vw);
+        opacity: 0.2;
     }
     100% { 
-        transform: translateX(200vw) scale(0.8);
-        opacity: 0;
+        transform: translateX(120vw);
+        opacity: 0.1;
     }
 }
 
@@ -216,27 +206,16 @@
     }
 }
 
-/* Tsunami Screen Flood */
+/* Tsunami Screen Flood - Ultra Minimal */
 @keyframes tsunamiFlood {
     0% { 
         background: rgba(0, 102, 204, 0);
-        backdrop-filter: blur(0px);
-    }
-    25% { 
-        background: rgba(0, 102, 204, 0.05);
-        backdrop-filter: blur(0.5px);
     }
     50% { 
-        background: rgba(0, 102, 204, 0.1);
-        backdrop-filter: blur(1px);
-    }
-    75% { 
-        background: rgba(0, 102, 204, 0.08);
-        backdrop-filter: blur(0.5px);
+        background: rgba(0, 102, 204, 0.02);
     }
     100% { 
         background: rgba(0, 102, 204, 0);
-        backdrop-filter: blur(0px);
     }
 }
 
