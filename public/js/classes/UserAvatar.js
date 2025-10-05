@@ -49,7 +49,19 @@ export class UserAvatar {
      */
     createElement() {
         this.element = createElement('div', 'user-avatar');
-        this.element.textContent = CONFIG.AVATAR.EMOJIS[this.currentEmoji];
+        
+        // PNG resim için background-image kullan
+        const characterPath = CONFIG.AVATAR.EMOJIS[this.currentEmoji];
+        if (characterPath.endsWith('.png')) {
+            this.element.style.backgroundImage = `url(${characterPath})`;
+            this.element.style.backgroundSize = 'cover';
+            this.element.style.backgroundPosition = 'center';
+            this.element.style.backgroundRepeat = 'no-repeat';
+            this.element.textContent = ''; // Text'i temizle
+        } else {
+            this.element.textContent = characterPath; // Emoji için text kullan
+        }
+        
         this.element.id = `avatar-${this.userId}`;
         
         // Initial position
@@ -127,9 +139,6 @@ export class UserAvatar {
      * Sağa hareket
      */
     async moveRight() {
-        // Show speech bubble with current emoji
-        this.showSpeechBubble(`${CONFIG.AVATAR.EMOJIS[this.currentEmoji]} →`, true, 30000);
-        
         return this.moveTo(
             Math.min(CONFIG.SCREEN.WIDTH - CONFIG.AVATAR.SIZE, this.position.x + CONFIG.AVATAR.MOVE_DISTANCE),
             this.position.y
@@ -140,9 +149,6 @@ export class UserAvatar {
      * Sola hareket
      */
     async moveLeft() {
-        // Show speech bubble with current emoji
-        this.showSpeechBubble(`← ${CONFIG.AVATAR.EMOJIS[this.currentEmoji]}`, true, 30000);
-        
         return this.moveTo(
             Math.max(0, this.position.x - CONFIG.AVATAR.MOVE_DISTANCE),
             this.position.y
@@ -153,9 +159,6 @@ export class UserAvatar {
      * Yukarı hareket
      */
     async moveUp() {
-        // Show speech bubble with current emoji
-        this.showSpeechBubble(`↑ ${CONFIG.AVATAR.EMOJIS[this.currentEmoji]}`, true, 30000);
-        
         return this.moveTo(
             this.position.x,
             Math.max(0, this.position.y - CONFIG.AVATAR.MOVE_DISTANCE)
@@ -166,9 +169,6 @@ export class UserAvatar {
      * Aşağı hareket
      */
     async moveDown() {
-        // Show speech bubble with current emoji
-        this.showSpeechBubble(`${CONFIG.AVATAR.EMOJIS[this.currentEmoji]} ↓`, true, 30000);
-        
         return this.moveTo(
             this.position.x,
             Math.min(CONFIG.SCREEN.HEIGHT - CONFIG.AVATAR.SIZE, this.position.y + CONFIG.AVATAR.MOVE_DISTANCE)
@@ -291,7 +291,7 @@ export class UserAvatar {
     }
 
     /**
-     * Avatar karakterini değiştir
+     * Avatar karakterini değiştir (eski davranış - sıradaki karakter)
      */
     async changeAvatar() {
         this.updateActivity();
@@ -308,7 +308,17 @@ export class UserAvatar {
         
         // Change character after scale up
         setTimeout(() => {
-            this.element.textContent = CONFIG.AVATAR.EMOJIS[this.currentEmoji];
+            const characterPath = CONFIG.AVATAR.EMOJIS[this.currentEmoji];
+            if (characterPath.endsWith('.png')) {
+                this.element.style.backgroundImage = `url(${characterPath})`;
+                this.element.style.backgroundSize = 'cover';
+                this.element.style.backgroundPosition = 'center';
+                this.element.style.backgroundRepeat = 'no-repeat';
+                this.element.textContent = ''; // Text'i temizle
+            } else {
+                this.element.textContent = characterPath; // Emoji için text kullan
+                this.element.style.backgroundImage = ''; // Background'ı temizle
+            }
         }, 150);
         
         // Scale back down
@@ -326,12 +336,63 @@ export class UserAvatar {
         return true;
     }
 
+    /**
+     * Belirli bir karaktere geç (özel karakter komutları için)
+     */
+    async setCharacter(characterIndex) {
+        if (characterIndex < 0 || characterIndex >= CONFIG.AVATAR.EMOJIS.length) {
+            console.warn(`Invalid character index: ${characterIndex}`);
+            return false;
+        }
+
+        this.updateActivity();
+
+        // Set specific character
+        this.currentEmoji = characterIndex;
+
+        // Enhanced animation
+        const originalTransition = this.element.style.transition;
+
+        this.element.style.transition = 'all 0.3s ease-in-out';
+        this.element.style.transform = 'scale(1.3) rotate(180deg)';
+        this.element.style.filter = 'brightness(1.8) drop-shadow(0 0 20px rgba(255,255,255,0.9))';
+
+        // Change character after scale up
+        setTimeout(() => {
+            const characterPath = CONFIG.AVATAR.EMOJIS[this.currentEmoji];
+            if (characterPath.endsWith('.png')) {
+                this.element.style.backgroundImage = `url(${characterPath})`;
+                this.element.style.backgroundSize = 'cover';
+                this.element.style.backgroundPosition = 'center';
+                this.element.style.backgroundRepeat = 'no-repeat';
+                this.element.textContent = ''; // Text'i temizle
+            } else {
+                this.element.textContent = characterPath; // Emoji için text kullan
+                this.element.style.backgroundImage = ''; // Background'ı temizle
+            }
+        }, 150);
+
+        // Scale back down
+        setTimeout(() => {
+            this.element.style.transform = 'scale(1) rotate(0deg)';
+            this.element.style.filter = 'drop-shadow(0 0 8px rgba(255,255,255,0.3))';
+
+            setTimeout(() => {
+                this.element.style.transition = originalTransition;
+            }, 100);
+        }, 300);
+
+        logger.avatar(`${this.username} set character to ${CONFIG.AVATAR.EMOJIS[this.currentEmoji]} (index: ${characterIndex})`);
+
+        return true;
+    }
+
     // SPEECH BUBBLE METHODS
 
     /**
      * Konuşma balonu göster
      */
-    showSpeechBubble(message, isCommand = false, duration = 30000) {
+    showSpeechBubble(message, isCommand = false, duration = CONFIG.AVATAR.INACTIVE_TIMEOUT) {
         this.updateActivity();
         
         // Clear any existing timeout

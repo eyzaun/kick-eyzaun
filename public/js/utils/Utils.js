@@ -259,12 +259,14 @@ export const logger = {
         if (CONFIG.DEBUG.LOG_AVATARS) {
             console.log('[AVATAR]', ...args);
         }
+    },
+
+    game(...args) {
+        if (CONFIG.DEBUG.LOG_EFFECTS) { // Use same config as effects for now
+            console.log('[GAME]', ...args);
+        }
     }
 };
-
-/**
- * Performance monitoring
- */
 export class PerformanceMonitor {
     constructor() {
         this.metrics = new Map();

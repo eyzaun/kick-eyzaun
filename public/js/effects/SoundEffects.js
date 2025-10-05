@@ -388,6 +388,39 @@ export class SoundEffects {
         });
     }
 
+    /**
+     * Alaycı ses efekti
+     */
+    playTaunt() {
+        return this.createComplexSound('taunt', () => {
+            const hits = [
+                { delay: 0, freq: 110, duration: 0.45, type: 'square', volume: 0.35 },
+                { delay: 140, freq: 180, duration: 0.35, type: 'sawtooth', volume: 0.28 },
+                { delay: 320, freq: 85, duration: 0.55, type: 'square', volume: 0.38 },
+                { delay: 520, freq: 260, duration: 0.2, type: 'triangle', volume: 0.25 },
+                { delay: 720, freq: 140, duration: 0.4, type: 'sawtooth', volume: 0.3 }
+            ];
+
+            hits.forEach(hit => {
+                setTimeout(() => this.createTone(hit.freq, hit.duration, hit.type, hit.volume), hit.delay);
+            });
+
+            setTimeout(() => {
+                for (let i = 0; i < 3; i++) {
+                    setTimeout(() => this.createTone(70 + i * 30, 0.35, 'square', 0.32), i * 110);
+                }
+            }, 980);
+
+            setTimeout(() => {
+                [420, 360, 300].forEach((freq, index) => {
+                    setTimeout(() => this.createTone(freq, 0.18, 'triangle', 0.22), index * 90);
+                });
+            }, 1500);
+
+            return { duration: 2100 };
+        });
+    }
+
     // ADVANCED SOUND EFFECTS
 
     /**

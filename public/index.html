@@ -6,17 +6,11 @@
     <title>Eyzaun Multi-User Avatar Chat</title>
     <link rel="icon" href="https://kick.com/favicon.ico" type="image/ico">
     <meta name="description" content="Her kullanıcının kendi avatarının olduğu interaktif chat sistemi">
-    
-    <!-- Cache Control -->
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
-    
     <!-- CSS Files with cache busting -->
-    <link rel="stylesheet" href="css/main.css?v=20250909-1">
-    <link rel="stylesheet" href="css/animations.css?v=20250909-1">
-    <link rel="stylesheet" href="css/components.css?v=20250909-1">
-    <link rel="stylesheet" href="css/particles.css?v=20250909-1">
+    <link rel="stylesheet" href="css/main.css?v=20251005-1">
+    <link rel="stylesheet" href="css/animations.css?v=20251005-1">
+    <link rel="stylesheet" href="css/components.css?v=20251005-1">
+    <link rel="stylesheet" href="css/particles.css?v=20251005-1">
 </head>
 <body>
     <!-- Loading Screen -->
@@ -40,70 +34,13 @@
     <!-- Commands Help -->
     <div class="commands-help">
         <h3>AVATAR KOMUTLARI</h3>
-        
-        <div class="command-category">
-            <h4>🚶 Hareket</h4>
-            <ul>
+        <div id="commandCategory" class="command-category">
+            <h4 id="categoryTitle">🚶 Hareket</h4>
+            <ul id="commandList">
                 <li>!sağ - Sağa git</li>
                 <li>!sol - Sola git</li>
                 <li>!yukarı - Yukarı git</li>
                 <li>!aşağı - Aşağı git</li>
-            </ul>
-        </div>
-
-        <div class="command-category">
-            <h4>💃 Animasyon</h4>
-            <ul>
-                <li>!dans - Dans et</li>
-                <li>!zıpla - Zıpla</li>
-                <li>!döndür - Dön</li>
-                <li>!karakter - Avatar değiştir</li>
-            </ul>
-        </div>
-
-        <div class="command-category">
-            <h4>🎬 Temel Efektler</h4>
-            <ul>
-                <li>!patlama - Mega patlama</li>
-                <li>!yıldırım - Şimşek çakması</li>
-                <li>!kar - Kar yağışı</li>
-                <li>!ateş - Ateş çemberi</li>
-                <li>!konfeti - Konfeti patlaması</li>
-                <li>!kalp - Kalp yağmuru</li>
-                <li>!rainbow - Gökkuşağı</li>
-                <li>!shake - Ekran sarsıntısı</li>
-            </ul>
-        </div>
-
-        <div class="command-category">
-            <h4>⚡ Gelişmiş Efektler</h4>
-            <ul>
-                <li>!lazer - Lazer gösterisi</li>
-                <li>!meteor - Meteor yağmuru</li>
-                <li>!matrix - Matrix efekti</li>
-                <li>!portal - Portal açma</li>
-                <li>!galaksi - Galaksi döndürme</li>
-                <li>!tsunami - Tsunami dalgası</li>
-            </ul>
-        </div>
-
-        <div class="command-category">
-            <h4>🎵 Ses Efektleri</h4>
-            <ul>
-                <li>!bas - Bass drop</li>
-                <li>!davul - Davul çalma</li>
-                <li>!gitar - Gitar riffi</li>
-                <li>!synth - Synthesizer</li>
-            </ul>
-        </div>
-
-        <div class="command-category">
-            <h4>🎯 Özel Efektler</h4>
-            <ul>
-                <li>!nuke - Nükleer patlama</li>
-                <li>!disco - Disco topu</li>
-                <li>!ufo - UFO çağırma</li>
-                <li>!ninja - Ninja saldırısı</li>
             </ul>
         </div>
     </div>
@@ -125,7 +62,7 @@
         </div>
         <div class="stats-item">
             <span>WebSocket:</span>
-            <span class="stats-value" id="websocketState">Disconnected</span>
+            <span class="stats-value" id="websocketState">Connecting</span>
         </div>
         <div class="stats-item">
             <span>Çalışma Süresi:</span>
@@ -136,7 +73,9 @@
     <!-- Particles Container -->
     <div id="particlesContainer" class="particles-container"></div>
 
+    <!-- Game Canvas is dynamically created by GameUI -->
+
     <!-- JavaScript Modules with cache busting -->
-    <script type="module" src="js/main.js?v=20250909-1"></script>
+    <script type="module" src="js/main.js?v=20251005-1"></script>
 </body>
 </html>

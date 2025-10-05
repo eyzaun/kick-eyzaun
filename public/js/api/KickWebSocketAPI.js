@@ -478,8 +478,17 @@ export class KickWebSocketAPI extends EventEmitter {
         if (this.connectionState !== state) {
             const previousState = this.connectionState;
             this.connectionState = state;
-            
+
             logger.websocket(`Connection state changed: ${previousState} -> ${state}`);
+            console.log(`🔄 Connection State Update:`, {
+                from: previousState,
+                to: state,
+                isConnected: this.isConnected,
+                isSubscribed: this.isSubscribed,
+                websocketState: this.websocket ? this.websocket.readyState : 'NO_WEBSOCKET',
+                timestamp: new Date().toISOString()
+            });
+
             this.emit('connectionStateChanged', { previous: previousState, current: state });
         }
     }

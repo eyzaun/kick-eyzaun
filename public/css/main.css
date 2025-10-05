@@ -37,7 +37,8 @@ body {
     font-size: 11px;
     z-index: 10002;
     border: 2px solid #00bfff;
-    backdrop-filter: blur(5px);
+        -webkit-backdrop-filter: blur(5px); /* Safari */
+        backdrop-filter: blur(5px);
 }
 
 /* Stats Display */
@@ -52,7 +53,8 @@ body {
     font-size: 11px;
     z-index: 10002;
     border: 2px solid rgba(0,255,0,0.8);
-    backdrop-filter: none;
+        -webkit-backdrop-filter: none; /* Safari */
+        backdrop-filter: none;
     min-width: 200px;
 }
 
@@ -157,7 +159,8 @@ body {
     z-index: 10003;
     animation: miniNotification 2s ease-out forwards;
     border: 1px solid white;
-    backdrop-filter: blur(5px);
+        -webkit-backdrop-filter: blur(5px); /* Safari */
+        backdrop-filter: blur(5px);
 }
 
 /* Lightning Flash */
@@ -190,4 +193,407 @@ body {
 .commands-help::-webkit-scrollbar-thumb {
     background: linear-gradient(180deg, #ff69b4, #00ff00);
     border-radius: 10px;
+}
+
+/* ===========================================
+   KAYO ÇÖP EFEKTİ ANİMASYONLARI
+   =========================================== */
+
+/* Çöp kutusu genişleme animasyonu */
+@keyframes trashBinExpand {
+    0% {
+        transform: translate(-50%, -50%) scale(0.1);
+        opacity: 0;
+    }
+    20% {
+        transform: translate(-50%, -50%) scale(0.8);
+        opacity: 0.8;
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.2);
+        opacity: 1;
+    }
+    80% {
+        transform: translate(-50%, -50%) scale(1.0);
+        opacity: 0.9;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(1.0);
+        opacity: 0.8;
+    }
+}
+
+/* Çöp yazısı nabız animasyonu */
+@keyframes trashTextPulse {
+    0%, 100% {
+        transform: translate(-50%, -50%) scale(1);
+        text-shadow:
+            0 0 10px #FF0000,
+            0 0 20px #FF0000,
+            0 0 30px #FF0000;
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.1);
+        text-shadow:
+            0 0 15px #FF0000,
+            0 0 30px #FF0000,
+            0 0 45px #FF0000,
+            0 0 60px #FF0000;
+    }
+}
+
+/* Çöp parçaları animasyonu */
+@keyframes trashDebris {
+    0% {
+        transform: translateY(-100vh) rotate(0deg) scale(0.5);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(100vh) rotate(720deg) scale(0.1);
+        opacity: 0;
+    }
+}
+
+/* Robot parçaları animasyonu */
+@keyframes robotPart {
+    0% {
+        transform: translateX(-100vw) rotate(0deg) scale(0.3);
+        opacity: 0;
+        filter: grayscale(100%) brightness(0.5);
+    }
+    20% {
+        opacity: 0.8;
+        filter: grayscale(80%) brightness(0.7);
+    }
+    80% {
+        opacity: 0.8;
+        filter: grayscale(80%) brightness(0.7);
+    }
+    100% {
+        transform: translateX(100vw) rotate(360deg) scale(0.1);
+        opacity: 0;
+        filter: grayscale(100%) brightness(0.3);
+    }
+}
+
+/* Çöp mesajları animasyonu */
+@keyframes trashMessage {
+    0% {
+        transform: translateY(-50px) rotate(-15deg) scale(0.5);
+        opacity: 0;
+    }
+    20% {
+        transform: translateY(0px) rotate(0deg) scale(1.2);
+        opacity: 1;
+    }
+    80% {
+        transform: translateY(0px) rotate(0deg) scale(1.0);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(50px) rotate(15deg) scale(0.5);
+        opacity: 0;
+    }
+}
+
+/* Karanlık perde efekti */
+@keyframes trashDarkness {
+    0% {
+        opacity: 0;
+    }
+    25% {
+        opacity: 0.7;
+    }
+    75% {
+        opacity: 0.7;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+/* Çöp titreşimi */
+@keyframes trashShake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+    20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+/* ===========================================
+   KAYO ÇÖP EFEKTİ STİLLERİ
+   =========================================== */
+
+/* Çöp kutusu */
+.trash-bin {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 200px;
+    height: 200px;
+    background: linear-gradient(45deg, #666, #999);
+    border: 4px solid #333;
+    border-radius: 20px 20px 0 0;
+    z-index: 10001;
+    animation: trashBinExpand 2s ease-out forwards;
+    box-shadow: 0 0 50px rgba(0,0,0,0.8);
+}
+
+.trash-bin::before {
+    content: '';
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 20px;
+    background: #333;
+    border-radius: 10px 10px 0 0;
+}
+
+.trash-bin::after {
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    background: linear-gradient(45deg, #444, #666);
+    border-radius: 10px;
+    opacity: 0.8;
+}
+
+/* Çöp yazısı */
+.trash-text {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 48px;
+    font-weight: bold;
+    color: #FF0000;
+    text-align: center;
+    z-index: 10002;
+    animation: trashTextPulse 2s ease-in-out infinite;
+    text-shadow:
+        0 0 10px #FF0000,
+        0 0 20px #FF0000,
+        0 0 30px #FF0000;
+    pointer-events: none;
+}
+
+/* Çöp parçaları */
+.trash-debris {
+    position: fixed;
+    width: 20px;
+    height: 20px;
+    background: linear-gradient(45deg, #8B4513, #A0522D);
+    border-radius: 50%;
+    z-index: 10000;
+    animation: trashDebris 3s ease-out forwards;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+/* Robot parçaları */
+.robot-part {
+    position: fixed;
+    width: 30px;
+    height: 30px;
+    background: linear-gradient(45deg, #C0C0C0, #808080);
+    border-radius: 5px;
+    z-index: 10000;
+    animation: robotPart 4s ease-out forwards;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    border: 1px solid #666;
+}
+
+/* Çöp mesajları */
+.trash-message {
+    position: fixed;
+    background: rgba(0,0,0,0.9);
+    color: #FF0000;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    z-index: 10002;
+    animation: trashMessage 3s ease-out forwards;
+    border: 2px solid #FF0000;
+    box-shadow: 0 0 20px rgba(255,0,0,0.5);
+    pointer-events: none;
+}
+
+/* Karanlık perde */
+.trash-darkness {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.8);
+    z-index: 9999;
+    animation: trashDarkness 5s ease-out forwards;
+    pointer-events: none;
+}
+
+/* Çöp titreşimi efekti */
+.trash-shake {
+    animation: trashShake 0.5s ease-in-out;
+}
+
+/* Game Container */
+.game-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.9);
+    z-index: 10001;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+        -webkit-backdrop-filter: blur(5px); /* Safari */
+        backdrop-filter: blur(5px);
+}
+
+.game-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 1280px;
+    margin-bottom: 20px;
+    padding: 0 20px;
+}
+
+.game-header h2 {
+    color: #ff69b4;
+    font-size: 28px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+    margin: 0;
+}
+
+.game-info {
+    display: flex;
+    gap: 20px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.game-info span {
+    background: rgba(0,0,0,0.7);
+    padding: 8px 15px;
+    border-radius: 20px;
+    border: 2px solid #00bfff;
+    color: white;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+}
+
+.game-canvas-container {
+    position: relative;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 0 30px rgba(0,0,0,0.5);
+    margin-bottom: 20px;
+}
+
+.game-canvas-container canvas {
+    display: block;
+    width: 1280px;
+    height: 720px;
+    max-width: 100%;
+    border: 3px solid #333;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #87CEEB 0%, #98FB98 100%);
+    box-shadow: 0 0 20px rgba(0,0,0,0.3);
+}
+
+/* Canvas visibility is controlled by JS within the game UI */
+
+.game-ui {
+    background: rgba(0,0,0,0.8);
+    color: white;
+    padding: 20px;
+    border-radius: 15px;
+    max-width: 1280px;
+    width: 100%;
+    border: 2px solid #ff69b4;
+        -webkit-backdrop-filter: blur(5px); /* Safari */
+        backdrop-filter: blur(5px);
+}
+
+.game-status {
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 15px;
+    color: #ffff00;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+}
+
+.game-controls {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.control-hint {
+    font-size: 14px;
+    color: #00bfff;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.control-keys {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    font-size: 12px;
+    color: #00ff00;
+    font-weight: bold;
+}
+
+.control-keys span {
+    background: rgba(0,0,0,0.6);
+    padding: 5px 10px;
+    border-radius: 8px;
+    border: 1px solid #333;
+}
+
+.player-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+}
+
+.player-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(0,0,0,0.6);
+    padding: 8px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    border: 1px solid #555;
+}
+
+.player-color {
+    font-size: 16px;
+}
+
+.player-name {
+    font-weight: bold;
+}
+
+.player-score {
+    color: #ffff00;
+    font-weight: bold;
 }

@@ -4,6 +4,7 @@ import { UserAvatar } from './UserAvatar.js';
 import { EventEmitter } from '../utils/EventEmitter.js';
 import { CONFIG, ALL_COMMANDS, USER_TYPES } from '../utils/Config.js';
 import { CooldownManager, logger } from '../utils/Utils.js';
+import { GameManager } from './GameManager.js';
 
 /**
  * Avatar Manager - Tüm kullanıcı avatarlarını yönetir
@@ -118,14 +119,17 @@ export class AvatarManager extends EventEmitter {
             messageData.username,
             messageData.userType
         );
-        
-        // Show speech bubble
-        const isCommand = messageData.message.startsWith('!');
-        user.showSpeechBubble(messageData.message, isCommand);
+
+        const messageText = String(messageData.message ?? '');
+        const isCommand = messageText.trim().startsWith('!');
+
+        if (!isCommand) {
+            user.showSpeechBubble(messageText, false);
+        }
         
         this.emit('messageHandled', { messageData, user });
         
-        logger.avatar(`Message from ${messageData.username}: ${messageData.message}`);
+        logger.avatar(`Message from ${messageData.username}: ${messageText}`);
     }
 
     /**
@@ -187,18 +191,24 @@ export class AvatarManager extends EventEmitter {
      */
     async executeUserAction(commandData, commandConfig) {
         const { userId, user: username, userType } = commandData;
-        
+
         const userAvatar = this.getOrCreateUser(userId, username, userType);
-        
+
         if (userAvatar && typeof userAvatar[commandConfig.action] === 'function') {
-            const result = await userAvatar[commandConfig.action]();
-            
+            // Özel karakter komutları için characterIndex parametresini geç
+            let result;
+            if (commandConfig.action === 'setCharacter' && commandConfig.characterIndex !== undefined) {
+                result = await userAvatar[commandConfig.action](commandConfig.characterIndex);
+            } else {
+                result = await userAvatar[commandConfig.action]();
+            }
+
             // Show notification
             this.showMiniNotification(`${username}: ${commandConfig.name}`);
-            
+
             return result;
         }
-        
+
         return false;
     }
 
@@ -207,24 +217,30 @@ export class AvatarManager extends EventEmitter {
      */
     async executeGlobalEffect(commandData, commandConfig) {
         const { user: username } = commandData;
-        
+
         // Import and execute effect
         try {
             const { VisualEffects } = await import('../effects/VisualEffects.js');
             const visualEffects = new VisualEffects();
-            
+
             if (typeof visualEffects[commandConfig.action] === 'function') {
-                const result = await visualEffects[commandConfig.action]();
-                
+                // Özel karakter komutları için character parametresini geç
+                let result;
+                if (commandConfig.action === 'createTrashEffect' && commandConfig.character) {
+                    result = await visualEffects[commandConfig.action]({ character: commandConfig.character });
+                } else {
+                    result = await visualEffects[commandConfig.action]();
+                }
+
                 // Show notification
                 this.showMiniNotification(`${username} used ${commandConfig.name}`);
-                
+
                 return result;
             }
         } catch (error) {
             logger.error(`Error loading visual effects:`, error);
         }
-        
+
         return false;
     }
 

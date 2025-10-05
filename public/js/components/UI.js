@@ -15,6 +15,75 @@ export class UIManager extends EventEmitter {
         this.notifications = new Set();
         this.modals = new Set();
         
+        // Command categories for rotation
+        this.commandCategories = [
+            {
+                title: "🚶 Hareket",
+                commands: [
+                    "!sağ - Sağa git",
+                    "!sol - Sola git",
+                    "!yukarı - Yukarı git",
+                    "!aşağı - Aşağı git"
+                ]
+            },
+            {
+                title: "💃 Animasyon",
+                commands: [
+                    "!dans - Dans et",
+                    "!zıpla - Zıpla",
+                    "!döndür - Dön",
+                    "!karakter - Karakter değiştir"
+                ]
+            },
+            {
+                title: "🎬 Temel Efektler",
+                commands: [
+                    "!patlama - Mega patlama",
+                    "!yıldırım - Şimşek çakması",
+                    "!kar - Kar yağışı",
+                    "!ateş - Ateş çemberi",
+                    "!konfeti - Konfeti patlaması",
+                    "!kalp - Kalp yağmuru",
+                    "!rainbow - Gökkuşağı",
+                    "!shake - Ekran sarsıntısı"
+                ]
+            },
+            {
+                title: "⚡ Gelişmiş Efektler",
+                commands: [
+                    "!lazer - Lazer gösterisi",
+                    "!meteor - Meteor yağmuru",
+                    "!matrix - Matrix efekti",
+                    "!portal - Portal açma",
+                    "!galaksi - Galaksi döndürme",
+                    "!tsunami - Tsunami dalgası"
+                ]
+            },
+            {
+                title: "🎵 Ses Efektleri",
+                commands: [
+                    "!bas - Bass drop",
+                    "!davul - Davul çalma",
+                    "!gitar - Gitar riffi",
+                    "!synth - Synthesizer"
+                ]
+            },
+            {
+                title: "🎮 OYUN KOMUTLARI",
+                commands: [
+                    "!oyun - Parkur oyununu başlat",
+                    "!ben - Oyuna katıl",
+                    "!kapat - Oyunu kapat",
+                    "!sol - Oyunda sola hareket",
+                    "!sag - Oyunda sağa hareket",
+                    "!yukari - Oyunda zıpla"
+                ]
+            }
+        ];
+        
+        this.currentCategoryIndex = 0;
+        this.rotationInterval = null;
+        
         this.initializeElements();
         
         logger.info('UIManager initialized');
@@ -42,6 +111,39 @@ export class UIManager extends EventEmitter {
         
         // Loading screen
         this.elements.set('loadingScreen', document.getElementById('loadingScreen'));
+
+        // Command rotation elements
+        this.categoryTitle = document.getElementById('categoryTitle');
+        this.commandList = document.getElementById('commandList');
+        
+        // Start command rotation
+        this.startCommandRotation();
+    }
+
+    /**
+     * Komut kategorilerini döndürmeye başla
+     */
+    startCommandRotation() {
+        // İlk kategoriyi göster
+        this.updateCommandDisplay();
+        
+        // 5 saniyede bir değiştir
+        this.rotationInterval = setInterval(() => {
+            this.currentCategoryIndex = (this.currentCategoryIndex + 1) % this.commandCategories.length;
+            this.updateCommandDisplay();
+        }, 5000); // 5 saniye
+    }
+
+    /**
+     * Komut display'ini güncelle
+     */
+    updateCommandDisplay() {
+        const category = this.commandCategories[this.currentCategoryIndex];
+        
+        if (this.categoryTitle && this.commandList) {
+            this.categoryTitle.textContent = category.title;
+            this.commandList.innerHTML = category.commands.map(cmd => `<li>${cmd}</li>`).join('');
+        }
     }
 
     /**
@@ -690,6 +792,12 @@ export class UIManager extends EventEmitter {
      * Cleanup ve kapatma
      */
     destroy() {
+        // Clear rotation interval
+        if (this.rotationInterval) {
+            clearInterval(this.rotationInterval);
+            this.rotationInterval = null;
+        }
+        
         // Clear notifications
         this.clearNotifications();
 

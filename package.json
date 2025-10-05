@@ -73,6 +73,8 @@
       "Multi-user avatar system",
       "Individual user control",
       "Real-time chat integration",
+      "🎮 Parkour game with multi-player support",
+      "Screen division for multiple players",
       "50+ visual effects",
       "WebSocket communication",
       "OBS-ready overlay",
@@ -81,12 +83,56 @@
       "Mobile responsive"
     ],
     "commands": {
-      "movement": ["!sağ", "!sol", "!yukarı", "!aşağı"],
-      "animations": ["!dans", "!zıpla", "!döndür", "!karakter"],
-      "effects": ["!patlama", "!yıldırım", "!kar", "!ateş", "!konfeti", "!kalp", "!rainbow", "!shake"],
-      "advanced": ["!lazer", "!meteor", "!matrix", "!portal", "!galaksi", "!tsunami"],
-      "sound": ["!bas", "!davul", "!gitar", "!synth"],
-      "special": ["!nuke", "!disco", "!ufo", "!ninja"]
+      "movement": [
+        "!sağ",
+        "!sol",
+        "!yukarı",
+        "!aşağı"
+      ],
+      "animations": [
+        "!dans",
+        "!zıpla",
+        "!döndür",
+        "!karakter"
+      ],
+      "effects": [
+        "!patlama",
+        "!yıldırım",
+        "!kar",
+        "!ateş",
+        "!konfeti",
+        "!kalp",
+        "!rainbow",
+        "!shake"
+      ],
+      "advanced": [
+        "!lazer",
+        "!meteor",
+        "!matrix",
+        "!portal",
+        "!galaksi",
+        "!tsunami"
+      ],
+      "sound": [
+        "!bas",
+        "!davul",
+        "!gitar",
+        "!synth"
+      ],
+      "special": [
+        "!nuke",
+        "!disco",
+        "!ufo",
+        "!ninja"
+      ],
+      "game": [
+        "!oyun",
+        "!ben",
+        "!kapat",
+        "!sol",
+        "!sag",
+        "!yukari"
+      ]
     }
   }
 }

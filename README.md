@@ -13,15 +13,42 @@
 - **Multi-User Avatar System**: Her kullanıcının kendi avatarı
 - **Real-Time Chat Integration**: Kick.com WebSocket API
 - **Individual User Control**: Her kullanıcı sadece kendi avatarını kontrol eder
+- **🎮 Parkour Game**: Çok oyunculu parkur oyunu sistemi
 - **50+ Visual Effects**: Patlama, yıldırım, kar, ateş ve daha fazlası
 - **Advanced Animations**: Dans, zıplama, döndürme animasyonları
 - **OBS Ready**: 1920x1080 overlay desteği
 - **Debug Tools**: Kapsamlı debugging araçları
 - **Performance Monitoring**: Real-time performans takibi
 
-### 🎯 Komut Kategorileri
+### � Parkour Game System
 
-#### 🚶 Hareket Komutları
+#### Oyun Özellikleri
+- **Multi-Player Support**: Birden fazla oyuncu aynı anda oynayabilir
+- **Dynamic Screen Division**: Oyuncu sayısına göre ekran bölünür
+- **Real-Time Controls**: Chat komutları ile oyun kontrolü
+- **Physics Engine**: Gerçekçi yerçekimi ve çarpışma sistemi
+- **Obstacle Generation**: Rastgele engeller ve coin'ler
+- **Score System**: Puan kazanma ve leaderboard
+- **Game States**: Başlatma, oynama, bitirme durumları
+
+#### Oyun Mekaniği
+- **Hareket**: !sol, !sag, !yukari komutları ile kontrol
+- **Zıplama**: !yukari komutu ile zıplama
+- **Engeller**: Çarpışmadan kaçınma
+- **Coin'ler**: Puan toplama
+- **Çoklu Oyuncu**: Her oyuncu kendi alanında oynar
+
+#### Oyun Komutları
+```
+!oyun     - Oyunu başlat (moderatör)
+!ben      - Oyuna katıl
+!kapat    - Oyunu kapat (moderatör)
+!sol      - Sola hareket
+!sag      - Sağa hareket
+!yukari   - Zıpla
+```
+
+## 📁 Proje Yapısı
 ```
 !sağ     - Sağa git
 !sol     - Sola git  
@@ -67,12 +94,14 @@
 !synth     - Synthesizer
 ```
 
-#### 🎯 Özel Efektler
+#### � Oyun Komutları
 ```
-!nuke      - Nükleer patlama
-!disco     - Disco topu
-!ufo       - UFO çağırma
-!ninja     - Ninja saldırısı
+!oyun     - Parkur oyununu başlat
+!ben      - Oyuna katıl
+!kapat    - Oyunu kapat
+!sol      - Oyunda sola hareket
+!sag      - Oyunda sağa hareket
+!yukari   - Oyunda zıpla
 ```
 
 ## 📁 Proje Yapısı
@@ -93,7 +122,8 @@ kick-eyzaun/
 │   │   │   └── KickWebSocketAPI.js   # WebSocket API
 │   │   ├── classes/
 │   │   │   ├── UserAvatar.js         # Kullanıcı avatar sınıfı
-│   │   │   └── AvatarManager.js      # Avatar yöneticisi
+│   │   │   ├── AvatarManager.js      # Avatar yöneticisi
+│   │   │   └── GameManager.js        # 🎮 Parkur oyun yöneticisi
 │   │   ├── effects/
 │   │   │   ├── VisualEffects.js      # Görsel efektler
 │   │   │   ├── ParticleSystem.js     # Parçacık sistemi
@@ -358,6 +388,9 @@ Bu proje MIT lisansı altında lisanslanmıştır. Detaylar için [LICENSE](LICE
 ### v3.0.0 (Current)
 - ✅ Multi-user avatar system
 - ✅ Individual user control
+- ✅ 🎮 Parkour game system with multi-player support
+- ✅ Screen division for multiple players
+- ✅ Real-time game controls via chat commands
 - ✅ 50+ effects and animations
 - ✅ Advanced debug tools
 - ✅ Performance monitoring

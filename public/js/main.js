@@ -18,6 +18,9 @@ import { LoadingScreenManager } from './components/LoadingScreen.js';
 // Debug import
 import { DebugTool } from './debug/DebugTool.js';
 
+// Game import
+import { GameManager } from './classes/GameManager.js';
+
 /**
  * Ana Uygulama Sınıfı - Tüm sistemleri koordine eder
  */
@@ -35,6 +38,7 @@ class EyzaunMultiUserAvatarApp {
         this.statsManager = null;
         this.loadingScreen = null;
         this.debugTool = null;
+        this.gameManager = null;
         
         // Initialization time
         this.initTime = Date.now();
@@ -78,6 +82,9 @@ class EyzaunMultiUserAvatarApp {
             await this.finalizeSetup();
             await this.loadingScreen.executeStep(6); // Finalizing
             
+            // Hide unnecessary UI elements
+            this.hideUnnecessaryUI();
+            
             // Complete initialization
             await this.loadingScreen.executeStep(7); // Complete
             
@@ -112,7 +119,7 @@ class EyzaunMultiUserAvatarApp {
             { text: 'Yöneticiler başlatılıyor...', progress: 35, duration: 400 },
             { text: 'Kick API hazırlanıyor...', progress: 50, duration: 300 },
             { text: 'Kick\'e bağlanılıyor...', progress: 70, duration: 1000 },
-            { text: 'Event sistemi kurulıyor...', progress: 85, duration: 200 },
+            { text: 'Event sistemi kuruluyor...', progress: 85, duration: 200 },
             { text: 'Son ayarlar yapılıyor...', progress: 95, duration: 200 },
             { text: 'Sistem hazır!', progress: 100, duration: 200 }
         ];
@@ -146,6 +153,9 @@ class EyzaunMultiUserAvatarApp {
         
         // Avatar Manager
         this.avatarManager = new AvatarManager();
+        
+        // Game Manager
+        this.gameManager = new GameManager();
         
         logger.info('Managers initialized');
     }
@@ -235,6 +245,14 @@ class EyzaunMultiUserAvatarApp {
             this.statsManager.updateWebSocketState(
                 data.current.charAt(0).toUpperCase() + data.current.slice(1)
             );
+
+            // Debug: Bağlantı durumu değişimini logla
+            logger.info(`WebSocket state changed: ${data.previous} -> ${data.current}`);
+            console.log(`🔌 WebSocket State: ${data.current}`, {
+                isConnected: this.kickAPI.isConnected,
+                isSubscribed: this.kickAPI.isSubscribed,
+                connectionInfo: this.kickAPI.getConnectionInfo()
+            });
         });
 
         // Avatar Manager Events
@@ -331,6 +349,31 @@ class EyzaunMultiUserAvatarApp {
     }
 
     /**
+     * Gereksiz UI elementlerini gizle
+     */
+    hideUnnecessaryUI() {
+        // Sol paneldeki istatistikleri gizle
+        const statsDisplay = this.uiManager.getElement('statsDisplay');
+        if (statsDisplay) {
+            statsDisplay.style.display = 'none';
+        }
+        
+        // Kullanıcı sayısını gizle
+        const userCountDisplay = this.uiManager.getElement('userCountDisplay');
+        if (userCountDisplay) {
+            userCountDisplay.style.display = 'none';
+        }
+        
+        // Bağlantı durumunu gizle
+        const connectionStatus = this.uiManager.getElement('connectionStatus');
+        if (connectionStatus) {
+            connectionStatus.style.display = 'none';
+        }
+        
+        logger.info('Unnecessary UI elements hidden');
+    }
+
+    /**
      * Chat mesajını işle
      */
     handleChatMessage(message) {
@@ -346,6 +389,49 @@ class EyzaunMultiUserAvatarApp {
     async handleCommand(command) {
         this.statsManager.addCommand();
         
+        const { command: cmd, userId, user: username, userType } = command;
+        const normalizedCmd = this.normalizeCommand(cmd);
+        
+        // Önce oyun komutlarını kontrol et
+        if (normalizedCmd === '!oyun') {
+            const result = await this.gameManager.startGame();
+            return result.success;
+        }
+        
+        if (normalizedCmd === '!basla') {
+            const result = await this.gameManager.manualStart();
+            return result.success;
+        }
+        
+        if (normalizedCmd === '!kapat') {
+            const result = await this.gameManager.stopGame();
+            return result.success;
+        }
+        
+        if (normalizedCmd === '!bitir') {
+            const result = await this.gameManager.forceEndGame();
+            return result.success;
+        }
+
+        if (normalizedCmd === '!ben') {
+            const result = await this.gameManager.joinGame(userId, username, userType);
+            return result.success;
+        }
+        
+        // Harita seçimi komutları
+        if (normalizedCmd === '!1' || normalizedCmd === '!2' || normalizedCmd === '!3' || normalizedCmd === '!4' || normalizedCmd === '!5') {
+            const mapId = normalizedCmd.slice(1); // ! işaretini kaldır
+            const result = await this.gameManager.selectMap(mapId);
+            return result.success;
+        }
+        
+        // Oyun sırasında hareket komutlarını oyun manager'a yönlendir
+        const gameCommandPattern = /^!(a|d|w|q|e){1,5}$/;
+        if (this.gameManager.isGameRunning && (gameCommandPattern.test(normalizedCmd) || ['!sol', '!sag', '!yukari', '!asagi'].includes(normalizedCmd))) {
+            this.gameManager.handlePlayerInput(userId, normalizedCmd);
+            return true;
+        }
+        
         const success = await this.avatarManager.handleCommand(command);
         
         if (success) {
@@ -354,12 +440,28 @@ class EyzaunMultiUserAvatarApp {
         
         if (this.debugTool) {
             this.debugTool.addToCollector('avatars', {
-                action: `Command: ${command.command}`,
-                user: command.user
+                action: `Command: ${cmd}`,
+                user: username
             });
         }
         
-        logger.command(`Command ${command.command} by ${command.user}: ${success ? 'SUCCESS' : 'FAILED'}`);
+        logger.command(`Command ${cmd} by ${username}: ${success ? 'SUCCESS' : 'FAILED'}`);
+        
+        return success;
+    }
+
+    /**
+     * Komut metnini normalize et (Türkçe karakterleri sadeleştir)
+     */
+    normalizeCommand(commandText = '') {
+        return String(commandText || '')
+            .toLowerCase()
+            .replace(/[ç]/g, 'c')
+            .replace(/[ğ]/g, 'g')
+            .replace(/[ı]/g, 'i')
+            .replace(/[ö]/g, 'o')
+            .replace(/[ş]/g, 's')
+            .replace(/[ü]/g, 'u');
     }
 
     /**

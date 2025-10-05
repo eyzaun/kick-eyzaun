@@ -186,13 +186,20 @@ export class StatsManager extends EventEmitter {
     updateWebSocketState(state) {
         const element = this.elements.get('websocketState');
         if (element) {
+            const oldState = element.textContent;
             element.textContent = state;
-            element.style.color = state === 'Connected' ? '#00ff00' : 
-                                   state === 'Connecting' ? '#ffaa00' : '#ff0000';
-        }
-    }
+            element.style.color = state === 'Connected' ?
+                '#00ff00' : state === 'Connecting' ?
+                '#ffaa00' : '#ff0000';
 
-    /**
+            // Debug: WebSocket durumu değişimini logla
+            console.log(`📊 WebSocket State Updated: ${oldState} -> ${state}`, {
+                element: element,
+                timestamp: new Date().toISOString(),
+                color: element.style.color
+            });
+        }
+    }    /**
      * Display'i güncelle
      */
     updateDisplay() {

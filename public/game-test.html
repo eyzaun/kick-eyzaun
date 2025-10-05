@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parkour Game Test - Canvas Version</title>
+    <link rel="stylesheet" href="css/main.css">
+    <style>
+        body {
+            background: #1a1a1a;
+            margin: 0;
+            padding: 20px;
+        }
+        .test-controls {
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border: 2px solid #ff69b4;
+        }
+        .test-controls h2 {
+            color: #ff69b4;
+            margin-bottom: 15px;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background: #007bff;
+            color: white;
+            font-weight: bold;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .status {
+            margin: 10px 0;
+            padding: 10px;
+            background: #333;
+            border-radius: 5px;
+            font-family: monospace;
+        }
+        .instructions {
+            background: rgba(0,0,0,0.6);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #00bfff;
+        }
+    </style>
+</head>
+<body>
+    <div class="instructions">
+        <h2>🎮 Canvas-Based Parkour Game Test</h2>
+        <p><strong>Test Adımları:</strong></p>
+        <ol>
+            <li>Start Game'e tıklayın</li>
+            <li>Join Game'e tıklayın</li>
+            <li>Kontrolleri test edin: Move Left, Move Right, Jump</li>
+            <li>Oyun canvas'ta görünüyor mu kontrol edin</li>
+            <li>Partiküller ve animasyonlar çalışıyor mu bakın</li>
+        </ol>
+    </div>
+
+    <div class="test-controls">
+        <h2>Game Controls</h2>
+        <button onclick="startGame()">🎮 Start Game</button>
+        <button onclick="joinGame()">👤 Join Game</button>
+        <button onclick="stopGame()">⏹️ Stop Game</button>
+        <br><br>
+        <button onclick="moveLeft()">⬅️ Move Left</button>
+        <button onclick="moveRight()">➡️ Move Right</button>
+        <button onclick="jump()">⬆️ Jump</button>
+    </div>
+
+    <div class="status" id="status">
+        Status: System initializing...
+    </div>
+
+    <script type="module">
+        import { GameManager } from './js/classes/GameManager.js';
+
+        let gameManager = null;
+        const statusDiv = document.getElementById('status');
+
+        function updateStatus(message) {
+            statusDiv.textContent = `Status: ${message}`;
+            console.log(message);
+        }
+
+        window.startGame = async function() {
+            try {
+                if (!gameManager) {
+                    gameManager = new GameManager();
+                    updateStatus('GameManager initialized with Canvas');
+                }
+
+                const result = await gameManager.startGame();
+                if (result) {
+                    updateStatus('✅ Game started successfully - Canvas should be visible');
+                } else {
+                    updateStatus('❌ Failed to start game');
+                }
+            } catch (error) {
+                updateStatus(`❌ Error starting game: ${error.message}`);
+                console.error(error);
+            }
+        };
+
+        window.joinGame = async function() {
+            try {
+                if (!gameManager) {
+                    updateStatus('❌ Game not initialized. Start game first.');
+                    return;
+                }
+
+                const result = await gameManager.joinGame('test-user-1', 'TestPlayer', 'viewer');
+                if (result) {
+                    updateStatus('✅ Player joined successfully - Should see player on canvas');
+                } else {
+                    updateStatus('❌ Failed to join game');
+                }
+            } catch (error) {
+                updateStatus(`❌ Error joining game: ${error.message}`);
+                console.error(error);
+            }
+        };
+
+        window.stopGame = async function() {
+            try {
+                if (!gameManager) {
+                    updateStatus('❌ Game not initialized.');
+                    return;
+                }
+
+                const result = await gameManager.stopGame();
+                if (result) {
+                    updateStatus('✅ Game stopped successfully');
+                } else {
+                    updateStatus('❌ Failed to stop game');
+                }
+            } catch (error) {
+                updateStatus(`❌ Error stopping game: ${error.message}`);
+                console.error(error);
+            }
+        };
+
+        window.moveLeft = function() {
+            if (gameManager && gameManager.isGameRunning) {
+                gameManager.handlePlayerInput('test-user-1', '!sol');
+                updateStatus('⬅️ Moved left');
+            } else {
+                updateStatus('❌ Game not running');
+            }
+        };
+
+        window.moveRight = function() {
+            if (gameManager && gameManager.isGameRunning) {
+                gameManager.handlePlayerInput('test-user-1', '!sag');
+                updateStatus('➡️ Moved right');
+            } else {
+                updateStatus('❌ Game not running');
+            }
+        };
+
+        window.jump = function() {
+            if (gameManager && gameManager.isGameRunning) {
+                gameManager.handlePlayerInput('test-user-1', '!yukari');
+                updateStatus('⬆️ Jumped');
+            } else {
+                updateStatus('❌ Game not running');
+            }
+        };
+
+        // Initialize
+        updateStatus('🎮 Canvas-based Parkour Game Test Ready - Click "Start Game" to begin!');
+    </script>
+</body>
+</html>
