@@ -1,25 +1,23 @@
 // public/js/main.js - Ana uygulama giriş noktası
 
-// Core imports
-import { CONFIG } from './utils/Config.js';
-import { getChannelFromURL, logger } from './utils/Utils.js';
+// Core imports via packages
+import { CONFIG } from './packages/config/index.js';
+import { getChannelFromURL, logger } from './packages/utils/index.js';
 
 // API imports
-import { KickWebSocketAPI } from './api/KickWebSocketAPI.js';
+import { KickWebSocketAPI } from './packages/connection/index.js';
 
 // Manager imports
-import { AvatarManager } from './classes/AvatarManager.js';
+import { AvatarManager } from './packages/avatars/index.js';
 
 // UI Component imports
-import { UIManager } from './components/UI.js';
-import { StatsManager } from './components/Stats.js';
-import { LoadingScreenManager } from './components/LoadingScreen.js';
+import { UIManager, StatsManager, LoadingScreenManager } from './packages/ui/index.js';
 
 // Debug import
-import { DebugTool } from './debug/DebugTool.js';
+import { DebugTool } from './packages/debug/index.js';
 
 // Game import
-import { GameManager } from './classes/GameManager.js';
+import { GameManager } from './packages/game/index.js';
 
 /**
  * Ana Uygulama Sınıfı - Tüm sistemleri koordine eder
