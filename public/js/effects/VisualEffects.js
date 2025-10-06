@@ -2727,18 +2727,30 @@ export class VisualEffects {
      */
     async createTrashEffect(command) {
         const character = command.character;
+        const overrides = command || {};
+        // Allow per-command duration override; default longer for readability
+        const durationMs = typeof overrides.durationMs === 'number' && overrides.durationMs > 0
+            ? overrides.durationMs
+            : 20000; // 20s default
         const effectId = `${character}Trash_` + Date.now();
         this.activeEffects.add(effectId);
 
         try {
             // VALORANT_TRASH_EFFECTS'tan karakter bilgilerini al
             const { VALORANT_TRASH_EFFECTS } = await import('../utils/Config.js');
-            const charData = VALORANT_TRASH_EFFECTS[character];
+            const charData = VALORANT_TRASH_EFFECTS[character] || {};
 
             if (!charData) {
                 logger.error(`Character data not found for: ${character}`);
                 return false;
             }
+
+            // Başlık metni: Config'te override varsa onu kullan
+            const titleText = (typeof overrides.title === 'string' && overrides.title.trim().length > 0)
+                ? overrides.title
+                : (typeof charData.title === 'string' && charData.title.trim().length > 0)
+                    ? charData.title
+                    : `${charData.name || character?.toUpperCase()} ÇÖP`;
 
             // Ana çöp kutusu efekti - ekranı dolduran büyük çöp kutusu
             const trashBin = createElement('div');
@@ -2757,7 +2769,7 @@ export class VisualEffects {
                     rgba(0,0,0,0.8) 100%);
                 transform: translate(-50%, -50%);
                 z-index: ${CONFIG.UI.Z_INDICES.PARTICLES};
-                animation: trashBinExpand 6s ease-out forwards;
+                animation: trashBinExpand ${durationMs}ms ease-out forwards;
                 box-shadow:
                     0 0 80px rgba(139,69,19,0.8),
                     0 0 160px rgba(101,67,33,0.6),
@@ -2770,7 +2782,7 @@ export class VisualEffects {
 
             // Çöp kutusu içine karakter adı yazısı
             const trashText = createElement('div');
-            trashText.textContent = `${charData.name} ÇÖP`;
+            trashText.textContent = titleText;
             trashText.style.cssText = `
                 position: absolute;
                 top: 50%;
@@ -2778,7 +2790,7 @@ export class VisualEffects {
                 transform: translate(-50%, -50%);
                 font-size: 48px;
                 font-weight: bold;
-                color: #FFD700;
+                color: ${overrides.titleColor || charData.titleColor || '#FFD700'};
                 text-shadow:
                     0 0 10px #FF0000,
                     0 0 20px #FF0000,
@@ -2792,16 +2804,23 @@ export class VisualEffects {
             trashBin.appendChild(trashText);
 
             // Çöp parçaları - her türlü çöp emoji'si
-            this.createTrashDebris();
+            this.createTrashDebris(durationMs);
 
             // Karakter özel parçaları
-            this.createCharacterParts(charData.parts);
+            this.createCharacterParts(overrides.parts || charData.parts || [], durationMs);
 
-            // Karakter özel mesajlar
-            this.createCharacterMessages(charData.messages);
+            // Karakter özel mesajlar (renk override destekler, tekrar yok)
+            this.createCharacterMessages(
+                overrides.messages || charData.messages || [],
+                {
+                    color: overrides.messageColor || charData.messageColor,
+                    unique: overrides.uniqueMessages !== false, // default true
+                    durationMs
+                }
+            );
 
             // Karanlık perde efekti
-            this.createTrashDarkness();
+            this.createTrashDarkness(durationMs);
 
             // Çöp titreşimi
             this.createTrashShake();
@@ -2813,7 +2832,7 @@ export class VisualEffects {
             setTimeout(() => {
                 removeElement(trashBin);
                 this.activeEffects.delete(effectId);
-            }, 6000);
+            }, durationMs);
 
             return true;
 
@@ -2827,7 +2846,7 @@ export class VisualEffects {
     /**
      * Çöp parçaları oluştur
      */
-    createTrashDebris() {
+    createTrashDebris(durationMs = 20000) {
         const trashEmojis = [
             '🗑️', '🥤', '📦', '🥫', '🧴', '📱', '👟', '📰',
             '🍾', '🥖', '🛶', '🏊', '🐟', '🐠', '🦈', '🌿',
@@ -2846,7 +2865,7 @@ export class VisualEffects {
                     left: ${Math.random() * 100}%;
                     font-size: ${20 + Math.random() * 30}px;
                     z-index: ${CONFIG.UI.Z_INDICES.PARTICLES + 2};
-                    animation: trashDebris ${3 + Math.random() * 3}s ease-out forwards;
+                    animation: trashDebris ${Math.round(durationMs * (0.5 + Math.random() * 0.4))}ms ease-out forwards;
                     opacity: ${0.7 + Math.random() * 0.3};
                     pointer-events: none;
                     transform: rotate(${Math.random() * 720 - 360}deg) scale(${0.5 + Math.random() * 0.8});
@@ -2856,7 +2875,7 @@ export class VisualEffects {
 
                 setTimeout(() => {
                     removeElement(trash);
-                }, 6000);
+                }, durationMs);
             }, i * 80);
         }
     }
@@ -2864,7 +2883,8 @@ export class VisualEffects {
     /**
      * Karakter özel parçaları oluştur
      */
-    createCharacterParts(parts) {
+    createCharacterParts(parts, durationMs = 20000) {
+        if (!Array.isArray(parts) || parts.length === 0) return;
         for (let i = 0; i < 25; i++) {
             setTimeout(() => {
                 const part = createElement('div');
@@ -2875,7 +2895,7 @@ export class VisualEffects {
                     left: ${Math.random() * 100}%;
                     font-size: ${25 + Math.random() * 25}px;
                     z-index: ${CONFIG.UI.Z_INDICES.PARTICLES + 3};
-                    animation: robotPart ${2.5 + Math.random() * 2.5}s ease-out forwards;
+                    animation: robotPart ${Math.round(durationMs * (0.5 + Math.random() * 0.3))}ms ease-out forwards;
                     opacity: ${0.6 + Math.random() * 0.4};
                     pointer-events: none;
                     filter: grayscale(100%) brightness(0.5);
@@ -2886,7 +2906,7 @@ export class VisualEffects {
 
                 setTimeout(() => {
                     removeElement(part);
-                }, 5000);
+                }, durationMs);
             }, i * 120);
         }
     }
@@ -2894,36 +2914,51 @@ export class VisualEffects {
     /**
      * Karakter özel mesajlar oluştur
      */
-    createCharacterMessages(messages) {
-        for (let i = 0; i < 8; i++) {
+    createCharacterMessages(messages, { color, unique = true, durationMs = 20000 } = {}) {
+        if (!Array.isArray(messages) || messages.length === 0) return;
+
+        // Deduplicate and optionally enforce unique usage per effect
+        const uniqueMessages = Array.from(new Set(messages.map(m => String(m).trim()))).filter(Boolean);
+        const items = unique ? uniqueMessages : uniqueMessages.concat(uniqueMessages);
+
+        // Shuffle
+        for (let i = items.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [items[i], items[j]] = [items[j], items[i]];
+        }
+
+        const count = unique ? items.length : Math.min(items.length, 8);
+        const delayStep = 800; // spread out for readability
+
+        for (let i = 0; i < count; i++) {
             setTimeout(() => {
                 const message = createElement('div');
-                message.textContent = messages[Math.floor(Math.random() * messages.length)];
+                message.textContent = items[i];
                 message.style.cssText = `
                     position: fixed;
                     top: ${Math.random() * 80 + 10}%;
                     left: ${Math.random() * 80 + 10}%;
                     font-size: ${24 + Math.random() * 16}px;
                     font-weight: bold;
-                    color: #FF0000;
+                    color: ${color || '#FF0000'};
                     text-shadow:
                         0 0 8px #000000,
                         0 0 16px #000000,
                         0 0 24px #000000;
                     z-index: ${CONFIG.UI.Z_INDICES.PARTICLES + 4};
-                    animation: trashMessage ${4 + Math.random() * 2}s ease-out forwards;
+                    animation: trashMessage ${Math.round(durationMs * (0.7 + Math.random() * 0.2))}ms ease-out forwards;
                     pointer-events: none;
                     font-family: 'Arial Black', sans-serif;
                     transform: rotate(${Math.random() * 30 - 15}deg);
-                    opacity: 0.9;
+                    opacity: 0.95;
                 `;
 
                 document.body.appendChild(message);
 
                 setTimeout(() => {
                     removeElement(message);
-                }, 6000);
-            }, i * 400);
+                }, durationMs);
+            }, i * delayStep);
         }
     }
 
@@ -2968,7 +3003,7 @@ export class VisualEffects {
     /**
      * Karanlık perde efekti
      */
-    createTrashDarkness() {
+    createTrashDarkness(durationMs = 20000) {
         const darkness = createElement('div');
         darkness.style.cssText = `
             position: fixed;
@@ -2982,7 +3017,7 @@ export class VisualEffects {
                 rgba(139,69,19,0.4) 60%,
                 rgba(0,0,0,0.9) 100%);
             z-index: ${CONFIG.UI.Z_INDICES.PARTICLES - 1};
-            animation: trashDarkness 6s ease-in-out forwards;
+            animation: trashDarkness ${durationMs}ms ease-in-out forwards;
             pointer-events: none;
             opacity: 0.7;
         `;
@@ -2991,7 +3026,7 @@ export class VisualEffects {
 
         setTimeout(() => {
             removeElement(darkness);
-        }, 6000);
+        }, durationMs);
     }
 
     /**

@@ -3,6 +3,7 @@
 import { EventEmitter } from '../utils/EventEmitter.js';
 import { CONFIG } from '../utils/Config.js';
 import { createElement, removeElement, logger } from '../utils/Utils.js';
+import { COMMAND_CATEGORIES } from '../utils/CommandCatalog.js';
 
 /**
  * UI Manager - Tüm kullanıcı arayüzü bileşenlerini yönetir
@@ -16,70 +17,7 @@ export class UIManager extends EventEmitter {
         this.modals = new Set();
         
         // Command categories for rotation
-        this.commandCategories = [
-            {
-                title: "🚶 Hareket",
-                commands: [
-                    "!sağ - Sağa git",
-                    "!sol - Sola git",
-                    "!yukarı - Yukarı git",
-                    "!aşağı - Aşağı git"
-                ]
-            },
-            {
-                title: "💃 Animasyon",
-                commands: [
-                    "!dans - Dans et",
-                    "!zıpla - Zıpla",
-                    "!döndür - Dön",
-                    "!karakter - Karakter değiştir"
-                ]
-            },
-            {
-                title: "🎬 Temel Efektler",
-                commands: [
-                    "!patlama - Mega patlama",
-                    "!yıldırım - Şimşek çakması",
-                    "!kar - Kar yağışı",
-                    "!ateş - Ateş çemberi",
-                    "!konfeti - Konfeti patlaması",
-                    "!kalp - Kalp yağmuru",
-                    "!rainbow - Gökkuşağı",
-                    "!shake - Ekran sarsıntısı"
-                ]
-            },
-            {
-                title: "⚡ Gelişmiş Efektler",
-                commands: [
-                    "!lazer - Lazer gösterisi",
-                    "!meteor - Meteor yağmuru",
-                    "!matrix - Matrix efekti",
-                    "!portal - Portal açma",
-                    "!galaksi - Galaksi döndürme",
-                    "!tsunami - Tsunami dalgası"
-                ]
-            },
-            {
-                title: "🎵 Ses Efektleri",
-                commands: [
-                    "!bas - Bass drop",
-                    "!davul - Davul çalma",
-                    "!gitar - Gitar riffi",
-                    "!synth - Synthesizer"
-                ]
-            },
-            {
-                title: "🎮 OYUN KOMUTLARI",
-                commands: [
-                    "!oyun - Parkur oyununu başlat",
-                    "!ben - Oyuna katıl",
-                    "!kapat - Oyunu kapat",
-                    "!sol - Oyunda sola hareket",
-                    "!sag - Oyunda sağa hareket",
-                    "!yukari - Oyunda zıpla"
-                ]
-            }
-        ];
+        this.commandCategories = COMMAND_CATEGORIES;
         
         this.currentCategoryIndex = 0;
         this.rotationInterval = null;

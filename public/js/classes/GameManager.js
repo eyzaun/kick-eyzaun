@@ -8,12 +8,13 @@ import { CommandProcessor } from '../game/CommandProcessor.js';
 import { PhysicsEngine } from '../game/PhysicsEngine.js';
 import { GameRenderer } from '../game/GameRenderer.js';
 import { buildDefaultMaps } from '../game/MapLibrary.js';
+import { GAME_CONSTANTS } from '../game/GameConstants.js';
 
 /**
  * GameManager - Çok oyunculu parkur oyunu sistemi
  */
 export class GameManager extends EventEmitter {
-    constructor() {
+    constructor({ ui, particles, commands, renderer, physics } = {}) {
         super();
 
         // Oyun durumu
@@ -27,30 +28,30 @@ export class GameManager extends EventEmitter {
         // Zamanlayıcılar
         this.gameStartTime = null;
         this.gameEndTime = null;
-        this.gameDuration = 180000; // 3 dakika (180 saniye)
-        this.maxPlayers = 8; // Maksimum 8 oyuncu
-        this.minPlayers = 1; // Minimum 1 oyuncu
+    this.gameDuration = GAME_CONSTANTS.GAME.DURATION_MS;
+    this.maxPlayers = GAME_CONSTANTS.GAME.MAX_PLAYERS;
+    this.minPlayers = GAME_CONSTANTS.GAME.MIN_PLAYERS;
 
         // Oyun alanı boyutları
-        this.gameWidth = 1280;
-        this.gameHeight = 720;
-        this.playerRadius = 18;
-        this.doubleJumpMultiplier = 0.5;
+    this.gameWidth = GAME_CONSTANTS.GAME.WIDTH;
+    this.gameHeight = GAME_CONSTANTS.GAME.HEIGHT;
+    this.playerRadius = GAME_CONSTANTS.GAME.PLAYER_RADIUS;
+    this.doubleJumpMultiplier = GAME_CONSTANTS.GAME.DOUBLE_JUMP_MULTIPLIER;
 
         // Oyun döngüsü
         this.gameLoop = null;
         this.lastFrameTime = 0;
 
         // Yardımcı sınıflar
-        this.ui = new GameUI();
-        this.particleSystem = new ParticleSystem();
-        this.commandProcessor = new CommandProcessor();
-        this.renderer = new GameRenderer({
+        this.ui = ui ?? new GameUI();
+        this.particleSystem = particles ?? new ParticleSystem();
+        this.commandProcessor = commands ?? new CommandProcessor();
+        this.renderer = renderer ?? new GameRenderer({
             gameWidth: this.gameWidth,
             gameHeight: this.gameHeight,
             playerRadius: this.playerRadius
         });
-        this.physicsEngine = new PhysicsEngine({
+        this.physicsEngine = physics ?? new PhysicsEngine({
             gameWidth: this.gameWidth,
             gameHeight: this.gameHeight,
             playerRadius: this.playerRadius,
@@ -478,7 +479,7 @@ export class GameManager extends EventEmitter {
             this.trails.set(player.userId, []);
         }
 
-        const trail = this.trails.get(player.userId);
+    const trail = this.trails.get(player.userId);
         trail.push({ x: player.position.x, y: player.position.y });
 
         // Trail uzunluğunu sınırla
@@ -520,37 +521,42 @@ export class GameManager extends EventEmitter {
      * Yeni oyuncu verisi oluştur
      */
     createPlayerData(userId, username, userType) {
-        return {
-            userId,
-            username,
-            userType,
-            joinedAt: Date.now(),
-            score: 0,
-            position: { x: 100, y: this.gameHeight - 100 }, // Başlangıç pozisyonu
-            previousPosition: { x: 100, y: this.gameHeight - 100 },
-            velocity: { x: 0, y: 0 },
-            isAlive: true,
-            onGround: true,
-            keys: { left: false, right: false, up: false, down: false, diagonalLeft: false, diagonalRight: false },
-            color: this.getPlayerColor(this.players.size),
-            trail: [],
-            commandQueue: [], // Çoklu komut kuyruğu
-            lastCommandTime: 0, // Son komut zamanı
-            jumpBuffer: 0,
-            jumpCount: 0,
-            hasDoubleJumped: false
-        };
+        return this.buildPlayer(userId, username, userType);
     }
 
     /**
      * Oyuncu rengini al
      */
     getPlayerColor(index) {
-        const colors = [
-            '#ff4444', '#44ff44', '#4444ff', '#ffff44',
-            '#ff44ff', '#44ffff', '#ff8844', '#8844ff'
-        ];
-        return colors[index % colors.length];
+        return GAME_CONSTANTS.COLORS[index % GAME_CONSTANTS.COLORS.length];
+    }
+
+    /**
+     * Yeni oyuncu objesi oluştur (KISS/DRY)
+     */
+    buildPlayer(userId, username, userType) {
+        const startX = 100;
+        const startY = this.gameHeight - 100;
+        return {
+            userId,
+            username,
+            userType,
+            joinedAt: Date.now(),
+            score: 0,
+            position: { x: startX, y: startY },
+            previousPosition: { x: startX, y: startY },
+            velocity: { x: 0, y: 0 },
+            isAlive: true,
+            onGround: true,
+            keys: { left: false, right: false, up: false, down: false, diagonalLeft: false, diagonalRight: false },
+            color: this.getPlayerColor(this.players.size),
+            trail: [],
+            commandQueue: [],
+            lastCommandTime: 0,
+            jumpBuffer: 0,
+            jumpCount: 0,
+            hasDoubleJumped: false
+        };
     }
 
     /**

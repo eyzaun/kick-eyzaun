@@ -99,6 +99,17 @@ class EyzaunMultiUserAvatarApp {
                 channel: this.channelName,
                 initTime: Date.now() - this.initTime
             });
+
+            // Expose unified reset hook for dashboard button
+            window.__resetAllStatsHook__ = () => {
+                try {
+                    this.statsManager?.resetStats();
+                    this.avatarManager?.resetStats();
+                    logger.info('Stats reset via dashboard hook');
+                } catch (err) {
+                    logger.error('Failed to reset stats via dashboard hook:', err);
+                }
+            };
             
         } catch (error) {
             await this.handleInitializationError(error);
@@ -607,6 +618,17 @@ class EyzaunMultiUserAvatarApp {
             // Ctrl+Shift+H - Hide/Show UI
             if (e.ctrlKey && e.shiftKey && e.key === 'H') {
                 this.uiManager.toggleUIVisibility();
+            }
+
+            // Ctrl+Shift+M - Reset Stats (UI + AvatarManager)
+            if (e.ctrlKey && e.shiftKey && e.key === 'M') {
+                try {
+                    this.statsManager?.resetStats();
+                    this.avatarManager?.resetStats();
+                    logger.info('Stats reset via keyboard shortcut (Ctrl+Shift+M)');
+                } catch (err) {
+                    logger.error('Failed to reset stats via shortcut:', err);
+                }
             }
         });
     }

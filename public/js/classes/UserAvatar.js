@@ -50,17 +50,10 @@ export class UserAvatar {
     createElement() {
         this.element = createElement('div', 'user-avatar');
         
-        // PNG resim için background-image kullan
-        const characterPath = CONFIG.AVATAR.EMOJIS[this.currentEmoji];
-        if (characterPath.endsWith('.png')) {
-            this.element.style.backgroundImage = `url(${characterPath})`;
-            this.element.style.backgroundSize = 'cover';
-            this.element.style.backgroundPosition = 'center';
-            this.element.style.backgroundRepeat = 'no-repeat';
-            this.element.textContent = ''; // Text'i temizle
-        } else {
-            this.element.textContent = characterPath; // Emoji için text kullan
-        }
+        // Emoji için text kullan (sadece emoji seti)
+        const emoji = CONFIG.AVATAR.EMOJIS[this.currentEmoji];
+        this.element.textContent = emoji;
+        this.element.style.backgroundImage = '';
         
         this.element.id = `avatar-${this.userId}`;
         
@@ -308,17 +301,9 @@ export class UserAvatar {
         
         // Change character after scale up
         setTimeout(() => {
-            const characterPath = CONFIG.AVATAR.EMOJIS[this.currentEmoji];
-            if (characterPath.endsWith('.png')) {
-                this.element.style.backgroundImage = `url(${characterPath})`;
-                this.element.style.backgroundSize = 'cover';
-                this.element.style.backgroundPosition = 'center';
-                this.element.style.backgroundRepeat = 'no-repeat';
-                this.element.textContent = ''; // Text'i temizle
-            } else {
-                this.element.textContent = characterPath; // Emoji için text kullan
-                this.element.style.backgroundImage = ''; // Background'ı temizle
-            }
+            const emoji = CONFIG.AVATAR.EMOJIS[this.currentEmoji];
+            this.element.textContent = emoji; // Emoji için text kullan
+            this.element.style.backgroundImage = ''; // Background'ı temizle
         }, 150);
         
         // Scale back down
@@ -359,17 +344,9 @@ export class UserAvatar {
 
         // Change character after scale up
         setTimeout(() => {
-            const characterPath = CONFIG.AVATAR.EMOJIS[this.currentEmoji];
-            if (characterPath.endsWith('.png')) {
-                this.element.style.backgroundImage = `url(${characterPath})`;
-                this.element.style.backgroundSize = 'cover';
-                this.element.style.backgroundPosition = 'center';
-                this.element.style.backgroundRepeat = 'no-repeat';
-                this.element.textContent = ''; // Text'i temizle
-            } else {
-                this.element.textContent = characterPath; // Emoji için text kullan
-                this.element.style.backgroundImage = ''; // Background'ı temizle
-            }
+            const emoji = CONFIG.AVATAR.EMOJIS[this.currentEmoji];
+            this.element.textContent = emoji; // Emoji için text kullan
+            this.element.style.backgroundImage = ''; // Background'ı temizle
         }, 150);
 
         // Scale back down

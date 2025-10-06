@@ -1,10 +1,7 @@
 import { buildFallbackPlatforms } from './MapLibrary.js';
-
-const GRAVITY = 500;
-const JUMP_FORCE = -350;
-const MOVE_SPEED = 1200;
-const FRICTION = 0.85;
-const DIAGONAL_BOOST_MULTIPLIER = 0.7;
+import { GAME_CONSTANTS } from './GameConstants.js';
+const { GRAVITY, JUMP_FORCE, MOVE_SPEED, FRICTION, DIAGONAL_BOOST_MULTIPLIER } = GAME_CONSTANTS.PHYSICS;
+const { GROUND_OFFSET, GOAL } = GAME_CONSTANTS.GAME;
 
 export class PhysicsEngine {
     constructor({
@@ -46,7 +43,7 @@ export class PhysicsEngine {
     integratePlayer(player, platforms, deltaTime) {
         const radius = this.playerRadius;
         const horizontalMargin = radius + 7;
-        const groundTop = this.gameHeight - 50;
+    const groundTop = this.gameHeight - GROUND_OFFSET;
 
         player.jumpBuffer = player.jumpBuffer ?? 0;
         player.jumpCount = player.jumpCount ?? 0;
@@ -187,7 +184,7 @@ export class PhysicsEngine {
     }
 
     handleGoalAndBounds(player) {
-        if (player.position.x > this.gameWidth - 80 && player.position.y < 100 && player.isAlive) {
+        if (player.position.x > this.gameWidth - GOAL.OFFSET_X && player.position.y < GOAL.THRESHOLD_Y && player.isAlive) {
             if (typeof this.onPlayerFinished === 'function') {
                 this.onPlayerFinished(player);
             }

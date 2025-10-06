@@ -4,7 +4,8 @@ import { UserAvatar } from './UserAvatar.js';
 import { EventEmitter } from '../utils/EventEmitter.js';
 import { CONFIG, ALL_COMMANDS, USER_TYPES } from '../utils/Config.js';
 import { CooldownManager, logger } from '../utils/Utils.js';
-import { GameManager } from './GameManager.js';
+// Note: GameManager isn't used directly here; gameplay is managed elsewhere
+import { StatsTracker } from '../utils/StatsTracker.js';
 
 /**
  * Avatar Manager - Tüm kullanıcı avatarlarını yönetir
@@ -20,13 +21,8 @@ export class AvatarManager extends EventEmitter {
         this.commands = new Map();
         this.cooldownManager = new CooldownManager();
         
-        // Stats
-        this.stats = {
-            totalMessages: 0,
-            totalCommands: 0,
-            totalMoves: 0,
-            startTime: Date.now()
-        };
+        // Stats (centralized tracker)
+        this.stats = new StatsTracker();
         
         // Cleanup
         this.cleanupInterval = null;
@@ -112,7 +108,7 @@ export class AvatarManager extends EventEmitter {
      * Chat mesajını işle
      */
     handleMessage(messageData) {
-        this.stats.totalMessages++;
+        this.stats.incMessages();
         
         const user = this.getOrCreateUser(
             messageData.userId,
@@ -136,7 +132,7 @@ export class AvatarManager extends EventEmitter {
      * Komut işle
      */
     async handleCommand(commandData) {
-        this.stats.totalCommands++;
+        this.stats.incCommands();
         
         const { command, userId, user: username, userType } = commandData;
         
@@ -171,7 +167,7 @@ export class AvatarManager extends EventEmitter {
             }
             
             if (result) {
-                this.stats.totalMoves++;
+                this.stats.incMoves();
                 this.emit('commandExecuted', { commandData, commandConfig, result });
                 
                 logger.command(`Executed command: ${command} by ${username}`);
@@ -227,7 +223,9 @@ export class AvatarManager extends EventEmitter {
                 // Özel karakter komutları için character parametresini geç
                 let result;
                 if (commandConfig.action === 'createTrashEffect' && commandConfig.character) {
-                    result = await visualEffects[commandConfig.action]({ character: commandConfig.character });
+                    // Allow overrides from commandConfig: title, titleColor, messageColor, messages, parts, durationMs, uniqueMessages
+                    const { character, title, titleColor, messageColor, messages, parts, durationMs, uniqueMessages } = commandConfig;
+                    result = await visualEffects[commandConfig.action]({ character, title, titleColor, messageColor, messages, parts, durationMs, uniqueMessages });
                 } else {
                     result = await visualEffects[commandConfig.action]();
                 }
@@ -360,14 +358,26 @@ export class AvatarManager extends EventEmitter {
     }
 
     /**
+     * İstatistikleri sıfırla
+     */
+    resetStats() {
+        if (this.stats && typeof this.stats.reset === 'function') {
+            this.stats.reset();
+            this.emit('statsReset', { timestamp: Date.now() });
+            logger.info('AvatarManager stats reset');
+        }
+    }
+
+    /**
      * Sistem istatistikleri
      */
     getStats() {
+        const snapshot = this.stats.getSnapshot();
         return {
-            ...this.stats,
+            ...snapshot,
             activeUsers: this.getActiveUserCount(),
             avatarStats: this.getAvatarStats(),
-            uptime: Date.now() - this.stats.startTime,
+            uptime: Date.now() - snapshot.startTime,
             commandsAvailable: this.commands.size,
             activeCooldowns: this.cooldownManager.cooldowns?.size || 0
         };

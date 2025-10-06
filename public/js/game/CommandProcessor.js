@@ -1,8 +1,5 @@
-const SINGLE_COMMANDS = ['a', 'd', 'w', 'q', 'e'];
-const COMMAND_TIMEOUT_MS = 200;
-const IMPULSE_MULTIPLIER = 0.45;
-const BASE_IMPULSE = 200;
-const MAX_HORIZONTAL_SPEED = 500;
+import { GAME_CONSTANTS } from './GameConstants.js';
+const { SINGLE_KEYS, TIMEOUT_MS, IMPULSE_MULTIPLIER, BASE_IMPULSE, MAX_HORIZONTAL_SPEED, SEQUENCE_DELAY_MS } = GAME_CONSTANTS.COMMANDS;
 
 export class CommandProcessor {
     handle(player, command) {
@@ -14,7 +11,7 @@ export class CommandProcessor {
 
         if (normalized.length > 1 && normalized.length <= 5) {
             const sequence = normalized.split('');
-            const isValidSequence = sequence.every(char => SINGLE_COMMANDS.includes(char));
+            const isValidSequence = sequence.every(char => SINGLE_KEYS.includes(char));
 
             if (isValidSequence && sequence.length >= 2) {
                 this.executeSequence(player, sequence);
@@ -31,20 +28,20 @@ export class CommandProcessor {
             case 'a':
             case 'sol':
                 player.keys.left = true;
-                setTimeout(() => player.keys.left = false, COMMAND_TIMEOUT_MS);
+                setTimeout(() => player.keys.left = false, TIMEOUT_MS);
                 break;
             case 'd':
             case 'sag':
             case 'sağ':
                 player.keys.right = true;
-                setTimeout(() => player.keys.right = false, COMMAND_TIMEOUT_MS);
+                setTimeout(() => player.keys.right = false, TIMEOUT_MS);
                 break;
             case 'w':
             case 'yukarı':
             case 'yukari':
                 player.jumpBuffer = Math.min((player.jumpBuffer || 0) + 1, 2);
                 player.keys.up = true;
-                setTimeout(() => player.keys.up = false, COMMAND_TIMEOUT_MS);
+                setTimeout(() => player.keys.up = false, TIMEOUT_MS);
                 break;
             case 'q':
                 this.applyDiagonalMove(player, 'left');
@@ -55,19 +52,17 @@ export class CommandProcessor {
             case 'asagi':
             case 'aşağı':
                 player.keys.down = true;
-                setTimeout(() => player.keys.down = false, COMMAND_TIMEOUT_MS);
+                setTimeout(() => player.keys.down = false, TIMEOUT_MS);
                 break;
         }
     }
 
     executeSequence(player, sequence) {
-        const delayBetweenCommands = 300;
-
         sequence.forEach((cmd, index) => {
             setTimeout(() => {
                 if (!player.isAlive) return;
                 this.executeSingle(player, cmd);
-            }, index * delayBetweenCommands);
+            }, index * SEQUENCE_DELAY_MS);
         });
     }
 
@@ -85,8 +80,8 @@ export class CommandProcessor {
             -MAX_HORIZONTAL_SPEED
         );
 
-        setTimeout(() => player.keys[diagonalKey] = false, COMMAND_TIMEOUT_MS);
-        setTimeout(() => player.keys[lateralKey] = false, COMMAND_TIMEOUT_MS);
-        setTimeout(() => player.keys.up = false, COMMAND_TIMEOUT_MS);
+        setTimeout(() => player.keys[diagonalKey] = false, TIMEOUT_MS);
+        setTimeout(() => player.keys[lateralKey] = false, TIMEOUT_MS);
+        setTimeout(() => player.keys.up = false, TIMEOUT_MS);
     }
 }

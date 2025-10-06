@@ -27,60 +27,12 @@ export const CONFIG = {
     SPEECH_BUBBLE_DURATION: 300000,
         INACTIVE_TIMEOUT: 300000, // 5 minutes
         EMOJIS: [
-            // TÜRKİYE'DEN ÜNLÜ İSİMLER (20 karakter)
-            'assets/characters/arda-guler.png', // Arda Güler
-            'assets/characters/kerem-akturkoglu.png', // Kerem Aktürkoğlu
-            'assets/characters/burak-yilmaz.png', // Burak Yılmaz
-            'assets/characters/cenk-tosun.png', // Cenk Tosun
-            'assets/characters/arda-turan.png', // Arda Turan
-            'assets/characters/mesut-ozil.png', // Mesut Özil
-            'assets/characters/cristiano-ronaldo.png', // Cristiano Ronaldo
-            'assets/characters/lionel-messi.png', // Lionel Messi
-            'assets/characters/neymar.png', // Neymar
-            'assets/characters/kylian-mbappe.png', // Kylian Mbappe
-            'assets/characters/erling-haaland.png', // Erling Haaland
-            'assets/characters/mohamed-salah.png', // Mohamed Salah
-            'assets/characters/kevin-de-bruyne.png', // Kevin De Bruyne
-            'assets/characters/bruno-fernandes.png', // Bruno Fernandes
-            'assets/characters/harry-kane.png', // Harry Kane
-            'assets/characters/son-heung-min.png', // Son Heung-min
-            'assets/characters/ataturk.png', // Atatürk
-            'assets/characters/erdogan.png', // Erdoğan
-            'assets/characters/kilincdaroglu.png', // Kılıçdaroğlu
-            'assets/characters/bahceli.png', // Bahçeli
-
-            // ÇEŞİTLİ KARAKTERLER (30 karakter)
-            'assets/characters/mutlu-yuz.png', // Mutlu yüz
-            'assets/characters/robot.png', // Robot
-            'assets/characters/kedi.png', // Kedi
-            'assets/characters/unicorn.png', // Unicorn
-            'assets/characters/hayalet.png', // Hayalet
-            'assets/characters/buyucu.png', // Büyücü
-            'assets/characters/superkahraman.png', // Süper kahraman
-            'assets/characters/astronot.png', // Astronot
-            'assets/characters/asci.png', // Aşçı
-            'assets/characters/doktor.png', // Doktor
-            'assets/characters/ressam.png', // Ressam
-            'assets/characters/muzisyen.png', // Müzisyen
-            'assets/characters/futbolcu.png', // Futbolcu
-            'assets/characters/basketbolcu.png', // Basketbolcu
-            'assets/characters/gamer.png', // Gamer
-            'assets/characters/tilki.png', // Tilki
-            'assets/characters/kurt.png', // Kurt
-            'assets/characters/aslan.png', // Aslan
-            'assets/characters/panda.png', // Panda
-            'assets/characters/kelebek.png', // Kelebek
-            'assets/characters/yunus.png', // Yunus
-            'assets/characters/baykus.png', // Baykuş
-            'assets/characters/unicorn2.png', // Unicorn
-            'assets/characters/alien.png', // Alien
-            'assets/characters/palyaco.png', // Palyaço
-            'assets/characters/cadi.png', // Cadı
-            'assets/characters/zombi.png', // Zombi
-            'assets/characters/denizkizi.png', // Denizkızı
-            'assets/characters/peri.png', // Peri
-            'assets/characters/melek.png', // Melek
-            'assets/characters/kafatasi.png'  // Kafatası
+            // Eğlenceli emoji seti (yalnızca emoji)
+            '😀','😎','🥳','🤖','👻','🦄','🐲','🐱','🐶','🦊',
+            '🐼','🐵','🐸','🐯','🦄','🐙','🐳','🦋','🐝','🐞',
+            '🌟','✨','🔥','⚡','❄️','🌈','🎈','🎲','🎮','🎵',
+            '💎','🍀','🍕','🍩','🍓','🍉','🍔','🚀','🛸','⚽',
+            '🏀','🏆','🎯','🎁','💡','💥','💫','🌀','🌪️','🌊'
         ],
     },
 
@@ -365,195 +317,500 @@ export const COMMANDS = {
             cooldown: CONFIG.EFFECTS.COOLDOWNS.ADVANCED_EFFECT,
             action: 'createTrashEffect',
             type: 'global',
-            character: 'brimstone'
+            character: 'brimstone',
+            durationMs: 20000,
+            uniqueMessages: true
+        },
+        '!brimstone': {
+            name: 'Brimstone Çöp Efekti',
+            cooldown: CONFIG.EFFECTS.COOLDOWNS.ADVANCED_EFFECT,
+            action: 'createTrashEffect',
+            type: 'global',
+            character: 'brimstone',
+            durationMs: 20000,
+            uniqueMessages: true
         },
         '!phoenixçöp': {
             name: 'Phoenix Çöp Efekti',
             cooldown: CONFIG.EFFECTS.COOLDOWNS.ADVANCED_EFFECT,
             action: 'createTrashEffect',
             type: 'global',
-            character: 'phoenix'
+            character: 'phoenix',
+            durationMs: 20000,
+            uniqueMessages: true
+        },
+        '!phoenix': {
+            name: 'Phoenix Çöp Efekti',
+            cooldown: CONFIG.EFFECTS.COOLDOWNS.ADVANCED_EFFECT,
+            action: 'createTrashEffect',
+            type: 'global',
+            character: 'phoenix',
+            durationMs: 20000,
+            uniqueMessages: true
         },
         '!sageçöp': {
             name: 'Sage Çöp Efekti',
             cooldown: CONFIG.EFFECTS.COOLDOWNS.ADVANCED_EFFECT,
             action: 'createTrashEffect',
             type: 'global',
-            character: 'sage'
+            character: 'sage',
+            durationMs: 20000,
+            uniqueMessages: true
+        },
+        '!sage': {
+            name: 'Sage Çöp Efekti',
+            cooldown: CONFIG.EFFECTS.COOLDOWNS.ADVANCED_EFFECT,
+            action: 'createTrashEffect',
+            type: 'global',
+            character: 'sage',
+            durationMs: 20000,
+            uniqueMessages: true
         },
         '!sovaçöp': {
             name: 'Sova Çöp Efekti',
             cooldown: CONFIG.EFFECTS.COOLDOWNS.ADVANCED_EFFECT,
             action: 'createTrashEffect',
             type: 'global',
-            character: 'sova'
+            character: 'sova',
+            durationMs: 20000,
+            uniqueMessages: true
+        },
+        '!sova': {
+            name: 'Sova Çöp Efekti',
+            cooldown: CONFIG.EFFECTS.COOLDOWNS.ADVANCED_EFFECT,
+            action: 'createTrashEffect',
+            type: 'global',
+            character: 'sova',
+            durationMs: 20000,
+            uniqueMessages: true
         },
         '!viperçöp': {
             name: 'Viper Çöp Efekti',
             cooldown: CONFIG.EFFECTS.COOLDOWNS.ADVANCED_EFFECT,
             action: 'createTrashEffect',
             type: 'global',
-            character: 'viper'
+            character: 'viper',
+            durationMs: 20000,
+            uniqueMessages: true
+        },
+        '!viper': {
+            name: 'Viper Çöp Efekti',
+            cooldown: CONFIG.EFFECTS.COOLDOWNS.ADVANCED_EFFECT,
+            action: 'createTrashEffect',
+            type: 'global',
+            character: 'viper',
+            durationMs: 20000,
+            uniqueMessages: true
         },
         '!cypherçöp': {
             name: 'Cypher Çöp Efekti',
             cooldown: CONFIG.EFFECTS.COOLDOWNS.ADVANCED_EFFECT,
             action: 'createTrashEffect',
             type: 'global',
-            character: 'cypher'
+            character: 'cypher',
+            durationMs: 20000,
+            uniqueMessages: true
+        },
+        '!cypher': {
+            name: 'Cypher Çöp Efekti',
+            cooldown: CONFIG.EFFECTS.COOLDOWNS.ADVANCED_EFFECT,
+            action: 'createTrashEffect',
+            type: 'global',
+            character: 'cypher',
+            durationMs: 20000,
+            uniqueMessages: true
         },
         '!reynaçöp': {
             name: 'Reyna Çöp Efekti',
             cooldown: CONFIG.EFFECTS.COOLDOWNS.ADVANCED_EFFECT,
             action: 'createTrashEffect',
             type: 'global',
-            character: 'reyna'
+            character: 'reyna',
+            durationMs: 20000,
+            uniqueMessages: true
+        },
+        '!reyna': {
+            name: 'Reyna Çöp Efekti',
+            cooldown: CONFIG.EFFECTS.COOLDOWNS.ADVANCED_EFFECT,
+            action: 'createTrashEffect',
+            type: 'global',
+            character: 'reyna',
+            durationMs: 20000,
+            uniqueMessages: true
         },
         '!killjoyçöp': {
             name: 'Killjoy Çöp Efekti',
             cooldown: CONFIG.EFFECTS.COOLDOWNS.ADVANCED_EFFECT,
             action: 'createTrashEffect',
             type: 'global',
-            character: 'killjoy'
+            character: 'killjoy',
+            durationMs: 20000,
+            uniqueMessages: true
+        },
+        '!killjoy': {
+            name: 'Killjoy Çöp Efekti',
+            cooldown: CONFIG.EFFECTS.COOLDOWNS.ADVANCED_EFFECT,
+            action: 'createTrashEffect',
+            type: 'global',
+            character: 'killjoy',
+            durationMs: 20000,
+            uniqueMessages: true
         },
         '!breachçöp': {
             name: 'Breach Çöp Efekti',
             cooldown: CONFIG.EFFECTS.COOLDOWNS.ADVANCED_EFFECT,
             action: 'createTrashEffect',
             type: 'global',
-            character: 'breach'
+            character: 'breach',
+            durationMs: 20000,
+            uniqueMessages: true
+        },
+        '!breach': {
+            name: 'Breach Çöp Efekti',
+            cooldown: CONFIG.EFFECTS.COOLDOWNS.ADVANCED_EFFECT,
+            action: 'createTrashEffect',
+            type: 'global',
+            character: 'breach',
+            durationMs: 20000,
+            uniqueMessages: true
         },
         '!omençöp': {
             name: 'Omen Çöp Efekti',
             cooldown: CONFIG.EFFECTS.COOLDOWNS.ADVANCED_EFFECT,
             action: 'createTrashEffect',
             type: 'global',
-            character: 'omen'
+            character: 'omen',
+            durationMs: 20000,
+            uniqueMessages: true
+        },
+        '!omen': {
+            name: 'Omen Çöp Efekti',
+            cooldown: CONFIG.EFFECTS.COOLDOWNS.ADVANCED_EFFECT,
+            action: 'createTrashEffect',
+            type: 'global',
+            character: 'omen',
+            durationMs: 20000,
+            uniqueMessages: true
         },
         '!jettçöp': {
             name: 'Jett Çöp Efekti',
             cooldown: CONFIG.EFFECTS.COOLDOWNS.ADVANCED_EFFECT,
             action: 'createTrashEffect',
             type: 'global',
-            character: 'jett'
+            character: 'jett',
+            durationMs: 20000,
+            uniqueMessages: true
+        },
+        '!jett': {
+            name: 'Jett Çöp Efekti',
+            cooldown: CONFIG.EFFECTS.COOLDOWNS.ADVANCED_EFFECT,
+            action: 'createTrashEffect',
+            type: 'global',
+            character: 'jett',
+            durationMs: 20000,
+            uniqueMessages: true
         },
         '!razeçöp': {
             name: 'Raze Çöp Efekti',
             cooldown: CONFIG.EFFECTS.COOLDOWNS.ADVANCED_EFFECT,
             action: 'createTrashEffect',
             type: 'global',
-            character: 'raze'
+            character: 'raze',
+            durationMs: 20000,
+            uniqueMessages: true
         },
-        '!skyecöp': {
+        '!raze': {
+            name: 'Raze Çöp Efekti',
+            cooldown: CONFIG.EFFECTS.COOLDOWNS.ADVANCED_EFFECT,
+            action: 'createTrashEffect',
+            type: 'global',
+            character: 'raze',
+            durationMs: 20000,
+            uniqueMessages: true
+        },
+        '!skyeçöp': {
             name: 'Skye Çöp Efekti',
             cooldown: CONFIG.EFFECTS.COOLDOWNS.ADVANCED_EFFECT,
             action: 'createTrashEffect',
             type: 'global',
-            character: 'skye'
+            character: 'skye',
+            durationMs: 20000,
+            uniqueMessages: true
+        },
+        '!skye': {
+            name: 'Skye Çöp Efekti',
+            cooldown: CONFIG.EFFECTS.COOLDOWNS.ADVANCED_EFFECT,
+            action: 'createTrashEffect',
+            type: 'global',
+            character: 'skye',
+            durationMs: 20000,
+            uniqueMessages: true
         },
         '!yoruçöp': {
             name: 'Yoru Çöp Efekti',
             cooldown: CONFIG.EFFECTS.COOLDOWNS.ADVANCED_EFFECT,
             action: 'createTrashEffect',
             type: 'global',
-            character: 'yoru'
+            character: 'yoru',
+            durationMs: 20000,
+            uniqueMessages: true
         },
-        '!astrançöp': {
+        '!yoru': {
+            name: 'Yoru Çöp Efekti',
+            cooldown: CONFIG.EFFECTS.COOLDOWNS.ADVANCED_EFFECT,
+            action: 'createTrashEffect',
+            type: 'global',
+            character: 'yoru',
+            durationMs: 20000,
+            uniqueMessages: true
+        },
+        '!astraçöp': {
             name: 'Astra Çöp Efekti',
             cooldown: CONFIG.EFFECTS.COOLDOWNS.ADVANCED_EFFECT,
             action: 'createTrashEffect',
             type: 'global',
-            character: 'astra'
+            character: 'astra',
+            durationMs: 20000,
+            uniqueMessages: true
+        },
+        '!astra': {
+            name: 'Astra Çöp Efekti',
+            cooldown: CONFIG.EFFECTS.COOLDOWNS.ADVANCED_EFFECT,
+            action: 'createTrashEffect',
+            type: 'global',
+            character: 'astra',
+            durationMs: 20000,
+            uniqueMessages: true
         },
         '!kayoçöp': {
             name: 'Kayo Çöp Efekti',
             cooldown: CONFIG.EFFECTS.COOLDOWNS.ADVANCED_EFFECT,
             action: 'createTrashEffect',
             type: 'global',
-            character: 'kayo'
+            character: 'kayo',
+            durationMs: 20000,
+            uniqueMessages: true
+        },
+        '!kayo': {
+            name: 'Kayo Çöp Efekti',
+            cooldown: CONFIG.EFFECTS.COOLDOWNS.ADVANCED_EFFECT,
+            action: 'createTrashEffect',
+            type: 'global',
+            character: 'kayo',
+            durationMs: 20000,
+            uniqueMessages: true
         },
         '!chamberçöp': {
             name: 'Chamber Çöp Efekti',
             cooldown: CONFIG.EFFECTS.COOLDOWNS.ADVANCED_EFFECT,
             action: 'createTrashEffect',
             type: 'global',
-            character: 'chamber'
+            character: 'chamber',
+            durationMs: 20000,
+            uniqueMessages: true
+        },
+        '!chamber': {
+            name: 'Chamber Çöp Efekti',
+            cooldown: CONFIG.EFFECTS.COOLDOWNS.ADVANCED_EFFECT,
+            action: 'createTrashEffect',
+            type: 'global',
+            character: 'chamber',
+            durationMs: 20000,
+            uniqueMessages: true
         },
         '!neonçöp': {
             name: 'Neon Çöp Efekti',
             cooldown: CONFIG.EFFECTS.COOLDOWNS.ADVANCED_EFFECT,
             action: 'createTrashEffect',
             type: 'global',
-            character: 'neon'
+            character: 'neon',
+            durationMs: 20000,
+            uniqueMessages: true
+        },
+        '!neon': {
+            name: 'Neon Çöp Efekti',
+            cooldown: CONFIG.EFFECTS.COOLDOWNS.ADVANCED_EFFECT,
+            action: 'createTrashEffect',
+            type: 'global',
+            character: 'neon',
+            durationMs: 20000,
+            uniqueMessages: true
         },
         '!fadeçöp': {
             name: 'Fade Çöp Efekti',
             cooldown: CONFIG.EFFECTS.COOLDOWNS.ADVANCED_EFFECT,
             action: 'createTrashEffect',
             type: 'global',
-            character: 'fade'
+            character: 'fade',
+            durationMs: 20000,
+            uniqueMessages: true
+        },
+        '!fade': {
+            name: 'Fade Çöp Efekti',
+            cooldown: CONFIG.EFFECTS.COOLDOWNS.ADVANCED_EFFECT,
+            action: 'createTrashEffect',
+            type: 'global',
+            character: 'fade',
+            durationMs: 20000,
+            uniqueMessages: true
         },
         '!harborçöp': {
             name: 'Harbor Çöp Efekti',
             cooldown: CONFIG.EFFECTS.COOLDOWNS.ADVANCED_EFFECT,
             action: 'createTrashEffect',
             type: 'global',
-            character: 'harbor'
+            character: 'harbor',
+            durationMs: 20000,
+            uniqueMessages: true
+        },
+        '!harbor': {
+            name: 'Harbor Çöp Efekti',
+            cooldown: CONFIG.EFFECTS.COOLDOWNS.ADVANCED_EFFECT,
+            action: 'createTrashEffect',
+            type: 'global',
+            character: 'harbor',
+            durationMs: 20000,
+            uniqueMessages: true
         },
         '!gekkoçöp': {
             name: 'Gekko Çöp Efekti',
             cooldown: CONFIG.EFFECTS.COOLDOWNS.ADVANCED_EFFECT,
             action: 'createTrashEffect',
             type: 'global',
-            character: 'gekko'
+            character: 'gekko',
+            durationMs: 20000,
+            uniqueMessages: true
+        },
+        '!gekko': {
+            name: 'Gekko Çöp Efekti',
+            cooldown: CONFIG.EFFECTS.COOLDOWNS.ADVANCED_EFFECT,
+            action: 'createTrashEffect',
+            type: 'global',
+            character: 'gekko',
+            durationMs: 20000,
+            uniqueMessages: true
         },
         '!deadlockçöp': {
             name: 'Deadlock Çöp Efekti',
             cooldown: CONFIG.EFFECTS.COOLDOWNS.ADVANCED_EFFECT,
             action: 'createTrashEffect',
             type: 'global',
-            character: 'deadlock'
+            character: 'deadlock',
+            durationMs: 20000,
+            uniqueMessages: true
+        },
+        '!deadlock': {
+            name: 'Deadlock Çöp Efekti',
+            cooldown: CONFIG.EFFECTS.COOLDOWNS.ADVANCED_EFFECT,
+            action: 'createTrashEffect',
+            type: 'global',
+            character: 'deadlock',
+            durationMs: 20000,
+            uniqueMessages: true
         },
         '!isoçöp': {
             name: 'Iso Çöp Efekti',
             cooldown: CONFIG.EFFECTS.COOLDOWNS.ADVANCED_EFFECT,
             action: 'createTrashEffect',
             type: 'global',
-            character: 'iso'
+            character: 'iso',
+            durationMs: 20000,
+            uniqueMessages: true
+        },
+        '!iso': {
+            name: 'Iso Çöp Efekti',
+            cooldown: CONFIG.EFFECTS.COOLDOWNS.ADVANCED_EFFECT,
+            action: 'createTrashEffect',
+            type: 'global',
+            character: 'iso',
+            durationMs: 20000,
+            uniqueMessages: true
         },
         '!cloveçöp': {
             name: 'Clove Çöp Efekti',
             cooldown: CONFIG.EFFECTS.COOLDOWNS.ADVANCED_EFFECT,
             action: 'createTrashEffect',
             type: 'global',
-            character: 'clove'
+            character: 'clove',
+            durationMs: 20000,
+            uniqueMessages: true
+        },
+        '!clove': {
+            name: 'Clove Çöp Efekti',
+            cooldown: CONFIG.EFFECTS.COOLDOWNS.ADVANCED_EFFECT,
+            action: 'createTrashEffect',
+            type: 'global',
+            character: 'clove',
+            durationMs: 20000,
+            uniqueMessages: true
         },
         '!vyseçöp': {
             name: 'Vyse Çöp Efekti',
             cooldown: CONFIG.EFFECTS.COOLDOWNS.ADVANCED_EFFECT,
             action: 'createTrashEffect',
             type: 'global',
-            character: 'vyse'
+            character: 'vyse',
+            durationMs: 20000,
+            uniqueMessages: true
         },
-        '!tejocöp': {
+        '!vyse': {
+            name: 'Vyse Çöp Efekti',
+            cooldown: CONFIG.EFFECTS.COOLDOWNS.ADVANCED_EFFECT,
+            action: 'createTrashEffect',
+            type: 'global',
+            character: 'vyse',
+            durationMs: 20000,
+            uniqueMessages: true
+        },
+        '!tejoçöp': {
             name: 'Tejo Çöp Efekti',
             cooldown: CONFIG.EFFECTS.COOLDOWNS.ADVANCED_EFFECT,
             action: 'createTrashEffect',
             type: 'global',
-            character: 'tejo'
+            character: 'tejo',
+            durationMs: 20000,
+            uniqueMessages: true
+        },
+        '!tejo': {
+            name: 'Tejo Çöp Efekti',
+            cooldown: CONFIG.EFFECTS.COOLDOWNS.ADVANCED_EFFECT,
+            action: 'createTrashEffect',
+            type: 'global',
+            character: 'tejo',
+            durationMs: 20000,
+            uniqueMessages: true
         },
         '!waylayçöp': {
             name: 'Waylay Çöp Efekti',
             cooldown: CONFIG.EFFECTS.COOLDOWNS.ADVANCED_EFFECT,
             action: 'createTrashEffect',
             type: 'global',
-            character: 'waylay'
+            character: 'waylay',
+            durationMs: 20000,
+            uniqueMessages: true
+        },
+        '!waylay': {
+            name: 'Waylay Çöp Efekti',
+            cooldown: CONFIG.EFFECTS.COOLDOWNS.ADVANCED_EFFECT,
+            action: 'createTrashEffect',
+            type: 'global',
+            character: 'waylay',
+            durationMs: 20000,
+            uniqueMessages: true
+        },
+        '!veto': {
+            name: 'Veto Çöp Efekti',
+            cooldown: CONFIG.EFFECTS.COOLDOWNS.ADVANCED_EFFECT,
+            action: 'createTrashEffect',
+            type: 'global',
+            character: 'veto',
+            durationMs: 20000,
+            uniqueMessages: true
         }
     }
 };
 
 // Tüm komutları ayrı export et
-// (Bu kısım SPECIAL_CHARACTER_COMMANDS'tan sonra güncellenecek)
 
 // Hareket komutları
 export const MOVEMENT_COMMANDS = COMMANDS.MOVEMENT;
@@ -603,607 +860,428 @@ export const GAME_COMMANDS = {
     }
 };
 
-// Özel karakter komutları (görünür listede yok ama çalışır)
-export const SPECIAL_CHARACTER_COMMANDS = {
-    // Türk ünlüleri
-    '!arda': {
-        name: 'Arda Güler',
-        cooldown: CONFIG.EFFECTS.COOLDOWNS.BASIC_EFFECT,
-        action: 'setCharacter',
-        type: 'character',
-        characterIndex: 0
-    },
-    '!kerem': {
-        name: 'Kerem Aktürkoğlu',
-        cooldown: CONFIG.EFFECTS.COOLDOWNS.BASIC_EFFECT,
-        action: 'setCharacter',
-        type: 'character',
-        characterIndex: 1
-    },
-    '!burak': {
-        name: 'Burak Yılmaz',
-        cooldown: CONFIG.EFFECTS.COOLDOWNS.BASIC_EFFECT,
-        action: 'setCharacter',
-        type: 'character',
-        characterIndex: 2
-    },
-    '!cenk': {
-        name: 'Cenk Tosun',
-        cooldown: CONFIG.EFFECTS.COOLDOWNS.BASIC_EFFECT,
-        action: 'setCharacter',
-        type: 'character',
-        characterIndex: 3
-    },
-    '!arda-turan': {
-        name: 'Arda Turan',
-        cooldown: CONFIG.EFFECTS.COOLDOWNS.BASIC_EFFECT,
-        action: 'setCharacter',
-        type: 'character',
-        characterIndex: 4
-    },
-    '!mesut': {
-        name: 'Mesut Özil',
-        cooldown: CONFIG.EFFECTS.COOLDOWNS.BASIC_EFFECT,
-        action: 'setCharacter',
-        type: 'character',
-        characterIndex: 5
-    },
-    '!ronaldo': {
-        name: 'Cristiano Ronaldo',
-        cooldown: CONFIG.EFFECTS.COOLDOWNS.BASIC_EFFECT,
-        action: 'setCharacter',
-        type: 'character',
-        characterIndex: 6
-    },
-    '!messi': {
-        name: 'Lionel Messi',
-        cooldown: CONFIG.EFFECTS.COOLDOWNS.BASIC_EFFECT,
-        action: 'setCharacter',
-        type: 'character',
-        characterIndex: 7
-    },
-    '!neymar': {
-        name: 'Neymar',
-        cooldown: CONFIG.EFFECTS.COOLDOWNS.BASIC_EFFECT,
-        action: 'setCharacter',
-        type: 'character',
-        characterIndex: 8
-    },
-    '!mbappe': {
-        name: 'Kylian Mbappe',
-        cooldown: CONFIG.EFFECTS.COOLDOWNS.BASIC_EFFECT,
-        action: 'setCharacter',
-        type: 'character',
-        characterIndex: 9
-    },
-    '!haaland': {
-        name: 'Erling Haaland',
-        cooldown: CONFIG.EFFECTS.COOLDOWNS.BASIC_EFFECT,
-        action: 'setCharacter',
-        type: 'character',
-        characterIndex: 10
-    },
-    '!salah': {
-        name: 'Mohamed Salah',
-        cooldown: CONFIG.EFFECTS.COOLDOWNS.BASIC_EFFECT,
-        action: 'setCharacter',
-        type: 'character',
-        characterIndex: 11
-    },
-    '!de-bruyne': {
-        name: 'Kevin De Bruyne',
-        cooldown: CONFIG.EFFECTS.COOLDOWNS.BASIC_EFFECT,
-        action: 'setCharacter',
-        type: 'character',
-        characterIndex: 12
-    },
-    '!bruno': {
-        name: 'Bruno Fernandes',
-        cooldown: CONFIG.EFFECTS.COOLDOWNS.BASIC_EFFECT,
-        action: 'setCharacter',
-        type: 'character',
-        characterIndex: 13
-    },
-    '!kane': {
-        name: 'Harry Kane',
-        cooldown: CONFIG.EFFECTS.COOLDOWNS.BASIC_EFFECT,
-        action: 'setCharacter',
-        type: 'character',
-        characterIndex: 14
-    },
-    '!son': {
-        name: 'Son Heung-min',
-        cooldown: CONFIG.EFFECTS.COOLDOWNS.BASIC_EFFECT,
-        action: 'setCharacter',
-        type: 'character',
-        characterIndex: 15
-    },
-    '!ataturk': {
-        name: 'Atatürk',
-        cooldown: CONFIG.EFFECTS.COOLDOWNS.BASIC_EFFECT,
-        action: 'setCharacter',
-        type: 'character',
-        characterIndex: 16
-    },
-    '!erdogan': {
-        name: 'Erdoğan',
-        cooldown: CONFIG.EFFECTS.COOLDOWNS.BASIC_EFFECT,
-        action: 'setCharacter',
-        type: 'character',
-        characterIndex: 17
-    },
-    '!kilincdaroglu': {
-        name: 'Kılıçdaroğlu',
-        cooldown: CONFIG.EFFECTS.COOLDOWNS.BASIC_EFFECT,
-        action: 'setCharacter',
-        type: 'character',
-        characterIndex: 18
-    },
-    '!bahceli': {
-        name: 'Bahçeli',
-        cooldown: CONFIG.EFFECTS.COOLDOWNS.BASIC_EFFECT,
-        action: 'setCharacter',
-        type: 'character',
-        characterIndex: 19
-    },
-
-    // Çeşitli karakterler
-    '!mutlu': {
-        name: 'Mutlu Yüz',
-        cooldown: CONFIG.EFFECTS.COOLDOWNS.BASIC_EFFECT,
-        action: 'setCharacter',
-        type: 'character',
-        characterIndex: 20
-    },
-    '!robot': {
-        name: 'Robot',
-        cooldown: CONFIG.EFFECTS.COOLDOWNS.BASIC_EFFECT,
-        action: 'setCharacter',
-        type: 'character',
-        characterIndex: 21
-    },
-    '!kedi': {
-        name: 'Kedi',
-        cooldown: CONFIG.EFFECTS.COOLDOWNS.BASIC_EFFECT,
-        action: 'setCharacter',
-        type: 'character',
-        characterIndex: 22
-    },
-    '!unicorn': {
-        name: 'Unicorn',
-        cooldown: CONFIG.EFFECTS.COOLDOWNS.BASIC_EFFECT,
-        action: 'setCharacter',
-        type: 'character',
-        characterIndex: 23
-    },
-    '!hayalet': {
-        name: 'Hayalet',
-        cooldown: CONFIG.EFFECTS.COOLDOWNS.BASIC_EFFECT,
-        action: 'setCharacter',
-        type: 'character',
-        characterIndex: 24
-    },
-    '!buyucu': {
-        name: 'Büyücü',
-        cooldown: CONFIG.EFFECTS.COOLDOWNS.BASIC_EFFECT,
-        action: 'setCharacter',
-        type: 'character',
-        characterIndex: 25
-    },
-    '!superkahraman': {
-        name: 'Süper Kahraman',
-        cooldown: CONFIG.EFFECTS.COOLDOWNS.BASIC_EFFECT,
-        action: 'setCharacter',
-        type: 'character',
-        characterIndex: 26
-    },
-    '!astronot': {
-        name: 'Astronot',
-        cooldown: CONFIG.EFFECTS.COOLDOWNS.BASIC_EFFECT,
-        action: 'setCharacter',
-        type: 'character',
-        characterIndex: 27
-    },
-    '!asci': {
-        name: 'Aşçı',
-        cooldown: CONFIG.EFFECTS.COOLDOWNS.BASIC_EFFECT,
-        action: 'setCharacter',
-        type: 'character',
-        characterIndex: 28
-    },
-    '!doktor': {
-        name: 'Doktor',
-        cooldown: CONFIG.EFFECTS.COOLDOWNS.BASIC_EFFECT,
-        action: 'setCharacter',
-        type: 'character',
-        characterIndex: 29
-    },
-    '!ressam': {
-        name: 'Ressam',
-        cooldown: CONFIG.EFFECTS.COOLDOWNS.BASIC_EFFECT,
-        action: 'setCharacter',
-        type: 'character',
-        characterIndex: 30
-    },
-    '!muzisyen': {
-        name: 'Müzisyen',
-        cooldown: CONFIG.EFFECTS.COOLDOWNS.BASIC_EFFECT,
-        action: 'setCharacter',
-        type: 'character',
-        characterIndex: 31
-    },
-    '!futbolcu': {
-        name: 'Futbolcu',
-        cooldown: CONFIG.EFFECTS.COOLDOWNS.BASIC_EFFECT,
-        action: 'setCharacter',
-        type: 'character',
-        characterIndex: 32
-    },
-    '!basketbolcu': {
-        name: 'Basketbolcu',
-        cooldown: CONFIG.EFFECTS.COOLDOWNS.BASIC_EFFECT,
-        action: 'setCharacter',
-        type: 'character',
-        characterIndex: 33
-    },
-    '!gamer': {
-        name: 'Gamer',
-        cooldown: CONFIG.EFFECTS.COOLDOWNS.BASIC_EFFECT,
-        action: 'setCharacter',
-        type: 'character',
-        characterIndex: 34
-    },
-    '!tilki': {
-        name: 'Tilki',
-        cooldown: CONFIG.EFFECTS.COOLDOWNS.BASIC_EFFECT,
-        action: 'setCharacter',
-        type: 'character',
-        characterIndex: 35
-    },
-    '!kurt': {
-        name: 'Kurt',
-        cooldown: CONFIG.EFFECTS.COOLDOWNS.BASIC_EFFECT,
-        action: 'setCharacter',
-        type: 'character',
-        characterIndex: 36
-    },
-    '!aslan': {
-        name: 'Aslan',
-        cooldown: CONFIG.EFFECTS.COOLDOWNS.BASIC_EFFECT,
-        action: 'setCharacter',
-        type: 'character',
-        characterIndex: 37
-    },
-    '!panda': {
-        name: 'Panda',
-        cooldown: CONFIG.EFFECTS.COOLDOWNS.BASIC_EFFECT,
-        action: 'setCharacter',
-        type: 'character',
-        characterIndex: 38
-    },
-    '!kelebek': {
-        name: 'Kelebek',
-        cooldown: CONFIG.EFFECTS.COOLDOWNS.BASIC_EFFECT,
-        action: 'setCharacter',
-        type: 'character',
-        characterIndex: 39
-    },
-    '!yunus': {
-        name: 'Yunus',
-        cooldown: CONFIG.EFFECTS.COOLDOWNS.BASIC_EFFECT,
-        action: 'setCharacter',
-        type: 'character',
-        characterIndex: 40
-    },
-    '!baykus': {
-        name: 'Baykuş',
-        cooldown: CONFIG.EFFECTS.COOLDOWNS.BASIC_EFFECT,
-        action: 'setCharacter',
-        type: 'character',
-        characterIndex: 41
-    },
-    '!alien': {
-        name: 'Alien',
-        cooldown: CONFIG.EFFECTS.COOLDOWNS.BASIC_EFFECT,
-        action: 'setCharacter',
-        type: 'character',
-        characterIndex: 42
-    },
-    '!palyaco': {
-        name: 'Palyaço',
-        cooldown: CONFIG.EFFECTS.COOLDOWNS.BASIC_EFFECT,
-        action: 'setCharacter',
-        type: 'character',
-        characterIndex: 43
-    },
-    '!cadi': {
-        name: 'Cadı',
-        cooldown: CONFIG.EFFECTS.COOLDOWNS.BASIC_EFFECT,
-        action: 'setCharacter',
-        type: 'character',
-        characterIndex: 44
-    },
-    '!zombi': {
-        name: 'Zombi',
-        cooldown: CONFIG.EFFECTS.COOLDOWNS.BASIC_EFFECT,
-        action: 'setCharacter',
-        type: 'character',
-        characterIndex: 45
-    },
-    '!denizkizi': {
-        name: 'Denizkızı',
-        cooldown: CONFIG.EFFECTS.COOLDOWNS.BASIC_EFFECT,
-        action: 'setCharacter',
-        type: 'character',
-        characterIndex: 46
-    },
-    '!peri': {
-        name: 'Peri',
-        cooldown: CONFIG.EFFECTS.COOLDOWNS.BASIC_EFFECT,
-        action: 'setCharacter',
-        type: 'character',
-        characterIndex: 47
-    },
-    '!melek': {
-        name: 'Melek',
-        cooldown: CONFIG.EFFECTS.COOLDOWNS.BASIC_EFFECT,
-        action: 'setCharacter',
-        type: 'character',
-        characterIndex: 48
-    },
-    '!kafatasi': {
-        name: 'Kafatası',
-        cooldown: CONFIG.EFFECTS.COOLDOWNS.BASIC_EFFECT,
-        action: 'setCharacter',
-        type: 'character',
-        characterIndex: 49
-    }
-};
-
 // VALORANT KARAKTERLERİ İÇİN ÇÖP EFEKTİ AYARLARI
 export const VALORANT_TRASH_EFFECTS = {
     brimstone: {
         name: 'BRIMSTONE',
+        title: 'BRIMSTONE ÇÖPLÜĞÜ!',
+        titleColor: '#FF4500',
+        messageColor: '#FFA500',
         messages: [
-            'ÇÖP ORB', 'BOZUK BRIMSTONE', 'ÇÖP TOPÇUSU', 'BRIMSTONE ÇÖP',
-            'ORB ARTIĞI', 'İNCENDİARY ÇÖP', 'BRIMSTONE BOZUK', 'ÇÖP ORB',
-            'TOPÇU HURDASI', 'BRIMSTONE ARTIK', 'ÇÖP İNCENDİARY', 'BOZUK TOPÇU'
+            "Molly atıyor kendisi yanıyor.",
+            "Smoke attığı yere düşman push atıyor zaten.",
+            "Stim beacon koyuyor kimse kullanmıyor.",
+            "Ulti çağırırken düşman kaçıyor, boş yere harcanıyor.",
+            "Haritayı açması defuse süresinden uzun.",
+            "Yaşlı abi taktik veriyor, round kaybediliyor."
         ],
-        parts: ['💥', '🔥', '💣', '🎯', '🚀', '⚡', '💥', '🔥', '💣', '🎯', '🚀', '⚡']
+        parts: ['🔥','�','�️','�']
     },
     phoenix: {
         name: 'PHOENIX',
+        title: 'PHOENIX KÖMÜRÜ!',
+        titleColor: '#FF6B00',
+        messageColor: '#FFD700',
         messages: [
-            'ÇÖP KUŞU', 'BOZUK PHOENIX', 'ÇÖP ATEŞİ', 'PHOENIX ÇÖP',
-            'KUŞ ARTIĞI', 'FIRE ÇÖP', 'PHOENIX BOZUK', 'ÇÖP KUŞU',
-            'ATEŞ HURDASI', 'PHOENIX ARTIK', 'ÇÖP FIRE', 'BOZUK KUŞ'
+            "Flash atıyor takım kör, düşman değil.",
+            "Wall çekiyor düşmana kapı açıyor.",
+            "Molly kendine, heal düşmana.",
+            "Ulti popunu harcıyor 0 kill'e.",
+            "Her şeyi tutuşturuyor ama düşmanı değil.",
+            "Ateş topu kendisi gibi, işe yaramaz."
         ],
-        parts: ['🔥', '🐦', '💥', '🌟', '⚡', '🔥', '🐦', '💥', '🌟', '⚡', '🔥', '🐦']
+        parts: ['🔥','�','💥','�']
     },
     sage: {
         name: 'SAGE',
+        title: 'SAGE SAÇMALIĞI!',
+        titleColor: '#00FF88',
+        messageColor: '#7FFFD4',
         messages: [
-            'ÇÖP İYİLEŞTİRİCİ', 'BOZUK SAGE', 'ÇÖP BARIŞÇI', 'SAGE ÇÖP',
-            'IYİLEŞTİRİCİ ARTIĞI', 'HEALING ÇÖP', 'SAGE BOZUK', 'ÇÖP BARIŞÇI',
-            'BARIŞÇI HURDASI', 'SAGE ARTIK', 'ÇÖP HEALING', 'BOZUK İYİLEŞTİRİCİ'
+            "Wall düşmana boost, kendine engel.",
+            "Heal kendine, takım ölüyor.",
+            "Slow orb attığı yere kimse gelmiyor.",
+            "Res ult harcanıyor en kötü oyuncuya.",
+            "İyileştirici değil hastalık gibi.",
+            "Bilge kadın ama aptal hareketler."
         ],
-        parts: ['💚', '🌿', '✨', '🕊️', '💚', '🌿', '✨', '🕊️', '💚', '🌿', '✨', '🕊️']
+        parts: ['🧊','','�','🧘']
     },
     sova: {
         name: 'SOVA',
+        title: 'SOVA ŞAŞKINI!',
+        titleColor: '#4169E1',
+        messageColor: '#87CEEB',
         messages: [
-            'ÇÖP OKÇU', 'BOZUK SOVA', 'ÇÖP İZCİ', 'SOVA ÇÖP',
-            'OKÇU ARTIĞI', 'RECON ÇÖP', 'SOVA BOZUK', 'ÇÖP İZCİ',
-            'IZCİ HURDASI', 'SOVA ARTIK', 'ÇÖP RECON', 'BOZUK OKÇU'
+            "Dart atıyor duvardan dönüyor kendini gösteriyor.",
+            "Shock dart hesabı yanlış, kendine geliyor.",
+            "Drone kullanırken vurulup ölüyor.",
+            "Ulti 3 ok, 3'ü de hava.",
+            "Keşif uzmanı ama kendini keşfettiriyor.",
+            "Avcı değil av olmuş."
         ],
-        parts: ['🏹', '🎯', '🦅', '⚡', '🏹', '🎯', '🦅', '⚡', '🏹', '🎯', '🦅', '⚡']
+        parts: ['🏹','🦅','⚡','']
     },
     viper: {
         name: 'VIPER',
+        title: 'VIPER ZEHİRİ!',
+        titleColor: '#00FF00',
+        messageColor: '#32CD32',
         messages: [
-            'ÇÖP ZEHİRLİ', 'BOZUK VIPER', 'ÇÖP KİMYAGER', 'VIPER ÇÖP',
-            'ZEHİRLİ ARTIĞI', 'POISON ÇÖP', 'VIPER BOZUK', 'ÇÖP KİMYAGER',
-            'KİMYAGER HURDASI', 'VIPER ARTIK', 'ÇÖP POISON', 'BOZUK ZEHİRLİ'
+            "Toxin attığı yerde takım oynayamıyor.",
+            "Wall çekiyor görüş sıfır, düşman geçiyor.",
+            "Orb atmayı unutuyor, boş duruyor.",
+            "Molly gecikiyor, düşman defuse bitiyor.",
+            "Zehir uzmani ama takıma zehir oluyor.",
+            "Her şeyi toxic kendisi gibi."
         ],
-        parts: ['🧪', '☠️', '💚', '🦂', '🧪', '☠️', '💚', '🦂', '🧪', '☠️', '💚', '🦂']
+        parts: ['☣️','�','💚','']
     },
     cypher: {
         name: 'CYPHER',
+        title: 'CYPHER ÇÖPLÜĞÜ!',
+        titleColor: '#FFFFFF',
+        messageColor: '#C0C0C0',
         messages: [
-            'ÇÖP KAMERA', 'BOZUK CYPHER', 'ÇÖP GİZLİ', 'CYPHER ÇÖP',
-            'KAMERA ARTIĞI', 'SPY ÇÖP', 'CYPHER BOZUK', 'ÇÖP GİZLİ',
-            'GİZLİ HURDASI', 'CYPHER ARTIK', 'ÇÖP SPY', 'BOZUK KAMERA'
+            "Trap koyuyor en saçma yerlere, kimse basmıyor.",
+            "Cage atıyor düşman içinden rahat geçiyor.",
+            "Kamera izlerken arkadan vurulup ölüyor.",
+            "Ulti atıyor zaten bilinen yerleri gösteriyor.",
+            "İstihbarat uzmanı ama hiçbir şey bilmiyor.",
+            "Casusmuş ama ilk ölen o."
         ],
-        parts: ['📷', '👁️', '🕵️', '⚡', '📷', '👁️', '🕵️', '⚡', '📷', '👁️', '🕵️', '⚡']
+        parts: ['📷','🎩','�','🕵️']
     },
     reyna: {
         name: 'REYNA',
+        title: 'REYNA FAKİRİ!',
+        titleColor: '#8B008B',
+        messageColor: '#DA70D6',
         messages: [
-            'ÇÖP VAMPIRE', 'BOZUK REYNA', 'ÇÖP RADİANT', 'REYNA ÇÖP',
-            'VAMPIRE ARTIĞI', 'EMPRESS ÇÖP', 'REYNA BOZUK', 'ÇÖP RADİANT',
-            'RADİANT HURDASI', 'REYNA ARTIK', 'ÇÖP EMPRESS', 'BOZUK VAMPIRE'
+            "Leer atıyor duvara, düşman görüyor.",
+            "Dismiss basıyor düşmanın yanına gidiyor.",
+            "Devour yaparken vurulup ölüyor.",
+            "Ulti açıyor panik modunda spray ediyor.",
+            "Kill alamayınca çöp oluyor zaten.",
+            "Vampir değil böcek gibi eziiliyor."
         ],
-        parts: ['🧛', '👑', '💎', '⚡', '🧛', '👑', '💎', '⚡', '🧛', '👑', '💎', '⚡']
+        parts: ['�️','�','�','�']
     },
     killjoy: {
         name: 'KILLJOY',
+        title: 'KILLJOY BOZUKLUĞU!',
+        titleColor: '#FFD700',
+        messageColor: '#FFFF00',
         messages: [
-            'ÇÖP ROBOT', 'BOZUK KILLJOY', 'ÇÖP MÜHENDİS', 'KILLJOY ÇÖP',
-            'ROBOT ARTIĞI', 'TURRET ÇÖP', 'KILLJOY BOZUK', 'ÇÖP MÜHENDİS',
-            'MÜHENDİS HURDASI', 'KILLJOY ARTIK', 'ÇÖP TURRET', 'BOZUK ROBOT'
+            "Turret koyuyor düşman arkadan geliyor.",
+            "Nanoswarm patlatıyor boş yere, düşman yok.",
+            "Alarmbot en saçma yerde, hiçbir işe yaramıyor.",
+            "Lockdown ulti düşman kaçıyor, boşa.",
+            "Dahi kız ama zekalı oyun yok.",
+            "Botları akıllı ama kendisi değil."
         ],
-        parts: ['🤖', '⚙️', '🔧', '💣', '🤖', '⚙️', '🔧', '💣', '🤖', '⚙️', '🔧', '💣']
+        parts: ['🤖','⚙️','','🔧']
     },
     breach: {
         name: 'BREACH',
+        title: 'BREACH BOZUKLUĞU!',
+        titleColor: '#FF8C00',
+        messageColor: '#FFA500',
         messages: [
-            'ÇÖP PATLAYICI', 'BOZUK BREACH', 'ÇÖP ŞOK', 'BREACH ÇÖP',
-            'PATLAYICI ARTIĞI', 'FLASH ÇÖP', 'BREACH BOZUK', 'ÇÖP ŞOK',
-            'ŞOK HURDASI', 'BREACH ARTIK', 'ÇÖP FLASH', 'BOZUK PATLAYICI'
+            "Flash atıyor takım kör, düşman hazır.",
+            "Aftershock çakıyor kimse yok orada.",
+            "Fault line yanlış yöne, işe yaramıyor.",
+            "Ulti atıyor düşman zaten kaçmış.",
+            "Duvar delen adam ama kafası delmemiş.",
+            "Şok dalgaları beynine ulaşmamış."
         ],
-        parts: ['💥', '⚡', '🔨', '💣', '💥', '⚡', '🔨', '💣', '💥', '⚡', '🔨', '💣']
+        parts: ['�','','⚡','🔨']
     },
     omen: {
         name: 'OMEN',
+        title: 'OMEN GÖLGE ÇÖPÜ!',
+        titleColor: '#4B0082',
+        messageColor: '#9370DB',
         messages: [
-            'ÇÖP HAYALET', 'BOZUK OMEN', 'ÇÖP GÖLGE', 'OMEN ÇÖP',
-            'HAYALET ARTIĞI', 'SHROUD ÇÖP', 'OMEN BOZUK', 'ÇÖP GÖLGE',
-            'GÖLGE HURDASI', 'OMEN ARTIK', 'ÇÖP SHROUD', 'BOZUK HAYALET'
+            "TP atıyor ses bombası gibi duyuruyor.",
+            "Paranoya takımı vuruyor daha çok.",
+            "Smoke atması defuse süresinden uzun.",
+            "Ulti deneyişi bedava kill düşmana.",
+            "Gölge değil hedef tahtası.",
+            "Karanlıktan gelmiyor, direkt ışığa."
         ],
-        parts: ['👻', '💀', '🦇', '🕸️', '👻', '💀', '🦇', '🕸️', '👻', '💀', '🦇', '🕸️']
+        parts: ['👻','🌑','💀','🌫️']
     },
     jett: {
         name: 'JETT',
+        title: 'JETT ÇÖP RÜZGARI!',
+        titleColor: '#00BFFF',
+        messageColor: '#87CEEB',
         messages: [
-            'ÇÖP RÜZGAR', 'BOZUK JETT', 'ÇÖP DÜŞMAN', 'JETT ÇÖP',
-            'RÜZGAR ARTIĞI', 'DUELIST ÇÖP', 'JETT BOZUK', 'ÇÖP DÜŞMAN',
-            'DÜŞMAN HURDASI', 'JETT ARTIK', 'ÇÖP DUELIST', 'BOZUK RÜZGAR'
+            "Dash var ama ilk ölen yine o.",
+            "Op alıyor 0 kill yapıyor.",
+            "Updraft atıp uçan kaz gibi vurluyor.",
+            "Cloud kendine, düşman net görüyor.",
+            "5 bıçak ultisi, 5'i de hava.",
+            "Hızlı ölüm garantisi."
         ],
-        parts: ['💨', '🌀', '⚡', '🌪️', '💨', '🌀', '⚡', '🌪️', '💨', '🌀', '⚡', '🌪️']
+        parts: ['💨','️','☁️','⚡']
     },
     raze: {
         name: 'RAZE',
+        title: 'RAZE PATLAMA ÇÖPÜ!',
+        titleColor: '#FF1493',
+        messageColor: '#FF69B4',
         messages: [
-            'ÇÖP PATLAYICI', 'BOZUK RAZE', 'ÇÖP GRENADE', 'RAZE ÇÖP',
-            'PATLAYICI ARTIĞI', 'SHOWSTOPPER ÇÖP', 'RAZE BOZUK', 'ÇÖP GRENADE',
-            'GRENADE HURDASI', 'RAZE ARTIK', 'ÇÖP SHOWSTOPPER', 'BOZUK PATLAYICI'
+            "Nade atıyor takıma, düşman sağlam.",
+            "Boom bot salıyor kendi peşinden koşuyor.",
+            "Satchel kendini uçuruyor düşmanın kucağına.",
+            "Ulti roket kendinden dönüyor bazen.",
+            "Patlayıcı uzmanı ama patlamış kafası.",
+            "Hasar kendine takıma, düşman rahat."
         ],
-        parts: ['💣', '🎆', '🔥', '💥', '💣', '🎆', '🔥', '💥', '💣', '🎆', '🔥', '💥']
+        parts: ['💥','🧨','�','💣']
     },
     skye: {
         name: 'SKYE',
+        title: 'SKYE DOĞA ÇÖPÜ!',
+        titleColor: '#32CD32',
+        messageColor: '#90EE90',
         messages: [
-            'ÇÖP HAYVAN', 'BOZUK SKYE', 'ÇÖP İZCİ', 'SKYE ÇÖP',
-            'HAYVAN ARTIĞI', 'GUIDE ÇÖP', 'SKYE BOZUK', 'ÇÖP İZCİ',
-            'IZCİ HURDASI', 'SKYE ARTIK', 'ÇÖP GUIDE', 'BOZUK HAYVAN'
+            "Flash köpeği takımı ısırıyor.",
+            "Heal poolu koyuyor kimse gelmiyor.",
+            "Trailblazer gönderirken vurulup ölüyor.",
+            "Ulti atıyor düşman yok bile.",
+            "Avustralyalı ama her şey ters gidiyor.",
+            "Doğanın gücü değil acizliği."
         ],
-        parts: ['🐺', '🦅', '🌿', '🦊', '🐺', '🦅', '🌿', '🦊', '🐺', '🦅', '🌿', '🦊']
+        parts: ['�','🌿','🐺','�']
     },
     yoru: {
         name: 'YORU',
+        title: 'YORU YALANCIĞI!',
+        titleColor: '#0000FF',
+        messageColor: '#6495ED',
         messages: [
-            'ÇÖP GÖLGE', 'BOZUK YORU', 'ÇÖP HAYALET', 'YORU ÇÖP',
-            'GÖLGE ARTIĞI', 'DIMENSION ÇÖP', 'YORU BOZUK', 'ÇÖP HAYALET',
-            'HAYALET HURDASI', 'YORU ARTIK', 'ÇÖP DIMENSION', 'BOZUK GÖLGE'
+            "Clone gönderip 2 saniye sonra belli oluyor.",
+            "Gatecrash atıp düşmanın yanına ışınlanıyor.",
+            "Flash en kötü açıdan atıyor, işe yaramıyor.",
+            "Ulti'de görünmez değil sadece şeffaf.",
+            "Japon ninja değil palyaço.",
+            "Aldatıcı ama kendini aldatıyor."
         ],
-        parts: ['👤', '🌀', '⚡', '🌑', '👤', '🌀', '⚡', '🌑', '👤', '🌀', '⚡', '🌑']
+        parts: ['👤','�','⚡','']
     },
     astra: {
         name: 'ASTRA',
+        title: 'ASTRA KOZMİK ÇÖPÜ!',
+        titleColor: '#9400D3',
+        messageColor: '#BA55D3',
         messages: [
-            'ÇÖP YILDIZ', 'BOZUK ASTRA', 'ÇÖP KOZMİK', 'ASTRA ÇÖP',
-            'YILDIZ ARTIĞI', 'COSMIC ÇÖP', 'ASTRA BOZUK', 'ÇÖP KOZMİK',
-            'KOZMİK HURDASI', 'ASTRA ARTIK', 'ÇÖP COSMIC', 'BOZUK YILDIZ'
+            "Yıldız koyuyor yanlış yerlere.",
+            "Smok çekerken takım 4v5 oynuyor.",
+            "Stun atıyor düşman geçmiş bile.",
+            "Ulti duvarı hiçbir işe yaramıyor.",
+            "Kozmos gücü var ama beyin yok.",
+            "Yıldızlar gibi uzakta kalmış oyundan."
         ],
-        parts: ['⭐', '🌟', '🌌', '🪐', '⭐', '🌟', '🌌', '🪐', '⭐', '🌟', '🌌', '🪐']
+        parts: ['⭐','🌟','🌌','🪐']
     },
     kayo: {
         name: 'KAY/O',
+        title: 'KAY/O ROBOT ÇÖPÜ!',
+        titleColor: '#708090',
+        messageColor: '#A9A9A9',
         messages: [
-            'ÇÖP ROBOT', 'BOZUK KAYO', 'ÇÖP YENİDEN', 'KAYO ÇÖP',
-            'ROBOT ARTIĞI', 'INITIATOR ÇÖP', 'KAYO BOZUK', 'ÇÖP YENİDEN',
-            'YENİDEN HURDASI', 'KAYO ARTIK', 'ÇÖP INITIATOR', 'BOZUK ROBOT'
+            "Molly atıyor boş köşeye.",
+            "Flash kendini etkiliyor gibi oynuyor.",
+            "Knife atıyor suppres olmuyor kimse.",
+            "Ulti açıp ilk ölüyor, res yok.",
+            "Robot ama yapay zeka seviyesi düşük.",
+            "Bastır yeteneği var ama bastırılamaz aptallığı."
         ],
-        parts: ['🤖', '⚙️', '🔧', '💻', '🤖', '⚙️', '🔧', '💻', '🤖', '⚙️', '🔧', '💻']
+        parts: ['🤖','⚡','�','�']
     },
     chamber: {
         name: 'CHAMBER',
+        title: 'CHAMBER ÇÖPLÜĞÜ!',
+        titleColor: '#FFD700',
+        messageColor: '#DAA520',
         messages: [
-            'ÇÖP SİLAH', 'BOZUK CHAMBER', 'ÇÖP AVCI', 'CHAMBER ÇÖP',
-            'SİLAH ARTIĞI', 'SENTINEL ÇÖP', 'CHAMBER BOZUK', 'ÇÖP AVCI',
-            'AVCI HURDASI', 'CHAMBER ARTIK', 'ÇÖP SENTINEL', 'BOZUK SİLAH'
+            "Trap koyuyor en saçma yerlere.",
+            "TP noktası düşmanın tam yanında.",
+            "Headhunter alıyor bacak vuruyor.",
+            "Ulti sniperı kaçırıyor hep.",
+            "Fransız ama marifet yok.",
+            "Zengin ama yoksul oyun."
         ],
-        parts: ['🔫', '🎯', '⚡', '💎', '🔫', '🎯', '⚡', '💎', '🔫', '🎯', '⚡', '💎']
+        parts: ['�','�','🔫','��']
     },
     neon: {
         name: 'NEON',
+        title: 'NEON ŞİMŞEK ÇÖPÜ!',
+        titleColor: '#00FFFF',
+        messageColor: '#00CED1',
         messages: [
-            'ÇÖP ELEKTRİK', 'BOZUK NEON', 'ÇÖP HIZLI', 'NEON ÇÖP',
-            'ELEKTRİK ARTIĞI', 'SPEED ÇÖP', 'NEON BOZUK', 'ÇÖP HIZLI',
-            'HIZLI HURDASI', 'NEON ARTIK', 'ÇÖP SPEED', 'BOZUK ELEKTRİK'
+            "Koşuyor düşmana direkt gidiyor.",
+            "Stun atıyor kendine yakın, etkisiz.",
+            "Duvar çekiyor düşman rahat geçiyor.",
+            "Ulti açıp spray ediyor, sıfır kill.",
+            "Elektrik hızı var beyin yok.",
+            "Filipinli şimşek ama tek çakan kafası."
         ],
-        parts: ['⚡', '💨', '🔋', '🌟', '⚡', '💨', '🔋', '🌟', '⚡', '💨', '🔋', '🌟']
+        parts: ['⚡','�','�','⚡']
     },
     fade: {
         name: 'FADE',
+        title: 'FADE KABUS ÇÖPÜ!',
+        titleColor: '#1C1C1C',
+        messageColor: '#696969',
         messages: [
-            'ÇÖP KORKU', 'BOZUK FADE', 'ÇÖP GÖLGE', 'FADE ÇÖP',
-            'KORKU ARTIĞI', 'NIGHTMARE ÇÖP', 'FADE BOZUK', 'ÇÖP GÖLGE',
-            'GÖLGE HURDASI', 'FADE ARTIK', 'ÇÖP NIGHTMARE', 'BOZUK KORKU'
+            "Prowler gönderiyor yanlış tarafa.",
+            "Seize orb boş yere harcanıyor.",
+            "Haunt göz düşman görmüyor bile.",
+            "Ulti atıyor takım etkileniyor daha çok.",
+            "Kabus uzmanı ama takımın kabusu.",
+            "Türk ajan ama milli olmamış."
         ],
-        parts: ['👹', '🕸️', '🌑', '💀', '👹', '🕸️', '🌑', '💀', '👹', '🕸️', '🌑', '💀']
+        parts: ['�️','🌑','💀','��']
     },
     harbor: {
         name: 'HARBOR',
+        title: 'HARBOR SU ÇÖPÜ!',
+        titleColor: '#00CED1',
+        messageColor: '#48D1CC',
         messages: [
-            'ÇÖP SU', 'BOZUK HARBOR', 'ÇÖP DALGA', 'HARBOR ÇÖP',
-            'SU ARTIĞI', 'WATER ÇÖP', 'HARBOR BOZUK', 'ÇÖP DALGA',
-            'DALGA HURDASI', 'HARBOR ARTIK', 'ÇÖP WATER', 'BOZUK SU'
+            "Cove koyuyor düşman duvara vuruyor.",
+            "Cascade duvarı anlamsız yerlerde.",
+            "High tide çekiyor görüş engeli sadece.",
+            "Ulti alanı hiçbir işe yaramıyor.",
+            "Hint su bükücü ama beyni kurmuş.",
+            "Okyanus değil gölet gibi etkisi."
         ],
-        parts: ['🌊', '💧', '🌊', '💧', '🌊', '💧', '🌊', '💧', '🌊', '💧', '🌊', '💧']
+        parts: ['🌊','💧','�','��']
     },
     gekko: {
         name: 'GEKKO',
+        title: 'GEKKO YARATIK ÇÖPÜ!',
+        titleColor: '#98FB98',
+        messageColor: '#00FA9A',
         messages: [
-            'ÇÖP HAYVAN', 'BOZUK GEKKO', 'ÇÖP YENİDEN', 'GEKKO ÇÖP',
-            'HAYVAN ARTIĞI', 'INITIATOR ÇÖP', 'GEKKO BOZUK', 'ÇÖP YENİDEN',
-            'YENİDEN HURDASI', 'GEKKO ARTIK', 'ÇÖP INITIATOR', 'BOZUK HAYVAN'
+            "Dizzy atıyor düşman dönmüş bile.",
+            "Wingman defuse verip gidiyor yanından.",
+            "Mosh pit anlamsız yere patlatıyor.",
+            "Thrash ulti düşman kaçıyor kolay.",
+            "Meksikalı ama organizasyon yok.",
+            "Yaratıkları bile utanıyor ondan."
         ],
-        parts: ['🦎', '🐸', '🦎', '🐸', '🦎', '🐸', '🦎', '🐸', '🦎', '🐸', '🦎', '🐸']
+        parts: ['🦎','�','�','🇲🇽']
     },
     deadlock: {
         name: 'DEADLOCK',
+        title: 'DEADLOCK KAPAN ÇÖPÜ!',
+        titleColor: '#FFFFFF',
+        messageColor: '#D3D3D3',
         messages: [
-            'ÇÖP TUZAK', 'BOZUK DEADLOCK', 'ÇÖP SENTINEL', 'DEADLOCK ÇÖP',
-            'TUZAK ARTIĞI', 'TRAP ÇÖP', 'DEADLOCK BOZUK', 'ÇÖP SENTINEL',
-            'SENTINEL HURDASI', 'DEADLOCK ARTIK', 'ÇÖP TRAP', 'BOZUK TUZAK'
+            "Sensor ağı yanlış yerde.",
+            "Barrier mesh düşmana yardım ediyor.",
+            "GravNet atıyor kimse yok orada.",
+            "Ulti cocoon düşman kurtarıyor arkadaşını.",
+            "Norveçli kapan ustası ama tek tuzak kendisi.",
+            "Kilitlemiş ama kafasını."
         ],
-        parts: ['🪤', '⚡', '🪤', '⚡', '🪤', '⚡', '🪤', '⚡', '🪤', '⚡', '🪤', '⚡']
+        parts: ['🕸️','⚙️','🔒','🇳🇴']
     },
     iso: {
         name: 'ISO',
+        title: 'ISO İZOLE ÇÖPÜ!',
+        titleColor: '#9370DB',
+        messageColor: '#BA55D3',
         messages: [
-            'ÇÖP ENERJİ', 'BOZUK ISO', 'ÇÖP DUELIST', 'ISO ÇÖP',
-            'ENERJİ ARTIĞI', 'ENERGY ÇÖP', 'ISO BOZUK', 'ÇÖP DUELIST',
-            'DUELIST HURDASI', 'ISO ARTIK', 'ÇÖP ENERGY', 'BOZUK ENERJİ'
+            "Double tap shield boşa harcıyor.",
+            "Undercut düşman geçmiş bile.",
+            "Contingency duvarı işe yaramıyor.",
+            "Ulti düellosu kaybediyor hep.",
+            "Çinli savaşçı ama barışçıl oyun.",
+            "İzole değil sadece yalnız ve işe yaramaz."
         ],
-        parts: ['⚡', '💎', '⚡', '💎', '⚡', '💎', '⚡', '💎', '⚡', '💎', '⚡', '💎']
+        parts: ['�️','�','⚡','🇨🇳']
     },
     clove: {
         name: 'CLOVE',
+        title: 'CLOVE ÖLÜMSÜZ ÇÖPÜ!',
+        titleColor: '#FF1493',
+        messageColor: '#FF69B4',
         messages: [
-            'ÇÖP BULUT', 'BOZUK CLOVE', 'ÇÖP ZEHİR', 'CLOVE ÇÖP',
-            'BULUT ARTIĞI', 'CLOUD ÇÖP', 'CLOVE BOZUK', 'ÇÖP ZEHİR',
-            'ZEHİR HURDASI', 'CLOVE ARTIK', 'ÇÖP CLOUD', 'BOZUK BULUT'
+            "Smoke attığı yere push geliyor.",
+            "Meddle kullanırken vurulup ölüyor.",
+            "Pick-me-up alıyor tekrar ölüyor.",
+            "Ulti zaten kayıp rounda harcıyor.",
+            "İskoç ölümsüzü ama devamlı ölüyor.",
+            "Non-binary ama oyunu binary: 0 ya da 0."
         ],
-        parts: ['☁️', '💨', '☁️', '💨', '☁️', '💨', '☁️', '💨', '☁️', '💨', '☁️', '💨']
+        parts: ['🦋','�','☠️','🏴']
     },
     vyse: {
         name: 'VYSE',
+        title: 'VYSE METAL ÇÖPÜ!',
+        titleColor: '#C0C0C0',
+        messageColor: '#A9A9A9',
         messages: [
-            'ÇÖP METAL', 'BOZUK VYSE', 'ÇÖP SENTINEL', 'VYSE ÇÖP',
-            'METAL ARTIĞI', 'STEEL ÇÖP', 'VYSE BOZUK', 'ÇÖP SENTINEL',
-            'SENTINEL HURDASI', 'VYSE ARTIK', 'ÇÖP STEEL', 'BOZUK METAL'
+            "Arc Rose bitki koysam daha iyi.",
+            "Shear duvarı düşman geçiyor rahat.",
+            "Razorvine düşman fark etmiyor bile.",
+            "Steel Garden ulti zaten kaybetmiş round.",
+            "Metali büken kadın ama mental çökmüş.",
+            "Trap uzmanı ama en büyük tuzak kendisi."
         ],
-        parts: ['⚙️', '🔧', '⚙️', '🔧', '⚙️', '🔧', '⚙️', '🔧', '⚙️', '🔧', '⚙️', '🔧']
+        parts: ['🌹','⚙️','�','�']
     },
     tejo: {
         name: 'TEJO',
+        title: 'TEJO HATA MESAJI!',
+        titleColor: '#FF0000',
+        messageColor: '#FF6347',
         messages: [
-            'ÇÖP ATEŞ', 'BOZUK TEJO', 'ÇÖP PATLAMA', 'TEJO ÇÖP',
-            'ATEŞ ARTIĞI', 'BLAST ÇÖP', 'TEJO BOZUK', 'ÇÖP PATLAMA',
-            'PATLAMA HURDASI', 'TEJO ARTIK', 'ÇÖP BLAST', 'BOZUK ATEŞ'
+            "Yeni karakter ama eski hata.",
+            "Yetenekleri ne işe yarıyor belli değil.",
+            "Kullanımı zor oynanışı daha zor.",
+            "Takıma yük olmaktan başka bir şey değil.",
+            "Daha tanımadan bıktık.",
+            "Çöp bile daha kullanışlı."
         ],
-        parts: ['🔥', '💥', '🔥', '💥', '🔥', '💥', '🔥', '💥', '🔥', '💥', '🔥', '💥']
+        parts: ['❌','⚠️','�','']
     },
     waylay: {
         name: 'WAYLAY',
+        title: 'WAYLAY HAYALET!',
+        titleColor: '#808080',
+        messageColor: '#A9A9A9',
         messages: [
-            'ÇÖP TUZAK', 'BOZUK WAYLAY', 'ÇÖP SENTINEL', 'WAYLAY ÇÖP',
-            'TUZAK ARTIĞI', 'TRAP ÇÖP', 'WAYLAY BOZUK', 'ÇÖP SENTINEL',
-            'SENTINEL HURDASI', 'WAYLAY ARTIK', 'ÇÖP TRAP', 'BOZUK TUZAK'
+            "Kim bu karakter belli değil.",
+            "Oyuna geldiğinde zaten silinmiş olacak.",
+            "Yetenekleri test aşamasında kalmış.",
+            "Pick edeni görmedik daha.",
+            "Hayalet gibi görünmez çünkü yok.",
+            "Valorant'ın hata mesajı."
         ],
-        parts: ['🪤', '⚡', '🪤', '⚡', '🪤', '⚡', '🪤', '⚡', '🪤', '⚡', '🪤', '⚡']
+        parts: ['👻','❓','🌫️','💭']
+    }
+    ,
+    veto: {
+        name: 'VETO',
+        title: 'VETO REDDEDİLDİ!',
+        titleColor: '#8B0000',
+        messageColor: '#DC143C',
+        messages: [
+            "Bu karakter mi yoksa bug mı belli değil.",
+            "Seç tuşu çalışmıyor zaten.",
+            "Yetenek açıklaması bile yok.",
+            "Oyunda olup olmadığı tartışmalı.",
+            "Adı veto çünkü herkes red ediyor.",
+            "Karakterden çok konsept art."
+        ],
+        parts: ['🚫','❌','🛑','⛔']
     }
 };
 
@@ -1212,8 +1290,7 @@ export const ALL_COMMANDS = {
     ...MOVEMENT_COMMANDS,
     ...EFFECT_COMMANDS,
     ...SPECIAL_EFFECTS,
-    ...GAME_COMMANDS,
-    ...SPECIAL_CHARACTER_COMMANDS
+    ...GAME_COMMANDS
 };
 
 // Kullanıcı türleri

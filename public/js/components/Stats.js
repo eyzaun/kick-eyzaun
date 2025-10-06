@@ -507,7 +507,7 @@ export class StatsManager extends EventEmitter {
                 
                 <div class="stats-actions">
                     <button onclick="statsManager.printStats()">Print Stats</button>
-                    <button onclick="statsManager.resetStats()">Reset Stats</button>
+                    <button onclick="(window.__resetAllStatsHook__ ? window.__resetAllStatsHook__() : statsManager.resetStats())">Reset Stats</button>
                     <button onclick="statsManager.exportStats()">Export JSON</button>
                 </div>
             </div>
