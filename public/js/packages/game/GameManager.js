@@ -1,14 +1,14 @@
-// public/js/classes/GameManager.js - Oyun yönetim sistemi
+// packages/game/GameManager.js - Moved from classes/GameManager.js
 
-import { EventEmitter } from '../utils/EventEmitter.js';
-import { logger } from '../utils/Utils.js';
-import { GameUI } from '../game/GameUI.js';
-import { ParticleSystem } from '../game/ParticleSystem.js';
-import { CommandProcessor } from '../game/CommandProcessor.js';
-import { PhysicsEngine } from '../game/PhysicsEngine.js';
-import { GameRenderer } from '../game/GameRenderer.js';
-import { buildDefaultMaps } from '../game/MapLibrary.js';
-import { GAME_CONSTANTS } from '../game/GameConstants.js';
+import { EventEmitter } from '../../utils/EventEmitter.js';
+import { logger } from '../../utils/Utils.js';
+import { GameUI } from './GameUI.js';
+import { ParticleSystem as GameParticleSystem } from './ParticleSystem.js';
+import { CommandProcessor } from './CommandProcessor.js';
+import { PhysicsEngine } from './PhysicsEngine.js';
+import { GameRenderer } from './GameRenderer.js';
+import { buildDefaultMaps } from './MapLibrary.js';
+import { GAME_CONSTANTS } from './GameConstants.js';
 
 /**
  * GameManager - Çok oyunculu parkur oyunu sistemi
@@ -28,15 +28,15 @@ export class GameManager extends EventEmitter {
         // Zamanlayıcılar
         this.gameStartTime = null;
         this.gameEndTime = null;
-    this.gameDuration = GAME_CONSTANTS.GAME.DURATION_MS;
-    this.maxPlayers = GAME_CONSTANTS.GAME.MAX_PLAYERS;
-    this.minPlayers = GAME_CONSTANTS.GAME.MIN_PLAYERS;
+        this.gameDuration = GAME_CONSTANTS.GAME.DURATION_MS;
+        this.maxPlayers = GAME_CONSTANTS.GAME.MAX_PLAYERS;
+        this.minPlayers = GAME_CONSTANTS.GAME.MIN_PLAYERS;
 
         // Oyun alanı boyutları
-    this.gameWidth = GAME_CONSTANTS.GAME.WIDTH;
-    this.gameHeight = GAME_CONSTANTS.GAME.HEIGHT;
-    this.playerRadius = GAME_CONSTANTS.GAME.PLAYER_RADIUS;
-    this.doubleJumpMultiplier = GAME_CONSTANTS.GAME.DOUBLE_JUMP_MULTIPLIER;
+        this.gameWidth = GAME_CONSTANTS.GAME.WIDTH;
+        this.gameHeight = GAME_CONSTANTS.GAME.HEIGHT;
+        this.playerRadius = GAME_CONSTANTS.GAME.PLAYER_RADIUS;
+        this.doubleJumpMultiplier = GAME_CONSTANTS.GAME.DOUBLE_JUMP_MULTIPLIER;
 
         // Oyun döngüsü
         this.gameLoop = null;
@@ -44,7 +44,7 @@ export class GameManager extends EventEmitter {
 
         // Yardımcı sınıflar
         this.ui = ui ?? new GameUI();
-        this.particleSystem = particles ?? new ParticleSystem();
+    this.particleSystem = particles ?? new GameParticleSystem();
         this.commandProcessor = commands ?? new CommandProcessor();
         this.renderer = renderer ?? new GameRenderer({
             gameWidth: this.gameWidth,
@@ -479,7 +479,7 @@ export class GameManager extends EventEmitter {
             this.trails.set(player.userId, []);
         }
 
-    const trail = this.trails.get(player.userId);
+        const trail = this.trails.get(player.userId);
         trail.push({ x: player.position.x, y: player.position.y });
 
         // Trail uzunluğunu sınırla
@@ -615,3 +615,5 @@ export class GameManager extends EventEmitter {
             });
     }
 }
+
+export default GameManager;

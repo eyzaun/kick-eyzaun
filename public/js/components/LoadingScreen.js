@@ -60,7 +60,7 @@ export class LoadingScreenManager extends EventEmitter {
             <div class="loading-title">EYZAUN MULTI-USER AVATAR SYSTEM</div>
             <div class="loading-subtitle">Her kullanıcı kendi avatarını kontrol ediyor...</div>
             <div class="loading-channel">Kanal: <span id="channelName">eyzaun</span></div>
-            <div class="loading-version">Sistem: Multi-Avatar Interactive v3.0</div>
+            <div class="loading-version">Sistem: Multi-Avatar Interactive v4.0.0</div>
             <div class="loading-progress-container"></div>
             <div class="loading-status"></div>
         `;

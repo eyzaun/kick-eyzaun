@@ -1,23 +1,25 @@
 // public/js/main.js - Ana uygulama giriş noktası
 
-// Core imports via packages
-import { CONFIG } from './packages/config/index.js';
-import { getChannelFromURL, logger } from './packages/utils/index.js';
+// Core imports (direct modules)
+import { CONFIG } from './utils/Config.js';
+import { getChannelFromURL, logger } from './utils/Utils.js';
 
 // API imports
-import { KickWebSocketAPI } from './packages/connection/index.js';
+import { KickWebSocketAPI } from './api/KickWebSocketAPI.js';
 
 // Manager imports
-import { AvatarManager } from './packages/avatars/index.js';
+import { AvatarManager } from './packages/avatars/AvatarManager.js';
 
 // UI Component imports
-import { UIManager, StatsManager, LoadingScreenManager } from './packages/ui/index.js';
+import { UIManager } from './components/UI.js';
+import { StatsManager } from './components/Stats.js';
+import { LoadingScreenManager } from './components/LoadingScreen.js';
 
 // Debug import
-import { DebugTool } from './packages/debug/index.js';
+import { DebugTool } from './debug/DebugTool.js';
 
 // Game import
-import { GameManager } from './packages/game/index.js';
+import { GameManager } from './packages/game/GameManager.js';
 
 /**
  * Ana Uygulama Sınıfı - Tüm sistemleri koordine eder
@@ -638,7 +640,7 @@ class EyzaunMultiUserAvatarApp {
         console.log(`
 ╔══════════════════════════════════════════════════╗
 ║         🎮 EYZAUN MULTI-USER AVATAR CHAT         ║
-║              Interactive System v3.0             ║
+║              Interactive System v4.0.0           ║
 ╠══════════════════════════════════════════════════╣
 ║                                                  ║
 ║  Kanal: ${this.channelName.padEnd(40)} ║

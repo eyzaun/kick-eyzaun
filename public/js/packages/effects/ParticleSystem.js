@@ -1,7 +1,7 @@
-// public/js/effects/ParticleSystem.js - Parçacık efekt sistemi
+// packages/effects/ParticleSystem.js - Parçacık efekt sistemi (moved)
 
-import { CONFIG } from '../utils/Config.js';
-import { createElement, removeElement, getRandomFromArray, logger } from '../utils/Utils.js';
+import { CONFIG } from '../../utils/Config.js';
+import { createElement, removeElement, getRandomFromArray, logger } from '../../utils/Utils.js';
 
 /**
  * Parçacık Sistemi - Tüm parçacık efektlerini yönetir

@@ -385,7 +385,7 @@ Bu proje MIT lisansı altında lisanslanmıştır. Detaylar için [LICENSE](LICE
 
 ## 📋 Changelog
 
-### v3.0.0 (Current)
+### v4.0.0 (Current)
 - ✅ Multi-user avatar system
 - ✅ Individual user control
 - ✅ 🎮 Parkour game system with multi-player support

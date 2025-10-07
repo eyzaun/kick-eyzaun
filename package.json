@@ -1,6 +1,6 @@
 {
   "name": "kick-eyzaun-multi-avatar",
-  "version": "3.0.0",
+  "version": "4.0.0",
   "description": "Multi-user avatar chat system for Eyzaun Kick channel with individual user control",
   "main": "public/index.html",
   "type": "module",

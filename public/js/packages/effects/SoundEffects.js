@@ -1,7 +1,7 @@
-// public/js/effects/SoundEffects.js - Ses efekt sistemi
+// packages/effects/SoundEffects.js - Ses efekt sistemi (moved)
 
-import { CONFIG } from '../utils/Config.js';
-import { logger } from '../utils/Utils.js';
+import { CONFIG } from '../../utils/Config.js';
+import { logger } from '../../utils/Utils.js';
 
 /**
  * Sound Effects sınıfı - Web Audio API kullanarak ses efektleri
@@ -12,55 +12,72 @@ export class SoundEffects {
         this.masterVolume = CONFIG.AUDIO.VOLUME;
         this.enabled = CONFIG.AUDIO.ENABLED;
         this.activeSounds = new Map();
+        this.unlocked = false;
+        this._notified = false;
         
+        // Defer audio context creation until a user gesture (autoplay policy)
         this.initializeAudioContext();
         
         logger.effect('SoundEffects initialized');
     }
 
     /**
-     * Audio Context başlat
+     * Setup unlock handlers for Audio Context (lazy init)
      */
     initializeAudioContext() {
+        const unlock = () => this.unlockAudio();
         try {
-            this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
-            
-            // Resume context on user interaction (autoplay policy)
-            this.resumeAudioContext();
-            
+            // Attach once; different events for desktop/mobile
+            document.addEventListener('click', unlock, { once: true });
+            document.addEventListener('keydown', unlock, { once: true });
+            document.addEventListener('touchstart', unlock, { once: true });
         } catch (error) {
-            logger.warn('Web Audio API not supported:', error);
-            this.enabled = false;
+            logger.warn('Unable to attach audio unlock handlers:', error);
         }
     }
 
     /**
-     * Audio Context'i aktifleştir
+     * Create and resume AudioContext on first user gesture
      */
-    resumeAudioContext() {
-        if (this.audioContext && this.audioContext.state === 'suspended') {
-            const resumeAudio = () => {
-                this.audioContext.resume().then(() => {
-                    logger.effect('Audio context resumed');
-                });
-                
-                // Remove listeners after first interaction
-                document.removeEventListener('click', resumeAudio);
-                document.removeEventListener('keypress', resumeAudio);
-                document.removeEventListener('touchstart', resumeAudio);
+    unlockAudio() {
+        if (this.unlocked) return;
+        try {
+            if (!this.audioContext) {
+                this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            const tryResume = () => {
+                if (this.audioContext.state === 'suspended') {
+                    return this.audioContext.resume().catch(() => {});
+                }
             };
-
-            document.addEventListener('click', resumeAudio);
-            document.addEventListener('keypress', resumeAudio);
-            document.addEventListener('touchstart', resumeAudio);
+            Promise.resolve(tryResume()).finally(() => {
+                this.unlocked = (this.audioContext.state === 'running' || this.audioContext.state === 'interrupted');
+                logger.effect('Audio context initialized' + (this.unlocked ? ' and resumed' : ''));
+            });
+        } catch (error) {
+            logger.warn('Web Audio API not supported or blocked:', error);
+            this.enabled = false;
         }
+    }
+
+    /** Ensure audio is allowed before creating nodes */
+    ensureReady() {
+        if (!this.enabled) return false;
+        if (!this.audioContext || !this.unlocked || this.audioContext.state === 'suspended') {
+            if (!this._notified) {
+                logger.warn('Audio is blocked by the browser until a user gesture. Click the page to enable sound.');
+                this._notified = true;
+            }
+            return false;
+        }
+        return true;
     }
 
     /**
      * Basit ton oluştur
      */
     createTone(frequency, duration, type = 'sine', volume = 1) {
-        if (!this.enabled || !this.audioContext) {
+        if (!this.ensureReady()) {
             return null;
         }
 
@@ -93,7 +110,7 @@ export class SoundEffects {
      * Kompleks ses efekti oluştur
      */
     createComplexSound(soundId, soundFunction) {
-        if (!this.enabled || !this.audioContext) {
+        if (!this.ensureReady()) {
             return false;
         }
 
