@@ -63,11 +63,57 @@ export class GameRenderer {
 
         const platforms = this.computeEffectivePlatforms(rawPlatforms, this.elapsedTime);
 
-        // Dinamik platformları hafifçe farklı renkle belirt
+        // Dinamik platformları özel renklerle belirt
         platforms.forEach(platform => {
-            const isDynamic = platform.type === 'moving' || platform.type === 'toggle' || platform.type === 'bounce';
-            ctx.fillStyle = isDynamic ? '#7a5234' : GAME_CONSTANTS.RENDER.TRACK.PLATFORM_COLOR;
+            let platformColor = GAME_CONSTANTS.RENDER.TRACK.PLATFORM_COLOR;
+            
+            // Platforma göre özel renkler
+            if (platform.type === 'moving') {
+                platformColor = '#7a5234'; // Kahverengi
+            } else if (platform.type === 'bounce') {
+                platformColor = '#ff9900'; // Turuncu
+            } else if (platform.type === 'ice') {
+                platformColor = '#88ddff'; // Açık mavi (buzlu)
+            } else if (platform.type === 'speed') {
+                platformColor = '#ffff00'; // Sarı (hız)
+            } else if (platform.type === 'gravity') {
+                platformColor = '#9966ff'; // Mor (düşük yerçekimi)
+            } else if (platform.type === 'wind') {
+                platformColor = '#66ffcc'; // Turkuaz (rüzgar)
+            } else if (platform.type === 'rotate') {
+                platformColor = '#ff6699'; // Pembe (döner)
+            }
+            
+            ctx.fillStyle = platformColor;
             ctx.fillRect(platform.x, platform.y, platform.w, platform.h);
+            
+            // Özel efektler ekle
+            if (platform.type === 'ice') {
+                // Buzlu görünüm için beyaz çizgiler
+                ctx.strokeStyle = 'rgba(255,255,255,0.6)';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(platform.x, platform.y + platform.h/2);
+                ctx.lineTo(platform.x + platform.w, platform.y + platform.h/2);
+                ctx.stroke();
+            } else if (platform.type === 'speed') {
+                // Hız çizgileri
+                ctx.fillStyle = 'rgba(255,255,255,0.5)';
+                for (let i = 0; i < 3; i++) {
+                    const y = platform.y + (i + 1) * platform.h / 4;
+                    ctx.fillRect(platform.x + 10, y, platform.w - 20, 2);
+                }
+            } else if (platform.type === 'wind') {
+                // Rüzgar dalgaları
+                ctx.strokeStyle = 'rgba(255,255,255,0.4)';
+                ctx.lineWidth = 1;
+                for (let i = 0; i < platform.w; i += 20) {
+                    ctx.beginPath();
+                    ctx.moveTo(platform.x + i, platform.y + 5);
+                    ctx.quadraticCurveTo(platform.x + i + 10, platform.y, platform.x + i + 20, platform.y + 5);
+                    ctx.stroke();
+                }
+            }
         });
 
         // Tehlikeleri çiz
@@ -108,6 +154,16 @@ export class GameRenderer {
                     const cycle = ((t + offset) % period + period) % period;
                     const visible = cycle < duty * period;
                     out.visible = visible;
+                } else if (p.type === 'rotate') {
+                    // Dönen platform hesaplaması
+                    const rotateSpeed = Number(p.rotateSpeed) || 1;
+                    const rotateRadius = Number(p.rotateRadius) || 100;
+                    const phase = Number(p.phase) || 0;
+                    const angle = rotateSpeed * t + phase;
+                    const offsetX = Math.cos(angle) * rotateRadius;
+                    const offsetY = Math.sin(angle) * rotateRadius;
+                    out.x = p.x + offsetX;
+                    out.y = p.y + offsetY;
                 }
                 return out;
             })

@@ -1,0 +1,77 @@
+Date : 2025-10-11 03:50:29
+Directory : c:\Users\eyyup\OneDrive\Desktop\KICK\kick-eyzaun
+Total : 36 files,  21194 codes, 1928 comments, 2277 blanks, all 25399 lines
+
+Languages
++------------+------------+------------+------------+------------+------------+
+| language   | files      | code       | comment    | blank      | total      |
++------------+------------+------------+------------+------------+------------+
+| JavaScript |         24 |      9,966 |      1,828 |      1,924 |     13,718 |
+| JSON       |          3 |      8,311 |          0 |          3 |      8,314 |
+| PostCSS    |          4 |      2,181 |         90 |        231 |      2,502 |
+| HTML       |          4 |        396 |         10 |         49 |        455 |
+| Markdown   |          1 |        340 |          0 |         70 |        410 |
++------------+------------+------------+------------+------------+------------+
+
+Directories
++----------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                   | files      | code       | comment    | blank      | total      |
++----------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                      |         36 |     21,194 |      1,928 |      2,277 |     25,399 |
+| . (Files)                                                                              |          4 |      8,651 |          0 |         73 |      8,724 |
+| public                                                                                 |         32 |     12,543 |      1,928 |      2,204 |     16,675 |
+| public (Files)                                                                         |          4 |        396 |         10 |         49 |        455 |
+| public\css                                                                             |          4 |      2,181 |         90 |        231 |      2,502 |
+| public\js                                                                              |         24 |      9,966 |      1,828 |      1,924 |     13,718 |
+| public\js (Files)                                                                      |          1 |        515 |        138 |        144 |        797 |
+| public\js\api                                                                          |          1 |        382 |         88 |         91 |        561 |
+| public\js\classes                                                                      |          3 |      1,060 |        360 |        315 |      1,735 |
+| public\js\components                                                                   |          3 |      1,265 |        314 |        300 |      1,879 |
+| public\js\debug                                                                        |          1 |        505 |         97 |         81 |        683 |
+| public\js\effects                                                                      |          3 |      3,320 |        590 |        708 |      4,618 |
+| public\js\game                                                                         |          7 |      1,058 |         41 |        135 |      1,234 |
+| public\js\utils                                                                        |          5 |      1,861 |        200 |        150 |      2,211 |
++----------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++----------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| filename                                                                               | language   | code       | comment    | blank      | total      |
++----------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| c:\Users\eyyup\OneDrive\Desktop\KICK\kick-eyzaun\README.md                             | Markdown   |        340 |          0 |         70 |        410 |
+| c:\Users\eyyup\OneDrive\Desktop\KICK\kick-eyzaun\firebase.json                         | JSON       |         57 |          0 |          1 |         58 |
+| c:\Users\eyyup\OneDrive\Desktop\KICK\kick-eyzaun\package-lock.json                     | JSON       |      8,116 |          0 |          1 |      8,117 |
+| c:\Users\eyyup\OneDrive\Desktop\KICK\kick-eyzaun\package.json                          | JSON       |        138 |          0 |          1 |        139 |
+| c:\Users\eyyup\OneDrive\Desktop\KICK\kick-eyzaun\public\command-test.html              | HTML       |          0 |          0 |          1 |          1 |
+| c:\Users\eyyup\OneDrive\Desktop\KICK\kick-eyzaun\public\css\animations.css             | PostCSS    |        981 |         24 |         82 |      1,087 |
+| c:\Users\eyyup\OneDrive\Desktop\KICK\kick-eyzaun\public\css\components.css             | PostCSS    |        388 |         15 |         56 |        459 |
+| c:\Users\eyyup\OneDrive\Desktop\KICK\kick-eyzaun\public\css\main.css                   | PostCSS    |        507 |         33 |         59 |        599 |
+| c:\Users\eyyup\OneDrive\Desktop\KICK\kick-eyzaun\public\css\particles.css              | PostCSS    |        305 |         18 |         34 |        357 |
+| c:\Users\eyyup\OneDrive\Desktop\KICK\kick-eyzaun\public\debug.html                     | HTML       |        165 |          0 |         25 |        190 |
+| c:\Users\eyyup\OneDrive\Desktop\KICK\kick-eyzaun\public\game-test.html                 | HTML       |        168 |          0 |         15 |        183 |
+| c:\Users\eyyup\OneDrive\Desktop\KICK\kick-eyzaun\public\index.html                     | HTML       |         63 |         10 |          8 |         81 |
+| c:\Users\eyyup\OneDrive\Desktop\KICK\kick-eyzaun\public\js\api\KickWebSocketAPI.js     | JavaScript |        382 |         88 |         91 |        561 |
+| c:\Users\eyyup\OneDrive\Desktop\KICK\kick-eyzaun\public\js\classes\AvatarManager.js    | JavaScript |        303 |        111 |         96 |        510 |
+| c:\Users\eyyup\OneDrive\Desktop\KICK\kick-eyzaun\public\js\classes\GameManager.js      | JavaScript |        424 |         96 |        101 |        621 |
+| c:\Users\eyyup\OneDrive\Desktop\KICK\kick-eyzaun\public\js\classes\UserAvatar.js       | JavaScript |        333 |        153 |        118 |        604 |
+| c:\Users\eyyup\OneDrive\Desktop\KICK\kick-eyzaun\public\js\components\LoadingScreen.js | JavaScript |        354 |         94 |         94 |        542 |
+| c:\Users\eyyup\OneDrive\Desktop\KICK\kick-eyzaun\public\js\components\Stats.js         | JavaScript |        375 |        116 |         88 |        579 |
+| c:\Users\eyyup\OneDrive\Desktop\KICK\kick-eyzaun\public\js\components\UI.js            | JavaScript |        536 |        104 |        118 |        758 |
+| c:\Users\eyyup\OneDrive\Desktop\KICK\kick-eyzaun\public\js\debug\DebugTool.js          | JavaScript |        505 |         97 |         81 |        683 |
+| c:\Users\eyyup\OneDrive\Desktop\KICK\kick-eyzaun\public\js\effects\ParticleSystem.js   | JavaScript |        385 |         70 |         98 |        553 |
+| c:\Users\eyyup\OneDrive\Desktop\KICK\kick-eyzaun\public\js\effects\SoundEffects.js     | JavaScript |        548 |        159 |        179 |        886 |
+| c:\Users\eyyup\OneDrive\Desktop\KICK\kick-eyzaun\public\js\effects\VisualEffects.js    | JavaScript |      2,387 |        361 |        431 |      3,179 |
+| c:\Users\eyyup\OneDrive\Desktop\KICK\kick-eyzaun\public\js\game\CommandProcessor.js    | JavaScript |         76 |          0 |         12 |         88 |
+| c:\Users\eyyup\OneDrive\Desktop\KICK\kick-eyzaun\public\js\game\GameConstants.js       | JavaScript |         67 |          1 |          3 |         71 |
+| c:\Users\eyyup\OneDrive\Desktop\KICK\kick-eyzaun\public\js\game\GameRenderer.js        | JavaScript |        166 |          6 |         34 |        206 |
+| c:\Users\eyyup\OneDrive\Desktop\KICK\kick-eyzaun\public\js\game\GameUI.js              | JavaScript |        184 |          0 |         26 |        210 |
+| c:\Users\eyyup\OneDrive\Desktop\KICK\kick-eyzaun\public\js\game\MapLibrary.js          | JavaScript |        199 |         21 |          5 |        225 |
+| c:\Users\eyyup\OneDrive\Desktop\KICK\kick-eyzaun\public\js\game\ParticleSystem.js      | JavaScript |         73 |          0 |         11 |         84 |
+| c:\Users\eyyup\OneDrive\Desktop\KICK\kick-eyzaun\public\js\game\PhysicsEngine.js       | JavaScript |        293 |         13 |         44 |        350 |
+| c:\Users\eyyup\OneDrive\Desktop\KICK\kick-eyzaun\public\js\main.js                     | JavaScript |        515 |        138 |        144 |        797 |
+| c:\Users\eyyup\OneDrive\Desktop\KICK\kick-eyzaun\public\js\utils\CommandCatalog.js     | JavaScript |         27 |          1 |          3 |         31 |
+| c:\Users\eyyup\OneDrive\Desktop\KICK\kick-eyzaun\public\js\utils\Config.js             | JavaScript |      1,261 |         27 |         27 |      1,315 |
+| c:\Users\eyyup\OneDrive\Desktop\KICK\kick-eyzaun\public\js\utils\EventEmitter.js       | JavaScript |        243 |         88 |         63 |        394 |
+| c:\Users\eyyup\OneDrive\Desktop\KICK\kick-eyzaun\public\js\utils\StatsTracker.js       | JavaScript |         23 |          1 |          6 |         30 |
+| c:\Users\eyyup\OneDrive\Desktop\KICK\kick-eyzaun\public\js\utils\Utils.js              | JavaScript |        307 |         83 |         51 |        441 |
+| Total                                                                                  |            |     21,194 |      1,928 |      2,277 |     25,399 |
++----------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+

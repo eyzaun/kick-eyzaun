@@ -429,8 +429,8 @@ class EyzaunMultiUserAvatarApp {
             return result.success;
         }
         
-        // Harita seçimi komutları
-        if (['!1','!2','!3','!4','!5','!6','!7','!8','!9','!10'].includes(normalizedCmd)) {
+        // Harita seçimi komutları (Map 1-15)
+        if (['!1','!2','!3','!4','!5','!6','!7','!8','!9','!10','!11','!12','!13','!14','!15'].includes(normalizedCmd)) {
             const mapId = normalizedCmd.slice(1); // ! işaretini kaldır
             const result = await this.gameManager.selectMap(mapId);
             return result.success;

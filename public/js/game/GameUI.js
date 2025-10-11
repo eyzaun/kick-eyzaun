@@ -146,11 +146,16 @@ export class GameUI {
             !3 - 🌊 Ada Atlama<br>
             !4 - 🏰 Kale Duvarları<br>
             !5 - 🌌 Uzay Labirenti<br>
-            !6 - 🟦 Metronom Köprüleri<br>
-            !7 - 🟩 Asansör Şaftı<br>
-            !8 - 🟥 Lazer Koridoru<br>
-            !9 - 🟨 Zıplama Fabrikası<br>
-            !10 - 🟪 Usta Sınavı<br>
+            !6 - 🟦 Yavaş Köprüler<br>
+            !7 - 🟩 Yumuşak Asansörler<br>
+            !8 - 🟥 Kolay Yol<br>
+            !9 - 🟨 Zıpla ve Çık<br>
+            !10 - 🟪 Karışık Parkur<br>
+            !11 - ❄️ Buz Pateni<br>
+            !12 - ⚡ Hız Tüneli<br>
+            !13 - 🌙 Ay Yürüyüşü<br>
+            !14 - 🌪️ Fırtına Vadisi<br>
+            !15 - 🎡 Döner Dünyanın Sonu<br>
             <small>Harita seçtikten sonra !ben ile katılın, !başla ile başlatın</small>
         `);
     }

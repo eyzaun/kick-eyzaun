@@ -112,7 +112,7 @@ export class GameManager extends EventEmitter {
 
             return {
                 success: true,
-                message: '🎮 Oyun açıldı! Harita seçin: !1 !2 !3 !4 !5 !6 !7 !8 !9 !10'
+                message: '🎮 Oyun açıldı! Harita seçin: !1 !2 !3 !4 !5 !6 !7 !8 !9 !10 !11 !12 !13 !14 !15'
             };
         } catch (error) {
             logger.error('Error starting game:', error);

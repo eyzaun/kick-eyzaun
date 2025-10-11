@@ -47,12 +47,12 @@ export class PhysicsEngine {
 
         players.forEach(player => {
             if (!player.isAlive) return;
-            this.integratePlayer(player, platforms, hazards, deltaTime);
+            this.integratePlayer(player, platforms, staticPlatforms, hazards, deltaTime);
         });
     }
 
     computeEffectivePlatforms(platforms, t) {
-        // Hareketli (moving), görünür/görünmez (toggle) ve zıplama (bounce) destekler
+        // Hareketli (moving), görünür/görünmez (toggle), zıplama (bounce), dönen (rotate) destekler
         if (!Array.isArray(platforms)) return this.fallbackPlatforms;
         const TWO_PI = Math.PI * 2;
         return platforms
@@ -76,44 +76,23 @@ export class PhysicsEngine {
                     const cycle = ((t + offset) % period + period) % period;
                     const visible = cycle < duty * period;
                     out.visible = visible;
-                }
-                return out;
-            })
-            .filter(p => p.type !== 'toggle' || p.visible !== false);
-    }
-
-    computeEffectivePlatforms(platforms, t) {
-        // Hareketli (moving), görünür/görünmez (toggle) ve zıplama (bounce) destekler
-        if (!Array.isArray(platforms)) return this.fallbackPlatforms;
-        const TWO_PI = Math.PI * 2;
-        return platforms
-            .map(p => {
-                const out = { ...p };
-                if (p.type === 'moving') {
-                    const axis = p.axis === 'y' ? 'y' : 'x';
-                    const range = Number(p.range) || 0;
-                    const speed = Number(p.speed) || 1;
+                } else if (p.type === 'rotate') {
+                    // Dönen platform - dairesel hareket
+                    const rotateSpeed = Number(p.rotateSpeed) || 1;
+                    const rotateRadius = Number(p.rotateRadius) || 100;
                     const phase = Number(p.phase) || 0;
-                    const offset = Math.sin(speed * t + phase) * range;
-                    if (axis === 'x') {
-                        out.x = p.x + offset;
-                    } else {
-                        out.y = p.y + offset;
-                    }
-                } else if (p.type === 'toggle') {
-                    const period = Math.max(0.1, Number(p.period) || 2);
-                    const duty = Math.min(0.95, Math.max(0.05, Number(p.duty) || 0.5));
-                    const offset = Number(p.offset) || 0;
-                    const cycle = ((t + offset) % period + period) % period;
-                    const visible = cycle < duty * period;
-                    out.visible = visible;
+                    const angle = rotateSpeed * t + phase;
+                    const offsetX = Math.cos(angle) * rotateRadius;
+                    const offsetY = Math.sin(angle) * rotateRadius;
+                    out.x = p.x + offsetX;
+                    out.y = p.y + offsetY;
                 }
                 return out;
             })
             .filter(p => p.type !== 'toggle' || p.visible !== false);
     }
 
-    integratePlayer(player, platforms, hazards, deltaTime) {
+    integratePlayer(player, platforms, staticPlatforms, hazards, deltaTime) {
         const radius = this.playerRadius;
         const horizontalMargin = radius + 7;
     const groundTop = this.gameHeight - GROUND_OFFSET;
@@ -158,23 +137,8 @@ export class PhysicsEngine {
         }
 
         // Eğer karakter hareketli platform üzerinde duruyorsa, pozisyonunu tamamen platforma göre ayarla
-        if (player.onGround && player.standingPlatform && player.standingPlatform.type === 'moving') {
-            const axis = player.standingPlatform.axis === 'y' ? 'y' : 'x';
-            const range = Number(player.standingPlatform.range) || 0;
-            const speed = Number(player.standingPlatform.speed) || 1;
-            const phase = Number(player.standingPlatform.phase) || 0;
-            const currentOffset = Math.sin(speed * this.elapsedTime + phase) * range;
-
-            const platformX = player.standingPlatform.x + (axis === 'x' ? currentOffset : 0);
-            const platformY = player.standingPlatform.y + (axis === 'y' ? currentOffset : 0);
-
-            // Karakteri platformun üstüne sabitle
-            player.position.x = platformX + player.relativeXOnPlatform;
-            player.position.y = platformY - radius;
-            player.velocity.x = 0; // Platform üzerinde dururken kendi hızını sıfırla
-            player.velocity.y = 0;
-        } else {
-            // Normal hareket (platform üzerinde değilse)
+        if (player.onGround && player.standingPlatform && (player.standingPlatform.type === 'moving' || player.standingPlatform.type === 'rotate')) {
+            // Önce hareket inputunu işle
             if (player.keys.left) {
                 player.velocity.x = Math.max(player.velocity.x - MOVE_SPEED * deltaTime, -MOVE_SPEED);
             } else if (player.keys.right) {
@@ -183,8 +147,91 @@ export class PhysicsEngine {
                 player.velocity.x *= FRICTION;
             }
 
+            let platformX, platformY;
+            
+            if (player.standingPlatform.type === 'moving') {
+                const axis = player.standingPlatform.axis === 'y' ? 'y' : 'x';
+                const range = Number(player.standingPlatform.range) || 0;
+                const speed = Number(player.standingPlatform.speed) || 1;
+                const phase = Number(player.standingPlatform.phase) || 0;
+                const currentOffset = Math.sin(speed * this.elapsedTime + phase) * range;
+
+                // GÜNCEL PLATFORM POZİSYONU (computeEffectivePlatforms'dan gelir)
+                const currentPlatformInList = platforms.find(p => 
+                    p.type === 'moving' && 
+                    Math.abs(p.x - (player.standingPlatform.x + (axis === 'x' ? currentOffset : 0))) < 5 &&
+                    Math.abs(p.y - (player.standingPlatform.y + (axis === 'y' ? currentOffset : 0))) < 5
+                );
+
+                platformX = currentPlatformInList ? currentPlatformInList.x : (player.standingPlatform.x + (axis === 'x' ? currentOffset : 0));
+                platformY = currentPlatformInList ? currentPlatformInList.y : (player.standingPlatform.y + (axis === 'y' ? currentOffset : 0));
+            } else if (player.standingPlatform.type === 'rotate') {
+                const rotateSpeed = Number(player.standingPlatform.rotateSpeed) || 1;
+                const rotateRadius = Number(player.standingPlatform.rotateRadius) || 100;
+                const phase = Number(player.standingPlatform.phase) || 0;
+                const angle = rotateSpeed * this.elapsedTime + phase;
+                const offsetX = Math.cos(angle) * rotateRadius;
+                const offsetY = Math.sin(angle) * rotateRadius;
+                
+                const currentPlatformInList = platforms.find(p => 
+                    p.type === 'rotate' && 
+                    Math.abs(p.x - (player.standingPlatform.x + offsetX)) < 5 &&
+                    Math.abs(p.y - (player.standingPlatform.y + offsetY)) < 5
+                );
+                
+                platformX = currentPlatformInList ? currentPlatformInList.x : (player.standingPlatform.x + offsetX);
+                platformY = currentPlatformInList ? currentPlatformInList.y : (player.standingPlatform.y + offsetY);
+            }
+            
+            const platformWidth = player.standingPlatform.w || 100;
+
+            // Göreceli pozisyonu güncelle (oyuncunun hareketi dahil)
+            player.relativeXOnPlatform += player.velocity.x * deltaTime;
+
+            // Karakteri platforma göre konumlandır
+            player.position.x = platformX + player.relativeXOnPlatform;
+            player.position.y = platformY - radius;
+            player.velocity.y = 0;
+
+            // Platform dışına çıkma kontrolü (daha toleranslı)
+            const playerCenterX = player.position.x;
+            const platformLeftEdge = platformX;
+            const platformRightEdge = platformX + platformWidth;
+
+            // Eğer karakter tamamen platform dışındaysa, düşür
+            if (playerCenterX < platformLeftEdge || playerCenterX > platformRightEdge) {
+                player.onGround = false;
+                player.standingPlatform = null;
+                player.relativeXOnPlatform = 0;
+            }
+        } else {
+            // Normal hareket (platform üzerinde değilse)
+            // Platformun özelliklerine göre sürtünme ve yerçekimi ayarla
+            let currentFriction = FRICTION;
+            let currentGravity = GRAVITY;
+            
+            // Eğer oyuncu bir platform üzerindeyse, o platformun özelliklerini kullan
+            if (player.onGround && player.standingPlatform) {
+                if (player.standingPlatform.type === 'ice') {
+                    currentFriction = Number(player.standingPlatform.friction) || 0.95;
+                }
+                if (player.standingPlatform.type === 'gravity') {
+                    currentGravity = GRAVITY * (Number(player.standingPlatform.gravityMultiplier) || 0.4);
+                }
+            }
+            
+            // Yatay hareket
+            if (player.keys.left) {
+                player.velocity.x = Math.max(player.velocity.x - MOVE_SPEED * deltaTime, -MOVE_SPEED);
+            } else if (player.keys.right) {
+                player.velocity.x = Math.min(player.velocity.x + MOVE_SPEED * deltaTime, MOVE_SPEED);
+            } else {
+                player.velocity.x *= currentFriction;
+            }
+
+            // Dikey hareket (yerçekimi)
             if (!player.onGround) {
-                player.velocity.y += GRAVITY * deltaTime;
+                player.velocity.y += currentGravity * deltaTime;
             }
 
             player.position.x += player.velocity.x * deltaTime;
@@ -208,7 +255,7 @@ export class PhysicsEngine {
             player.velocity.x = Math.min(0, player.velocity.x);
         }
 
-    this.handlePlatformCollisions(player, platforms);
+    this.handlePlatformCollisions(player, platforms, staticPlatforms);
     this.handleHazards(player, hazards);
     this.handleGoalAndBounds(player);
 
@@ -220,7 +267,7 @@ export class PhysicsEngine {
         player.previousPosition = { x: player.position.x, y: player.position.y };
     }
 
-    handlePlatformCollisions(player, platforms) {
+    handlePlatformCollisions(player, platforms, staticPlatforms) {
         // Eğer karakter hareketli platform üzerinde duruyorsa, çarpışmaları atla (zaten pozisyon platforma göre ayarlandı)
         if (player.onGround && player.standingPlatform && player.standingPlatform.type === 'moving') {
             return;
@@ -265,17 +312,83 @@ export class PhysicsEngine {
                     this.particleSystem.createJumpParticles(player.position.x, player.position.y);
                     player.standingPlatform = null; // Bounce'da platform bırak
                     player.relativeXOnPlatform = 0;
-                } else {
+                }
+                // Hız artırıcı platform
+                else if (platform.type === 'speed') {
+                    player.position.y = top - radius;
+                    const speedBoost = Number(platform.speedBoost) || 1.5;
+                    const direction = platform.direction || 'right';
+                    
+                    if (direction === 'right') {
+                        player.velocity.x = MOVE_SPEED * speedBoost;
+                    } else if (direction === 'left') {
+                        player.velocity.x = -MOVE_SPEED * speedBoost;
+                    } else if (direction === 'up') {
+                        player.velocity.y = JUMP_FORCE * speedBoost;
+                        player.onGround = false;
+                    }
+                    
+                    if (direction !== 'up') {
+                        player.velocity.y = Math.min(0, player.velocity.y);
+                        player.onGround = true;
+                        player.jumpCount = 0;
+                        player.hasDoubleJumped = false;
+                    }
+                    player.standingPlatform = platform;
+                    player.relativeXOnPlatform = player.position.x - left;
+                }
+                // Rüzgar platformu
+                else if (platform.type === 'wind') {
+                    player.position.y = top - radius;
+                    const windForce = Number(platform.windForce) || 200;
+                    const windDirection = platform.windDirection || 'right';
+                    
+                    if (windDirection === 'right') {
+                        player.velocity.x += windForce * 0.016; // 60fps için normalize
+                    } else if (windDirection === 'left') {
+                        player.velocity.x -= windForce * 0.016;
+                    } else if (windDirection === 'up') {
+                        player.velocity.y -= windForce * 0.016;
+                    }
+                    
+                    player.velocity.y = Math.min(0, player.velocity.y);
+                    player.onGround = true;
+                    player.jumpCount = 0;
+                    player.hasDoubleJumped = false;
+                    player.standingPlatform = platform;
+                    player.relativeXOnPlatform = player.position.x - left;
+                }
+                else {
                     player.position.y = top - radius;
                     player.velocity.y = Math.min(0, player.velocity.y);
                     player.onGround = true;
                     player.jumpCount = 0;
                     player.hasDoubleJumped = false;
                     player.jumpBuffer = 0;
-                    player.standingPlatform = platform; // Player'a kaydet
-                    // Platform üzerindeki göreceli X pozisyonunu platform merkezine göre hesapla
-                    const platformCenterX = left + platform.w / 2;
-                    player.relativeXOnPlatform = player.position.x - platformCenterX;
+                    
+                    // ORIJINAL static platformu kaydet (moving/rotate platformlar için)
+                    if (platform.type === 'moving') {
+                        // Static platform referansını bul
+                        const staticPlatform = staticPlatforms?.find(sp => 
+                            sp.type === 'moving' && 
+                            Math.abs(sp.x - platform.x) < Math.abs(platform.range || 0) + 10 &&
+                            Math.abs(sp.y - platform.y) < Math.abs(platform.range || 0) + 10
+                        );
+                        player.standingPlatform = staticPlatform || platform;
+                    } else if (platform.type === 'rotate') {
+                        // Dönen platform için static referansını bul
+                        const staticPlatform = staticPlatforms?.find(sp => 
+                            sp.type === 'rotate' && 
+                            Math.abs(sp.x - platform.x) < Math.abs(sp.rotateRadius || 0) + 10 &&
+                            Math.abs(sp.y - platform.y) < Math.abs(sp.rotateRadius || 0) + 10
+                        );
+                        player.standingPlatform = staticPlatform || platform;
+                    } else {
+                        player.standingPlatform = platform;
+                    }
+                    
+                    // Platform SOL KENARINDA göreceli X pozisyonunu hesapla (IŞINLANMAYI ÖNLER)
+                    player.relativeXOnPlatform = player.position.x - left;
                 }
                 return;
             }
