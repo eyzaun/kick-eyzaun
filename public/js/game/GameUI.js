@@ -64,7 +64,7 @@ export class GameUI {
         if (this.canvas) {
             this.canvas.style.border = '3px solid #333';
             this.canvas.style.borderRadius = '10px';
-            this.canvas.style.background = 'linear-gradient(135deg, #87CEEB 0%, #98FB98 100%)';
+            this.canvas.style.background = 'transparent';
             this.canvas.style.boxShadow = '0 0 20px rgba(0,0,0,0.3)';
         }
     }
@@ -146,6 +146,11 @@ export class GameUI {
             !3 - 🌊 Ada Atlama<br>
             !4 - 🏰 Kale Duvarları<br>
             !5 - 🌌 Uzay Labirenti<br>
+            !6 - 🟦 Metronom Köprüleri<br>
+            !7 - 🟩 Asansör Şaftı<br>
+            !8 - 🟥 Lazer Koridoru<br>
+            !9 - 🟨 Zıplama Fabrikası<br>
+            !10 - 🟪 Usta Sınavı<br>
             <small>Harita seçtikten sonra !ben ile katılın, !başla ile başlatın</small>
         `);
     }

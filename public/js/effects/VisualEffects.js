@@ -864,34 +864,123 @@ export class VisualEffects {
     // ADVANCED EFFECTS
 
     /**
-     * Lazer gösterisi
+     * Lazer gösterisi - Gelişmiş hareketli lazer efekti
      */
     async createLazer() {
         const effectId = 'lazer_' + Date.now();
         this.activeEffects.add(effectId);
         
         try {
-            const lazer = createElement('div');
-            lazer.style.cssText = `
+            const container = createElement('div');
+            container.style.cssText = `
                 position: fixed;
-                top: 0;
-                left: 50%;
-                width: 10px;
-                height: 100vh;
-                background: linear-gradient(180deg, transparent, #ff0080, #00ff80, #0080ff, transparent);
-                transform: translateX(-50%);
+                inset: 0;
                 z-index: ${CONFIG.UI.Z_INDICES.PARTICLES};
-                box-shadow: 0 0 20px #ff0080, 0 0 40px #00ff80, 0 0 60px #0080ff;
-                animation: lazerSweep 3s ease-in-out;
+                pointer-events: none;
             `;
-            
-            document.body.appendChild(lazer);
-            this.soundEffects.playLazer();
+            document.body.appendChild(container);
+
+            // Helper to create a beam
+            const createBeam = ({ x = '50%', y = '0%', w = 8, h = '100vh', color = '#00ffff', angle = 0, anim = 'laserScanX 2.2s linear forwards', delay = 0, opacity = 0.9 } = {}) => {
+                const beam = createElement('div');
+                beam.style.cssText = `
+                    position: fixed;
+                    top: ${y};
+                    left: ${x};
+                    width: ${typeof w === 'number' ? w + 'px' : w};
+                    height: ${typeof h === 'number' ? h + 'px' : h};
+                    background: linear-gradient(180deg, transparent, ${color}, ${color}, transparent);
+                    transform: translate(-50%, 0) rotate(${angle}deg);
+                    mix-blend-mode: screen;
+                    opacity: ${opacity};
+                    --c: ${color};
+                    animation: ${anim};
+                    animation-delay: ${delay}ms;
+                    border-radius: 6px;
+                    filter: drop-shadow(0 0 8px ${color}) drop-shadow(0 0 18px ${color});
+                `;
+                container.appendChild(beam);
+                return beam;
+            };
+
+            // Horizontal scans in different colors
+            const colors = ['#00ffff', '#ff007f', '#7fff00'];
+            const beams = [];
+            colors.forEach((c, i) => {
+                beams.push(createBeam({ x: '-10%', y: '0%', w: 10, h: '100vh', color: c, angle: 0, anim: 'laserScanX 2.2s linear forwards, laserFlicker 0.35s linear infinite, laserGlowPulse 1.2s ease-in-out infinite', delay: i * 120 }));
+            });
+
+            // Diagonal beams
+            beams.push(createBeam({ x: '0%', y: '0%', w: 8, h: '180vh', color: '#00aaff', angle: -35, anim: 'laserDiagonalLeft 1.8s ease-out forwards, laserFlicker 0.3s linear infinite', delay: 250, opacity: 0.8 }));
+            beams.push(createBeam({ x: '100%', y: '0%', w: 8, h: '180vh', color: '#ff00b3', angle: 35, anim: 'laserDiagonalRight 1.8s ease-out forwards, laserFlicker 0.3s linear infinite', delay: 350, opacity: 0.8 }));
+
+            // Impact ring at center
+            const ring = createElement('div');
+            ring.style.cssText = `
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                width: 20px;
+                height: 20px;
+                border: 2px solid #00ffff;
+                border-radius: 50%;
+                transform: translate(-50%, -50%);
+                pointer-events: none;
+                mix-blend-mode: screen;
+                --c: #00ffff;
+                animation: laserRingPulse 1.2s ease-out forwards;
+            `;
+            container.appendChild(ring);
+
+            // Hit flash overlay
+            const flash = createElement('div');
+            flash.style.cssText = `
+                position: fixed;
+                inset: 0;
+                background: radial-gradient(circle at 50% 50%, rgba(0,255,255,0.35), rgba(255,0,200,0.25), rgba(0,0,0,0));
+                mix-blend-mode: screen;
+                animation: laserHitFlash 800ms ease-out forwards;
+                pointer-events: none;
+            `;
+            container.appendChild(flash);
+
+            // Sparks from center
+            for (let i = 0; i < 16; i++) {
+                const sx = (Math.random() * 160 - 80) | 0;
+                const sy = (Math.random() * -120) | 0;
+                const spark = createElement('div');
+                spark.textContent = '✦';
+                spark.style.cssText = `
+                    position: fixed;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    color: #e0ffff;
+                    font-size: ${10 + Math.random() * 12}px;
+                    text-shadow: 0 0 8px #00ffff, 0 0 14px #00ffff;
+                    opacity: 0.9;
+                    --sx: ${sx}px;
+                    --sy: ${sy}px;
+                    animation: laserSpark ${600 + Math.random() * 400}ms ease-out forwards;
+                    pointer-events: none;
+                `;
+                container.appendChild(spark);
+                setTimeout(() => removeElement(spark), 1200);
+            }
+
+            // Optional subtle screen shake
+            document.body.style.animation = 'cosmicShake 0.5s ease-in-out';
+            setTimeout(() => { document.body.style.animation = ''; }, 500);
+
+            // Play sound if available
+            if (this.soundEffects && this.soundEffects.playLazer) {
+                this.soundEffects.playLazer();
+            }
 
             setTimeout(() => {
-                removeElement(lazer);
+                removeElement(container);
                 this.activeEffects.delete(effectId);
-            }, 3000);
+            }, 2400);
 
             return true;
 

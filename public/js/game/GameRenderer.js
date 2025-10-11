@@ -7,6 +7,7 @@ export class GameRenderer {
         this.gameHeight = gameHeight;
         this.playerRadius = playerRadius;
         this.fallbackPlatforms = buildFallbackPlatforms(gameHeight);
+        this.elapsedTime = 0; // seconds
     }
 
     setDimensions({ gameWidth, gameHeight }) {
@@ -15,16 +16,17 @@ export class GameRenderer {
         this.fallbackPlatforms = buildFallbackPlatforms(gameHeight);
     }
 
-    render({ ctx, players, trails, particleSystem, map, isGameRunning, gameDuration, gameStartTime }) {
+    render({ ctx, players, trails, particleSystem, map, isGameRunning, gameDuration, gameStartTime, deltaTime = 0 }) {
         if (!ctx) return;
 
         ctx.clearRect(0, 0, this.gameWidth, this.gameHeight);
 
-    const gradient = ctx.createLinearGradient(0, 0, 0, this.gameHeight);
-    gradient.addColorStop(0, GAME_CONSTANTS.RENDER.SKY_GRADIENT[0]);
-    gradient.addColorStop(1, GAME_CONSTANTS.RENDER.SKY_GRADIENT[1]);
-        ctx.fillStyle = gradient;
-        ctx.fillRect(0, 0, this.gameWidth, this.gameHeight);
+        // Arka planı şeffaf bırak - yayın için
+        // ctx.fillStyle = 'transparent';
+        // ctx.fillRect(0, 0, this.gameWidth, this.gameHeight);
+
+        // Zamanı ilerlet (dinamik platformlar için)
+        this.elapsedTime += Math.max(0, deltaTime || 0);
 
         this.drawTrack(ctx, map);
         this.drawTrails(ctx, trails);
@@ -56,12 +58,60 @@ export class GameRenderer {
         ctx.fillStyle = GAME_CONSTANTS.RENDER.TRACK.GROUND_COLOR;
         ctx.fillRect(0, this.gameHeight - GAME_CONSTANTS.GAME.GROUND_OFFSET, this.gameWidth, GAME_CONSTANTS.GAME.GROUND_OFFSET);
 
-        const platforms = Array.isArray(map?.platforms) ? map.platforms : this.fallbackPlatforms;
+        const rawPlatforms = Array.isArray(map?.platforms) ? map.platforms : this.fallbackPlatforms;
+        const hazards = Array.isArray(map?.hazards) ? map.hazards : [];
 
-        ctx.fillStyle = GAME_CONSTANTS.RENDER.TRACK.PLATFORM_COLOR;
+        const platforms = this.computeEffectivePlatforms(rawPlatforms, this.elapsedTime);
+
+        // Dinamik platformları hafifçe farklı renkle belirt
         platforms.forEach(platform => {
+            const isDynamic = platform.type === 'moving' || platform.type === 'toggle' || platform.type === 'bounce';
+            ctx.fillStyle = isDynamic ? '#7a5234' : GAME_CONSTANTS.RENDER.TRACK.PLATFORM_COLOR;
             ctx.fillRect(platform.x, platform.y, platform.w, platform.h);
         });
+
+        // Tehlikeleri çiz
+        hazards.forEach(hz => {
+            if (hz.type === 'lava') {
+                ctx.fillStyle = '#d33';
+                ctx.fillRect(hz.x, hz.y, hz.w, hz.h);
+            } else if (hz.type === 'laser') {
+                ctx.fillStyle = '#f44';
+                ctx.fillRect(hz.x, hz.y, hz.w, hz.h);
+            } else if (hz.type === 'spike') {
+                ctx.fillStyle = '#aaa';
+                ctx.fillRect(hz.x, hz.y, hz.w, hz.h);
+            }
+        });
+    }
+
+    computeEffectivePlatforms(platforms, t) {
+        if (!Array.isArray(platforms)) return this.fallbackPlatforms;
+        return platforms
+            .map(p => {
+                const out = { ...p };
+                if (p.type === 'moving') {
+                    const axis = p.axis === 'y' ? 'y' : 'x';
+                    const range = Number(p.range) || 0;
+                    const speed = Number(p.speed) || 1;
+                    const phase = Number(p.phase) || 0;
+                    const offset = Math.sin(speed * t + phase) * range;
+                    if (axis === 'x') {
+                        out.x = p.x + offset;
+                    } else {
+                        out.y = p.y + offset;
+                    }
+                } else if (p.type === 'toggle') {
+                    const period = Math.max(0.1, Number(p.period) || 2);
+                    const duty = Math.min(0.95, Math.max(0.05, Number(p.duty) || 0.5));
+                    const offset = Number(p.offset) || 0;
+                    const cycle = ((t + offset) % period + period) % period;
+                    const visible = cycle < duty * period;
+                    out.visible = visible;
+                }
+                return out;
+            })
+            .filter(p => p.type !== 'toggle' || p.visible !== false);
     }
 
     drawPlayers(ctx, players) {

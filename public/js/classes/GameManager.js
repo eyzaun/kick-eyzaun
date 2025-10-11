@@ -112,7 +112,7 @@ export class GameManager extends EventEmitter {
 
             return {
                 success: true,
-                message: '🎮 Oyun açıldı! Harita seçin: !1 !2 !3 !4 !5'
+                message: '🎮 Oyun açıldı! Harita seçin: !1 !2 !3 !4 !5 !6 !7 !8 !9 !10'
             };
         } catch (error) {
             logger.error('Error starting game:', error);
@@ -433,7 +433,8 @@ export class GameManager extends EventEmitter {
                 map: this.selectedMap,
                 isGameRunning: this.isGameRunning,
                 gameDuration: this.gameDuration,
-                gameStartTime: this.gameStartTime
+                gameStartTime: this.gameStartTime,
+                deltaTime
             });
 
             // UI güncellemesi
@@ -555,7 +556,9 @@ export class GameManager extends EventEmitter {
             lastCommandTime: 0,
             jumpBuffer: 0,
             jumpCount: 0,
-            hasDoubleJumped: false
+            hasDoubleJumped: false,
+            standingPlatform: null, // Hareketli platform üzerinde durma takibi
+            relativeXOnPlatform: 0 // Platform üzerindeki göreceli X pozisyonu
         };
     }
 

@@ -430,7 +430,7 @@ class EyzaunMultiUserAvatarApp {
         }
         
         // Harita seçimi komutları
-        if (normalizedCmd === '!1' || normalizedCmd === '!2' || normalizedCmd === '!3' || normalizedCmd === '!4' || normalizedCmd === '!5') {
+        if (['!1','!2','!3','!4','!5','!6','!7','!8','!9','!10'].includes(normalizedCmd)) {
             const mapId = normalizedCmd.slice(1); // ! işaretini kaldır
             const result = await this.gameManager.selectMap(mapId);
             return result.success;

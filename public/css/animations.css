@@ -1028,3 +1028,60 @@
         color: #00ff00; 
     }
 }
+
+/* Lazer efekt animasyonları */
+@keyframes laserScanX {
+    0% { transform: translateX(-10vw) scaleX(0.3); opacity: 0; }
+    20% { transform: translateX(-5vw) scaleX(0.6); opacity: 0.8; }
+    50% { transform: translateX(0) scaleX(1); opacity: 1; }
+    80% { transform: translateX(5vw) scaleX(0.8); opacity: 0.6; }
+    100% { transform: translateX(10vw) scaleX(0.2); opacity: 0; }
+}
+
+@keyframes laserFlicker {
+    0%, 100% { opacity: 0.9; }
+    25% { opacity: 1; }
+    50% { opacity: 0.7; }
+    75% { opacity: 1; }
+}
+
+@keyframes laserGlowPulse {
+    0%, 100% { filter: drop-shadow(0 0 8px var(--c)) drop-shadow(0 0 18px var(--c)); }
+    50% { filter: drop-shadow(0 0 12px var(--c)) drop-shadow(0 0 28px var(--c)) drop-shadow(0 0 40px var(--c)); }
+}
+
+@keyframes laserDiagonalLeft {
+    0% { transform: translateX(-20vw) translateY(-20vh) scale(0.5); opacity: 0; }
+    30% { transform: translateX(-10vw) translateY(-10vh) scale(0.8); opacity: 0.8; }
+    70% { transform: translateX(10vw) translateY(10vh) scale(1.2); opacity: 1; }
+    100% { transform: translateX(20vw) translateY(20vh) scale(0.7); opacity: 0; }
+}
+
+@keyframes laserDiagonalRight {
+    0% { transform: translateX(20vw) translateY(-20vh) scale(0.5); opacity: 0; }
+    30% { transform: translateX(10vw) translateY(-10vh) scale(0.8); opacity: 0.8; }
+    70% { transform: translateX(-10vw) translateY(10vh) scale(1.2); opacity: 1; }
+    100% { transform: translateX(-20vw) translateY(20vh) scale(0.7); opacity: 0; }
+}
+
+@keyframes laserRingPulse {
+    0% { transform: scale(0.1); opacity: 0; border-width: 1px; }
+    30% { transform: scale(0.8); opacity: 1; border-width: 3px; }
+    70% { transform: scale(1.5); opacity: 0.8; border-width: 2px; }
+    100% { transform: scale(2.5); opacity: 0; border-width: 1px; }
+}
+
+@keyframes laserHitFlash {
+    0% { opacity: 0; }
+    20% { opacity: 0.6; }
+    50% { opacity: 0.9; }
+    80% { opacity: 0.4; }
+    100% { opacity: 0; }
+}
+
+@keyframes laserSpark {
+    0% { transform: translate(var(--sx), var(--sy)) scale(0.5); opacity: 0; }
+    30% { transform: translate(calc(var(--sx) * 1.5), calc(var(--sy) * 1.5)) scale(1.2); opacity: 1; }
+    70% { transform: translate(calc(var(--sx) * 2), calc(var(--sy) * 2)) scale(1.5); opacity: 0.8; }
+    100% { transform: translate(calc(var(--sx) * 2.5), calc(var(--sy) * 2.5)) scale(0.8); opacity: 0; }
+}
